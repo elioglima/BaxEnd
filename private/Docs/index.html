@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<!--
+	Halcyonic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>API Docs</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/public/assets/css/main.css" />
+		<link rel="shortcut icon" href="/public/favicon.ico" />
+	</head>
+	<body class="subpage">
+
+<form action="/docs/" method="post" >
+	<input type="hidden" id="hash" name="hash" value="{{.Hash}}" >
+		
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<h1><a href="#" onClick="pg('')" id="logo">Xpress API Docs</a></h1>
+								<nav id="nav">
+									<a href="/docs/">Sair</a>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+
+
+<!-- Content -->
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 col-12-medium">
+				{{ .MenuLateral }}
+            </div>
+            <div class="col-9 col-12-medium imp-medium">
+
+                <!-- Main Content -->
+                    <section>
+                        <header>
+                            <h2>Xpress API</h2>
+                            <h1 style="font-family: times, serif; font-size:14pt; font-style:italic">Documentação {{ .Data }}</h1>
+                            <h4 style="font-family: times, serif; font-size:14pt; font-style:italic">Versão:{{ .Versao }}</h4>
+                        </header>
+                        <p>
+                            Nossa API possui alta taxa de sucesso, evitando erros que possam atrapalhar o seu funcionamento, pois estamos sempre atualizados e fazendo constantes manutenções em nosso próprio sistema, garantindo estabilidade para o seu uso. Além disso, a API da Wavy conta com uma alta segurança, impedindo vazamentos de informações e proporcionando total sigilo para os seus dados.
+                        </p>
+                        <h3>API HTTPS</h3>
+                        <p>Permite o envio e recebimento de mensagens e status do protocolo HTTPS utilizando os métodos GET ou POST.</p>
+
+                        <h3>API SFTP</h3>
+                        <p>Utilizado para transferência de arquivos, sendo indicado para envios de mensagens em massa (lote).. Os arquivos são transferidos pelo cliente para nossos servidores, e são imediatamente processados.</p>
+
+                        <h3>API REST</h3>
+                        <p>Utilizado para envios de mensagens e consultas. Oferecemos uma API REST fácil de integrar, de alta performance e seguindo as melhores práticas de mercado. Você poderá integrar em minutos, independente da linguagem de programação.</p>
+
+
+                    </section>
+
+            </div>
+        </div>
+    </div>
+</section>
+  		
+
+		{{ .Rodape }}		
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="/public/assets/js/jquery.min.js"></script>
+	<script src="/public/assets/js/browser.min.js"></script>
+	<script src="/public/assets/js/breakpoints.min.js"></script>
+	<script src="/public/assets/js/util.js"></script>
+	<script src="/public/assets/js/main.js"></script>
+	
+	</form>
+	</body>
+</html>

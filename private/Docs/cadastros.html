@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<!--
+	Halcyonic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>API Docs</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/public/assets/css/main.css" />
+		<link rel="shortcut icon" href="/public/favicon.ico" />
+	</head>
+	<body class="subpage" id="inicio_pagina">
+<form action="/docs/" method="post" >
+	<input type="hidden" id="hash" name="hash" value="{{.Hash}}" >	
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<h1><a href="#" onClick="pg('')" id="logo">Xpress API Docs</a></h1>
+								<nav id="nav">
+									<a href="#" onClick="pg('')">Inicio</a>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</section>
+
+<!-- Content -->
+<section id="content">
+	<div class="container">
+		<div class="row">
+			
+			<div class="col-3 col-12-medium">
+				{{ .MenuLateral }}
+            </div>
+			
+			<div class="col-9 col-12-medium imp-medium">
+
+
+	<section>
+		<header>
+			<h2>Metodos e Roteamentos</h2>
+			<h3>índice de rotas</h3>
+		</header>
+
+		<li><a href="#rtusuarios" class="fonte-texto-link">Usuários</a></li>
+		<li><a href="#rtclientes" class="fonte-texto-link">Clientes</a></li>
+		<li><a href="#rttppessoa" class="fonte-texto-link">Tipo Pessoa</a></li>
+	</section>
+
+
+	<section id="rtusuarios">
+		<div id="menu-section">
+                <a href="#inicio_pagina" class="fonte-texto-link">Subir</a>
+        </div>
+		<header>
+			<h2>Usuários</h2>
+			<h3>Rotas de Acesso para cadastro usuários</h3>
+		</header>
+		<li><a href="#rtupesqtodos" class="fonte-texto-link">/api/usuario/pesquisa/todos/</a></li>
+		<li><a href="#rtupesqcodigo" class="fonte-texto-link">/api/usuario/pesquisa/codigo/{id}</a></li>
+		<li><a href="#rtupesqnome" class="fonte-texto-link">/api/usuario/pesquisa/nome/{value}</a></li>
+		<li><a href="#rtupesqemail" class="fonte-texto-link">/api/usuario/pesquisa/email/{value}</a></li>
+		<li><a href="#rtuinsunico" class="fonte-texto-link">/api/usuario/inserir/unico/</a></li>
+		<li><a href="#rtuinsvarios" class="fonte-texto-link">/api/usuario/inserir/varios/</a></li>
+		<li><a href="#rtuatualizar" class="fonte-texto-link">/api/usuario/atualizar/{id}</a></li>
+		<li><a href="#rtuapagar" class="fonte-texto-link">/api/usuario/apagar/{id}</a></li>
+	</section>
+
+	<section id="rtupesqtodos">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/pesquisa/todos/</h2>
+		</header>
+		<p>Metodo para pesquisar todos os registros, sem necessidade de passar paramêtros</p>
+	</section>
+
+	<section id="rtupesqcodigo">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/pesquisa/codigo/{id}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo código</p>
+	</section>
+
+	<section id="rtupesqnome">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/pesquisa/nome/{value}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtupesqemail">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/pesquisa/email/{value}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtuinsunico">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/inserir/unico/</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtuinsvarios">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/inserir/varios/</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtuatualizar">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/atualizar/{id}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtuapagar">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/usuario/apagar/{id}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>	
+
+
+	<section id="rtclientes">
+		<div id="menu-section">
+                <a href="#inicio_pagina" class="fonte-texto-link">Subir</a>
+        </div>
+		<header>
+			<h2>Clientes</h2>
+			<h3>Rotas de Acesso para cadastro clientes</h3>
+		</header>
+		<li><a href="#rtcpesqtodos" class="fonte-texto-link">/api/clientes/pesquisa/todos/</a></li>
+		<li><a href="#rtcpesqcodigo" class="fonte-texto-link">/api/clientes/pesquisa/codigo/{id}</a></li>
+		<li><a href="#rtcpesqnome" class="fonte-texto-link">/api/clientes/pesquisa/nome/{value}</a></li>
+		<li><a href="#rtcpesqemail" class="fonte-texto-link">/api/clientes/pesquisa/email/{value}</a></li>
+		<li><a href="#rtcinsunico" class="fonte-texto-link">/api/clientes/inserir/unico/</a></li>
+		<li><a href="#rtcinsvarios" class="fonte-texto-link">/api/clientes/inserir/varios/</a></li>
+		<li><a href="#rtcatualizar" class="fonte-texto-link">/api/clientes/atualizar/{id}</a></li>
+		<li><a href="#rtcapagar" class="fonte-texto-link">/api/clientes/apagar/{id}</a></li>
+
+		<li><a href="#rtcadce" class="fonte-texto-link">Cadastro de endereços</a></li>
+	</section>
+
+	<section id="rtcpesqtodos">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/pesquisa/todos/</h2>
+		</header>
+		<p>Metodo para pesquisar todos os registros, sem necessidade de passar paramêtros</p>
+	</section>
+
+	<section id="rtcpesqcodigo">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/pesquisa/codigo/{id}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo código</p>
+	</section>
+
+	<section id="rtcpesqnome">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/pesquisa/nome/{value}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtcpesqemail">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/pesquisa/email/{value}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtcinsunico">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/inserir/unico/</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtcinsvarios">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/inserir/varios/</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtcatualizar">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/atualizar/{id}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rtcapagar">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/clientes/apagar/{id}</h2>
+		</header>
+		<p>Metodo que pesquisa o registro pelo nome ( LIKE )</p>
+	</section>
+
+	<section id="rttppessoa">
+		<div id="menu-section">
+                <a href="#inicio_pagina" class="fonte-texto-link">Subir</a>
+        </div>
+		<header>
+			<h2>Tipo de Pessoa</h2>
+			<h3>Tabela estatica não consta no banco de dados</h3>
+		</header>
+		<li><a href="#rttppessoapesqtodos" class="fonte-texto-link">/api/tipo_pessoa/</a></li>
+		<li><a href="#rttppessoapesqcodigo" class="fonte-texto-link">/api/tipo_pessoa/{id:[0-9]+}</a></li>
+	</section>
+
+	<section id="rttppessoapesqtodos">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/tipo_pessoa/</h2>
+		</header>
+		<p>Metodo para pesquisar todos os registros, sem necessidade de passar paramêtros</p>
+	</section>
+
+	<section id="rttppessoapesqcodigo">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/tipo_pessoa/{id:[0-9]+}</h2>
+		</header>
+		<p>Metodo para pesquisar o registro, passando o paramêtro em digitos númericos.</p>
+	</section>
+
+	<section id="rtcadce">
+		<div id="menu-section">
+                <a href="#inicio_pagina" class="fonte-texto-link">Subir</a>
+        </div>
+		<header>
+			<h2>Clientes Cadastro de Endereços</h2>
+			<h3>Rotas de Acesso a API para cadastro endereços</h3>
+		</header>
+		<li><a href="#rtcadceptodos" class="fonte-texto-link">/api/cliente/endereco/pesquisa/todos/{idr}</a></li>
+		<li><a href="#rtcadcepid" class="fonte-texto-link">/api/cliente/endereco/pesquisa/{idr}/{id}</a></li>
+	</section>
+
+	<section id="rtcadceptodos">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/cliente/endereco/pesquisa/todos/{idr}</h2>
+		</header>
+		<p>Metodo para pesquisar todos os registros, sem necessidade de passar paramêtros</p>
+	</section>
+
+	<section id="rtcadcepid">
+		<header>
+			<h2 class="fonte-texto-titulo">/api/cliente/endereco/pesquisa/{idr}/{id}</h2>
+		</header>
+		<p>Metodo para pesquisar o registro, passando o paramêtro</p>
+		<p>primitive.ObjectIDFromHex - <b>ObjectID</b></p>		
+	</section>
+
+</section>
+
+							</div>
+						</div>
+					</div>
+				</section>
+
+		{{ .Rodape }}		
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="/public/assets/js/jquery.min.js"></script>
+	<script src="/public/assets/js/browser.min.js"></script>
+	<script src="/public/assets/js/breakpoints.min.js"></script>
+	<script src="/public/assets/js/util.js"></script>
+	<script src="/public/assets/js/main.js"></script>
+</form>
+	</body>
+</html>
