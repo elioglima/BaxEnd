@@ -6,9 +6,15 @@ import (
 )
 
 type sRetorno struct {
-	Erro  error
+	Erro  bool
 	Msg   string
 	Dados interface{}
+}
+
+func (s *sRetorno) Ini() {
+	s.Erro = false
+	s.Msg = "Aguardando.."
+	s.Dados = nil
 }
 
 func responseReturn(w http.ResponseWriter, Retorno sRetorno) error {

@@ -1,6 +1,7 @@
 package global
 
 import (
+	"BaxEnd/Controller/database"
 	"os"
 )
 
@@ -12,7 +13,7 @@ const (
 )
 
 func DBConnect() error {
-
+	database.Iniciar()
 	// err := database.DBConnect()
 	// if err == nil {
 	// 	logger.Atencao("Mongo online")

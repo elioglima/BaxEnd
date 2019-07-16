@@ -21,7 +21,7 @@ func NewConexao() *ConexaoST {
 	s.ParamsConexao.SENHA = "AB@102030"
 	s.dbConexao = GoMysql.NewConexao(s.ParamsConexao)
 
-	s.Usuario = usuarios.NewUsuarioST()
+	s.Usuario = usuarios.NewUsuarioST(s.dbConexao)
 	return s
 }
 

@@ -13,7 +13,7 @@ func Apagar(w http.ResponseWriter, r *http.Request) {
 	id := params["id"]
 	msg, err := database.MySql.Usuario.Apagar(id)
 	if err != nil {
-		Retorno.Erro = err
+		Retorno.Erro = false
 		Retorno.Msg = msg
 		responseReturn(w, Retorno)
 		return
