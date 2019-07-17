@@ -22,9 +22,9 @@ type UsuarioDadosInST struct {
 	Nome            *string
 	Doc1            *string
 	Doc2            *string
-	TipoPessoa_ID   *int
+	TipoPessoa_ID   *int64
 	TipoPessoa_Desc *string
-	Categoria_ID    *int
+	Categoria_ID    *int64
 	Categoria_Desc  *string
 	dbConexao       *GoMysql.ConexaoST
 	SQLResult       sql.Result

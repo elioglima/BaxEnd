@@ -1,6 +1,7 @@
 package dbmysql
 
 import (
+	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
 	"BaxEnd/Controller/database/dbmysql/usuarios"
 	"GoLibs/logs"
 	"GoMysql"
@@ -9,6 +10,7 @@ import (
 type ConexaoST struct {
 	ParamsConexao GoMysql.ParamsConexaoST
 	dbConexao     *GoMysql.ConexaoST
+	TipoPessoa    tipo_pessoa.TipoPessoaST
 	Usuario       *usuarios.UsuarioST
 }
 

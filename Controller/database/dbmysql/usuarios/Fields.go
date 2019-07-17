@@ -32,9 +32,9 @@ func (s *UsuarioST) MarshalResultToField(Results []map[string]interface{}) error
 	s.Field.Nome = GoMysql.FirstValueToStr(Results, "Nome")
 	s.Field.Doc1 = GoMysql.FirstValueToStr(Results, "Doc1")
 	s.Field.Doc2 = GoMysql.FirstValueToStr(Results, "Doc2")
-	s.Field.TipoPessoa_ID = GoMysql.FirstValueToInt(Results, "TipoPessoa_ID")
+	s.Field.TipoPessoa_ID = GoMysql.FirstValueToInt64(Results, "TipoPessoa_ID")
 	s.Field.TipoPessoa_Desc = GoMysql.FirstValueToStr(Results, "TipoPessoa_Desc")
-	s.Field.Categoria_ID = GoMysql.FirstValueToInt(Results, "Categoria_ID")
+	s.Field.Categoria_ID = GoMysql.FirstValueToInt64(Results, "Categoria_ID")
 	s.Field.Categoria_Desc = GoMysql.FirstValueToStr(Results, "Categoria_Desc")
 	return nil
 }
@@ -51,9 +51,9 @@ func (s *UsuarioST) MarshalResultToFields(Results []map[string]interface{}) erro
 		FieldTemp.Nome = GoMysql.GetValueToStr(Result, "Nome")
 		FieldTemp.Doc1 = GoMysql.GetValueToStr(Result, "Doc1")
 		FieldTemp.Doc2 = GoMysql.GetValueToStr(Result, "Doc2")
-		FieldTemp.TipoPessoa_ID = GoMysql.GetValueToInt(Result, "TipoPessoa_ID")
+		FieldTemp.TipoPessoa_ID = GoMysql.GetValueToInt64(Result, "TipoPessoa_ID")
 		FieldTemp.TipoPessoa_Desc = GoMysql.GetValueToStr(Result, "TipoPessoa_Desc")
-		FieldTemp.Categoria_ID = GoMysql.GetValueToInt(Result, "Categoria_ID")
+		FieldTemp.Categoria_ID = GoMysql.GetValueToInt64(Result, "Categoria_ID")
 		FieldTemp.Categoria_Desc = GoMysql.GetValueToStr(Result, "Categoria_Desc")
 		s.Fields = append(s.Fields, FieldTemp)
 	}

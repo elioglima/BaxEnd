@@ -18,9 +18,9 @@ type UsuarioDadosST struct {
 	Nome            string    `db_notnull:"true"`
 	Doc1            string    `db_comm:"CNPJ ou CPF"`
 	Doc2            string    `db_comm:"IE ou RG"`
-	TipoPessoa_ID   int       `db_comm:"Tipo de pessoa ID - 0 Fisica, 1 juridica" db_default:"0"`
+	TipoPessoa_ID   int64     `db_comm:"Tipo de pessoa ID - 0 Fisica, 1 juridica" db_default:"0"`
 	TipoPessoa_Desc string    `db_comm:"Tipo de pessoa ID - 0 Fisica, 1 juridica" db_default:"Pessoa Física"`
-	Categoria_ID    int       `db_comm:"Código da Categoria" db_default:"0"`
+	Categoria_ID    int64     `db_comm:"Código da Categoria" db_default:"0"`
 	Categoria_Desc  string    `db_comm:"Descrição da Categoria" db_default:"Definir"`
 }
 
