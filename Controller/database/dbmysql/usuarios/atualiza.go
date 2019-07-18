@@ -144,6 +144,14 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					return err.Error(), err
 				}
 				dados.Doc1 = &DocFormatado
+			} else {
+				if len(strings.TrimSpace(s.Field.Doc1)) > 0 {
+					if err := GoLibs.IsCPF(s.Field.Doc1); err != nil { // verificação de cpf
+						smsg := "O CPF cadastrado não é válido. " + s.Field.Doc1
+						err := errors.New(smsg)
+						return err.Error(), err
+					}
+				}
 			}
 
 		} else if *dados.TipoPessoa_ID == 1 {
@@ -161,7 +169,20 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					return err.Error(), err
 				}
 				dados.Doc1 = &DocFormatado
+			} else {
+				if len(strings.TrimSpace(s.Field.Doc1)) > 0 {
+					if err := GoLibs.IsCNPJ(s.Field.Doc1); err != nil { // verificação de cpf
+						smsg := "O documento " + s.Field.Doc1 + " cadastrado não é válido, "
 
+						if err := GoLibs.IsCPF(s.Field.Doc1); err == nil { // verificação de cpf
+							smsg += "deveria ser um CNPJ pois é um CPF."
+							smsg += "Informe um CNPJ na transação."
+						}
+
+						err := errors.New(smsg)
+						return err.Error(), err
+					}
+				}
 			}
 		}
 	}
