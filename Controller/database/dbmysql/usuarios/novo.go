@@ -93,7 +93,7 @@ func (s *UsuarioST) NovoUnico(ArrayByteIn []byte) (string, error) {
 	}
 
 	if s.RecordCount > 0 {
-		return "Email " + *dados.Email + " ja consta na base de dados.", nil
+		return "Email " + *dados.Email + " já consta na cadastrado na base de dados.", nil
 	}
 
 	Results, err := dados.Inserir()

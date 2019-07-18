@@ -1,8 +1,6 @@
 package usuarios
 
-import (
-	"GoMysql"
-)
+import "GoMysql"
 
 func (s *UsuarioST) MarshalResult(Results []map[string]interface{}) error {
 	s.Field = UsuarioDadosST{}

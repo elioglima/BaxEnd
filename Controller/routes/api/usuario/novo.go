@@ -29,7 +29,7 @@ func NovoUnico(w http.ResponseWriter, r *http.Request) {
 
 	} else if len(ArrayByteIn) == 0 {
 		Retorno.Erro = true
-		Retorno.Msg = "Erro ao receber parametros"
+		Retorno.Msg = "Nenhum paramêtros informado."
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return

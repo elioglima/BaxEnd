@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+
 	logger.DebugErro = true
 	logger.DebugSucesso = true
 	// logger.DebugOrigem = true

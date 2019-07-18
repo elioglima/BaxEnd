@@ -90,9 +90,16 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					err := errors.New(smsg)
 					return err.Error(), err
 				}
+
+				DocFormatado, err := GoLibs.ImprimeCPF(*dados.Doc1)
+				if err != nil {
+					return err.Error(), err
+				}
+				dados.Doc1 = &DocFormatado
+
 			}
 
-		} else if s.Field.TipoPessoa_ID == 0 {
+		} else if s.Field.TipoPessoa_ID == 1 {
 			// cadastro de pessoa juridica
 
 			if dados.Doc1 != nil {
@@ -102,6 +109,12 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					err := errors.New(smsg)
 					return err.Error(), err
 				}
+
+				DocFormatado, err := GoLibs.ImprimeCNPJ(*dados.Doc1)
+				if err != nil {
+					return err.Error(), err
+				}
+				dados.Doc1 = &DocFormatado
 			}
 		}
 
@@ -120,24 +133,35 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 			// cadastro de pessoa fisica
 
 			if dados.Doc1 != nil {
-				if err := GoLibs.IsCPF(*dados.Doc1); err != nil {
-					// verificação de cpf
+				if err := GoLibs.IsCPF(*dados.Doc1); err != nil { // verificação de cpf
 					smsg := "O CPF informado não é válido."
 					err := errors.New(smsg)
 					return err.Error(), err
 				}
+
+				DocFormatado, err := GoLibs.ImprimeCPF(*dados.Doc1)
+				if err != nil {
+					return err.Error(), err
+				}
+				dados.Doc1 = &DocFormatado
 			}
 
-		} else if *dados.TipoPessoa_ID == 0 {
+		} else if *dados.TipoPessoa_ID == 1 {
 			// cadastro de pessoa juridica
 
 			if dados.Doc1 != nil {
-				if err := GoLibs.IsCPF(*dados.Doc1); err != nil {
-					// verificação de cnpj
+				if err := GoLibs.IsCNPJ(*dados.Doc1); err != nil { // verificação de cnpj
 					smsg := "O CNPJ informado não é válido."
 					err := errors.New(smsg)
 					return err.Error(), err
 				}
+
+				DocFormatado, err := GoLibs.ImprimeCNPJ(*dados.Doc1)
+				if err != nil {
+					return err.Error(), err
+				}
+				dados.Doc1 = &DocFormatado
+
 			}
 		}
 	}
@@ -153,6 +177,7 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 				return err.Error(), err
 			}
 		}
+
 	}
 
 	return "", nil
