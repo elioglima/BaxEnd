@@ -15,17 +15,17 @@ import (
 ** ********************************************************************** */
 
 type UsuarioDadosInST struct {
-	Id              *int64
-	DataCadastro    time.Time
-	Email           *string
-	Nome            *string
-	Doc1            *string
-	Doc2            *string
-	TipoPessoa_ID   *int64
-	TipoPessoa_Desc *string
-	Categoria_ID    *int64
-	Categoria_Desc  *string
-	dbConexao       *GoMysql.ConexaoST
+	Id              *int64             // chave não alteravel
+	Email           *string            // chave não alteravel
+	DataCadastro    time.Time          // campo automatico
+	Nome            *string            // nome compledo do usuario
+	Doc1            *string            // 0 CPF ou 1 CNPJ
+	Doc2            *string            // 0 RG ou 1 IE
+	TipoPessoa_ID   *int64             // campo de tabela statica
+	TipoPessoa_Desc *string            // campo colhe dados automatico
+	Categoria_ID    *int64             // campo de tabela statica
+	Categoria_Desc  *string            // campo colhe dados automatico
+	dbConexao       *GoMysql.ConexaoST // classe de conexão, instanciada no inicio da aplicação
 	SQLResult       sql.Result
 }
 
@@ -83,8 +83,19 @@ func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 		numUp++
 	}
 
+	if s.Doc1 != nil {
+		s.dbConexao.SQL.Add("Doc1", *s.Doc1)
+		numUp++
+	}
+
 	if s.Doc2 != nil {
 		s.dbConexao.SQL.Add("Doc2", *s.Doc2)
+		numUp++
+	}
+
+	if s.TipoPessoa_ID != nil {
+		s.dbConexao.SQL.Add("TipoPessoa_ID", *s.TipoPessoa_ID)
+		s.dbConexao.SQL.Add("TipoPessoa_Desc", *s.TipoPessoa_Desc)
 		numUp++
 	}
 

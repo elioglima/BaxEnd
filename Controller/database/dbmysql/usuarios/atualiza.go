@@ -1,5 +1,15 @@
 package usuarios
 
+/*
+	19/07/2019 16:34
+
+	obs:
+		* atualização de email e senha será efetuado
+		  por uma rota especifica por questões de
+		  segurança.
+
+*/
+
 import (
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
 	"GoLibs"
@@ -8,12 +18,6 @@ import (
 	"errors"
 	"strings"
 )
-
-type StUsersAlteraUnicoIn struct {
-	ID    string  `bson:"id" json:"id"`
-	Nome  *string `bson:"nome" json:"nome"`
-	Email *string `bson:"email" json:"email"`
-}
 
 func (s *UsuarioST) AlteraUnico(ArrayByteIn []byte) (string, error) {
 
@@ -91,11 +95,11 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					return err.Error(), err
 				}
 
-				DocFormatado, err := GoLibs.ImprimeCPF(*dados.Doc1)
+				Doc1SoNumeros, err := GoLibs.SoNumeros(*dados.Doc1)
 				if err != nil {
 					return err.Error(), err
 				}
-				dados.Doc1 = &DocFormatado
+				dados.Doc1 = &Doc1SoNumeros
 
 			}
 
@@ -103,18 +107,18 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 			// cadastro de pessoa juridica
 
 			if dados.Doc1 != nil {
-				if err := GoLibs.IsCPF(*dados.Doc1); err != nil {
+				if err := GoLibs.IsCNPJ(*dados.Doc1); err != nil {
 					// verificação de cnpj
 					smsg := "O CNPJ informado não é válido."
 					err := errors.New(smsg)
 					return err.Error(), err
 				}
 
-				DocFormatado, err := GoLibs.ImprimeCNPJ(*dados.Doc1)
+				Doc1SoNumeros, err := GoLibs.SoNumeros(*dados.Doc1)
 				if err != nil {
 					return err.Error(), err
 				}
-				dados.Doc1 = &DocFormatado
+				dados.Doc1 = &Doc1SoNumeros
 			}
 		}
 
@@ -128,8 +132,11 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 			return err.Error(), err
 		}
 
+		dados.TipoPessoa_Desc = &TipoPessoa.Field.Descricao
+
 		// o tipo da pessoa tenha sido informada como parametro
 		if *dados.TipoPessoa_ID == 0 {
+
 			// cadastro de pessoa fisica
 
 			if dados.Doc1 != nil {
@@ -139,11 +146,13 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					return err.Error(), err
 				}
 
-				DocFormatado, err := GoLibs.ImprimeCPF(*dados.Doc1)
+				Doc1SoNumeros, err := GoLibs.SoNumeros(*dados.Doc1)
 				if err != nil {
 					return err.Error(), err
 				}
-				dados.Doc1 = &DocFormatado
+
+				dados.Doc1 = &Doc1SoNumeros
+
 			} else {
 				if len(strings.TrimSpace(s.Field.Doc1)) > 0 {
 					if err := GoLibs.IsCPF(s.Field.Doc1); err != nil { // verificação de cpf
@@ -155,8 +164,8 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 			}
 
 		} else if *dados.TipoPessoa_ID == 1 {
-			// cadastro de pessoa juridica
 
+			// cadastro de pessoa juridica
 			if dados.Doc1 != nil {
 				if err := GoLibs.IsCNPJ(*dados.Doc1); err != nil { // verificação de cnpj
 					smsg := "O CNPJ informado não é válido."
@@ -164,11 +173,13 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 					return err.Error(), err
 				}
 
-				DocFormatado, err := GoLibs.ImprimeCNPJ(*dados.Doc1)
+				Doc1SoNumeros, err := GoLibs.SoNumeros(*dados.Doc1)
 				if err != nil {
 					return err.Error(), err
 				}
-				dados.Doc1 = &DocFormatado
+
+				dados.Doc1 = &Doc1SoNumeros
+
 			} else {
 				if len(strings.TrimSpace(s.Field.Doc1)) > 0 {
 					if err := GoLibs.IsCNPJ(s.Field.Doc1); err != nil { // verificação de cpf
@@ -188,14 +199,33 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 	}
 
 	if dados.Doc2 != nil {
+
+		// verificação do documento doc2 caso tenha sido informado
+
 		if len(strings.TrimSpace(*dados.Doc2)) == 0 {
 			dados.Doc2 = nil
 
 		} else {
-			if smsg, err := GoLibs.SoNumeros(*dados.Doc2); err != nil {
-				smsg := "Erro ao retirar letras do Doc2 [" + smsg + "]"
+
+			// retira os numeros caso exista
+			doc2, err := GoLibs.SoNumeros(*dados.Doc2)
+			if err != nil {
+				smsg := "Erro ao retirar letras do Doc2 [" + doc2 + "]"
 				err := errors.New(smsg)
 				return err.Error(), err
+			}
+
+			dados.Doc2 = &doc2
+		}
+
+	} else {
+
+		// caso o documento esteja preenchido e contenha caracteres
+		// retira e deixa apenas numeros
+		if err := GoLibs.StrJustNumber(s.Field.Doc2); err != nil {
+			doc2, err := GoLibs.SoNumeros(s.Field.Doc2)
+			if err == nil {
+				dados.Doc2 = &doc2
 			}
 		}
 
