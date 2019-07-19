@@ -78,13 +78,6 @@ func (s *UsuarioST) NovoUnico(ArrayByteIn []byte) (string, error) {
 		return err.Error(), err
 	}
 
-	if dados.Senha == nil {
-		smsg := "O senha não foi informado."
-		err := errors.New(smsg)
-		return err.Error(), err
-
-	}
-
 	if err := s.PesquisaEmail(*dados.Email); err != nil {
 		logs.Erro(err)
 		smsg := "Erro ao pesquisar o email se existe:" + *dados.Email

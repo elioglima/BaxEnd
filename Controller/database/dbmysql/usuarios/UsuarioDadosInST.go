@@ -18,7 +18,6 @@ type UsuarioDadosInST struct {
 	Id              *int64
 	DataCadastro    time.Time
 	Email           *string
-	Senha           *string
 	Nome            *string
 	Doc1            *string
 	Doc2            *string
@@ -43,10 +42,6 @@ func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 
 	if s.Email != nil {
 		s.dbConexao.SQL.Add("Email", *s.Email)
-	}
-
-	if s.Senha != nil {
-		s.dbConexao.SQL.Add("Senha", *s.Senha)
 	}
 
 	if s.Nome != nil {
