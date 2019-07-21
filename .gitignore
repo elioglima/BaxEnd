@@ -5,7 +5,7 @@ XpressAPI
 *.dll
 *.so
 *.dylib
-./configs/
+configs/**/*
 
 # Test binary, build with `go test -c`
 *.test
