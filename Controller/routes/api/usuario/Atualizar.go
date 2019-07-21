@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func AlteraUnico(w http.ResponseWriter, r *http.Request) {
+func Atualizar(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
 	Retorno.Ini()
@@ -56,7 +56,7 @@ func AlteraUnico(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg, err := database.MySql.Usuario.AlteraUnico(ArrayByteIn)
+	msg, err := database.MySql.Usuario.Atualizar(ArrayByteIn)
 	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()

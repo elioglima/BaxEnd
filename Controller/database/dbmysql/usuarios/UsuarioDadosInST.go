@@ -1,6 +1,7 @@
 package usuarios
 
 import (
+	"GoLibs"
 	"GoMysql"
 	"database/sql"
 	"errors"
@@ -36,34 +37,51 @@ func NewUsuarioDadosInST(dbConexao *GoMysql.ConexaoST) *UsuarioDadosInST {
 }
 
 func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
+
+	numUp := 0
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Insert("usuario")
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 
 	if s.Email != nil {
+		numUp++
 		s.dbConexao.SQL.Add("Email", *s.Email)
+		hash, err := GoLibs.HashEncode(*s.Email + *s.Nome)
+		if err != nil {
+			return nil, errors.New("Erro ao gerar hash para senha temporaria, " + err.Error())
+		}
+		s.dbConexao.SQL.Add("Senha", hash)
 	}
 
 	if s.Nome != nil {
+		numUp++
 		s.dbConexao.SQL.Add("Nome", *s.Nome)
 	}
 
 	if s.Doc1 != nil {
+		numUp++
 		s.dbConexao.SQL.Add("Doc1", *s.Doc1)
 	}
 
 	if s.Doc2 != nil {
+		numUp++
 		s.dbConexao.SQL.Add("Doc2", *s.Doc2)
 	}
 
 	if s.TipoPessoa_ID != nil {
+		numUp++
 		s.dbConexao.SQL.Add("TipoPessoa_ID", *s.TipoPessoa_ID)
+		s.dbConexao.SQL.Add("TipoPessoa_Desc", *s.TipoPessoa_Desc)
 	}
+
 	if s.Categoria_ID != nil {
+		numUp++
 		s.dbConexao.SQL.Add("Categoria_ID", *s.Categoria_ID)
-	}
-	if s.Categoria_Desc != nil {
 		s.dbConexao.SQL.Add("Categoria_Desc", *s.Categoria_Desc)
+	}
+
+	if numUp == 0 {
+		return nil, errors.New("Nenhum campo informado para atualização")
 	}
 
 	return s.dbConexao.SQL.Execute()
@@ -72,7 +90,6 @@ func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 
 	numUp := 0
-
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Update("usuario")
 	s.dbConexao.SQL.Where("id=" + fmt.Sprintf("%v", *s.Id))
@@ -97,6 +114,12 @@ func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 		s.dbConexao.SQL.Add("TipoPessoa_ID", *s.TipoPessoa_ID)
 		s.dbConexao.SQL.Add("TipoPessoa_Desc", *s.TipoPessoa_Desc)
 		numUp++
+	}
+
+	if s.Categoria_ID != nil {
+		numUp++
+		s.dbConexao.SQL.Add("Categoria_ID", *s.Categoria_ID)
+		s.dbConexao.SQL.Add("Categoria_Desc", *s.Categoria_Desc)
 	}
 
 	if numUp == 0 {

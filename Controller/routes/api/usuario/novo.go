@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func NovoUnico(w http.ResponseWriter, r *http.Request) {
+func Novo(w http.ResponseWriter, r *http.Request) {
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -35,7 +35,7 @@ func NovoUnico(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg, err := database.MySql.Usuario.NovoUnico(ArrayByteIn)
+	msg, err := database.MySql.Usuario.Novo(ArrayByteIn)
 	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()

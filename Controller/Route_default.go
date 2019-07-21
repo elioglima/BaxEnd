@@ -28,8 +28,10 @@ func SetRoutesViews(routes *mux.Router) {
 
 func SetRoutesUsuario(routes *mux.Router) {
 	routes.HandleFunc("/api/usuarios/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
-	routes.HandleFunc("/api/usuarios/novo/unico/", use(usuario.NovoUnico, basicAuth))
-	routes.HandleFunc("/api/usuario/alterar/unico/{id}", use(usuario.AlteraUnico, basicAuth))
+	routes.HandleFunc("/api/usuarios/novo/", use(usuario.Novo, basicAuth))
+	routes.HandleFunc("/api/usuario/atualizar/{id}", use(usuario.Atualizar, basicAuth))
+	routes.HandleFunc("/api/usuario/hashativacao/{email}/{documento}", use(usuario.HashAtivacao, basicAuth))
+
 	routes.HandleFunc("/api/usuario/apagar/{id}", use(usuario.Apagar, basicAuth))
 	routes.HandleFunc("/api/usuario/pesquisa/codigo/{id}", use(usuario.PesquisaCodigo, basicAuth))
 	routes.HandleFunc("/api/usuario/pesquisa/nome/{value}", use(usuario.PesquisaNome, basicAuth))

@@ -19,7 +19,7 @@ import (
 	"strings"
 )
 
-func (s *UsuarioST) AlteraUnico(ArrayByteIn []byte) (string, error) {
+func (s *UsuarioST) Atualizar(ArrayByteIn []byte) (string, error) {
 
 	dados := NewUsuarioDadosInST(s.dbConexao)
 
