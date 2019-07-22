@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func HashAtivacao(w http.ResponseWriter, r *http.Request) {
+func ColherHash(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
 	Retorno.Ini()
@@ -30,6 +30,6 @@ func HashAtivacao(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Retorno.Msg = "Consulta efetuada com sucesso."
-	Retorno.Dados = RetornoST{Hash}
+	Retorno.Dados = Hash
 	responseReturn(w, Retorno)
 }

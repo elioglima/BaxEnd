@@ -47,6 +47,7 @@ func (s *UsuarioST) Atualizar(ArrayByteIn []byte) (string, error) {
 		return err.Error(), err
 	}
 
+	s.Response = nil
 	smsg := "Usuario atualizado com sucesso."
 	return smsg, nil
 }

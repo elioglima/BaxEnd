@@ -66,6 +66,6 @@ func Atualizar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Retorno.Msg = msg
-	Retorno.Dados = database.MySql.Usuario.Field
+	Retorno.Dados = database.MySql.Usuario.Response
 	responseReturn(w, Retorno)
 }

@@ -162,7 +162,7 @@ func (s *UsuarioST) PesquisaEmailHash(email_in, documento_in string) (string, er
 
 	s.RecordCount = RecordCount
 	if s.RecordCount == 0 {
-		return "", nil
+		return "", errors.New("Usuário não foi localizado.")
 	}
 
 	if s.Field.Ativado == 1 {

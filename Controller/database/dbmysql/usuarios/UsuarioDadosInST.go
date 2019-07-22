@@ -17,8 +17,8 @@ import (
 
 type UsuarioDadosInST struct {
 	Id              *int64             // chave não alteravel
-	Email           *string            // chave não alteravel
 	DataCadastro    time.Time          // campo automatico
+	Email           *string            // chave não alteravel
 	Nome            *string            // nome compledo do usuario
 	Doc1            *string            // 0 CPF ou 1 CNPJ
 	Doc2            *string            // 0 RG ou 1 IE

@@ -29,6 +29,7 @@ type UsuarioST struct {
 	dbConexao   *GoMysql.ConexaoST
 	Fields      []UsuarioDadosST
 	Field       UsuarioDadosST
+	Response    interface{}
 	RecordCount int
 }
 
