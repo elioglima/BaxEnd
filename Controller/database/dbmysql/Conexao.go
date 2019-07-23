@@ -15,6 +15,7 @@ import (
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
 	"GoLibs/logs"
 	"GoMysql"
+	"os"
 )
 
 type ConexaoST struct {
@@ -107,19 +108,32 @@ func (s *ConexaoST) CriaEstrutura() error {
 	*/
 
 	// criação de tabelas caso não exista
-	Empresa := Empresas.NewEmpresaDadosST()
-	if err := s.dbConexao.CreateTable(Empresa); err != nil {
+	var Objeto interface{}
+
+	Objeto = Empresas.NewEmpresaDadosST()
+	if err := s.dbConexao.CreateTable(Objeto); err != nil {
 		logs.Erro(err)
 		return err
 	}
 
-	Usuario := Usuarios.NewUsuarioDadosST()
-	if err := s.dbConexao.CreateTable(Usuario); err != nil {
+	Objeto = Usuarios.NewUsuarioDadosST()
+	if err := s.dbConexao.CreateTable(Objeto); err != nil {
 		logs.Erro(err)
 		return err
 	}
 
 	// importação de dados iniciais para teste
+	Empresa := Empresas.NewEmpresaST(s.dbConexao)
+	if err := Empresa.Demo(); err != nil {
+		logs.Erro(err)
+		os.Exit(0)
+	}
+
+	Usuario := Usuarios.NewUsuarioST(s.dbConexao)
+	if err := Usuario.Demo(); err != nil {
+		logs.Erro(err)
+		os.Exit(0)
+	}
 
 	return nil
 }
