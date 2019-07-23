@@ -111,10 +111,10 @@ func (s *ConexaoST) CriaEstrutura() error {
 	var Objeto interface{}
 
 	Objeto = Empresas.NewEmpresaDadosST()
-	if err := s.dbConexao.DropTable(Objeto); err != nil {
-		logs.Erro(err)
-		return err
-	}
+	// if err := s.dbConexao.DropTable(Objeto); err != nil {
+	// 	logs.Erro(err)
+	// 	return err
+	// }
 
 	if err := s.dbConexao.CreateTable(Objeto); err != nil {
 		logs.Erro(err)
@@ -122,10 +122,10 @@ func (s *ConexaoST) CriaEstrutura() error {
 	}
 
 	Objeto = Usuarios.NewUsuarioDadosST()
-	if err := s.dbConexao.DropTable(Objeto); err != nil {
-		logs.Erro(err)
-		return err
-	}
+	// if err := s.dbConexao.DropTable(Objeto); err != nil {
+	// 	logs.Erro(err)
+	// 	return err
+	// }
 
 	if err := s.dbConexao.CreateTable(Objeto); err != nil {
 		logs.Erro(err)
@@ -134,13 +134,13 @@ func (s *ConexaoST) CriaEstrutura() error {
 
 	// importação de dados iniciais para teste
 	Empresa := Empresas.NewEmpresaST(s.dbConexao)
-	if err := Empresa.Demo(); err != nil {
+	if err := Empresa.Root(); err != nil {
 		logs.Erro(err)
 		os.Exit(0)
 	}
 
 	Usuario := Usuarios.NewUsuarioST(s.dbConexao)
-	if err := Usuario.Demo(); err != nil {
+	if err := Usuario.Root(); err != nil {
 		logs.Erro(err)
 		os.Exit(0)
 	}
