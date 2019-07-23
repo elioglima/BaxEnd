@@ -1,4 +1,4 @@
-package usuarios
+package Usuarios
 
 import (
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
@@ -97,23 +97,23 @@ func (s *UsuarioST) ValidacaoNovo(dados *UsuarioDadosInST) (string, error) {
 		return err.Error(), nil
 	}
 
-	if dados.TipoPessoa_ID == nil {
-		smsg := "O tipo de pessoa não foi informado. [tipopessoa_id]"
+	if dados.TipoPessoaID == nil {
+		smsg := "O tipo de pessoa não foi informado. [tipopessoaid]"
 		err := errors.New(smsg)
 		return err.Error(), err
 	}
 
 	// verificar a existencia do registro de tipo de pessoa
 	TipoPessoa := tipo_pessoa.New()
-	if err := TipoPessoa.PesquisaID(*dados.TipoPessoa_ID); err != nil {
+	if err := TipoPessoa.PesquisaID(*dados.TipoPessoaID); err != nil {
 		smsg := "O tipo de pessoa informado não é válido."
 		err := errors.New(smsg)
 		return err.Error(), err
 	}
 
-	dados.TipoPessoa_Desc = &TipoPessoa.Field.Descricao
+	dados.TipoPessoaDesc = &TipoPessoa.Field.Descricao
 
-	if *dados.TipoPessoa_ID == 0 { // o tipo da pessoa tenha sido informada como parametro
+	if *dados.TipoPessoaID == 0 { // o tipo da pessoa tenha sido informada como parametro
 
 		if dados.Doc1 == nil {
 			smsg := "CPF não informado. [doc1]"
@@ -136,7 +136,7 @@ func (s *UsuarioST) ValidacaoNovo(dados *UsuarioDadosInST) (string, error) {
 			dados.Doc1 = &Doc1SoNumeros
 		}
 
-	} else if *dados.TipoPessoa_ID == 1 {
+	} else if *dados.TipoPessoaID == 1 {
 
 		// cadastro de pessoa juridica
 		if dados.Doc1 == nil {

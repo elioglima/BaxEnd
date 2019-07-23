@@ -1,4 +1,4 @@
-package usuarios
+package Usuarios
 
 /*
 	19/07/2019 16:34
@@ -11,6 +11,7 @@ package usuarios
 */
 
 import (
+	"BaxEnd/Controller/MsgsTexto"
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
 	"GoLibs"
 	"GoLibs/logs"
@@ -78,14 +79,20 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 		}
 	}
 
-	if dados.TipoPessoa_ID == nil {
+	if s.Field.Ativado == false {
+		smsg := MsgsTexto.MsgContaNaoAtivada()
+		err := errors.New(smsg)
+		return err.Error(), err
+	}
+
+	if dados.TipoPessoaID == nil {
 
 		// quendo o tipo de pessoa nao for informado
 		// verificar o tipo de pessoa do banco de dados
 		// para efetuar as validações do documento passado
 		// se for o caso
 
-		if s.Field.TipoPessoa_ID == 0 {
+		if s.Field.TipoPessoaID == 0 {
 			// cadastro de pessoa fisica
 
 			if dados.Doc1 != nil {
@@ -104,7 +111,7 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 
 			}
 
-		} else if s.Field.TipoPessoa_ID == 1 {
+		} else if s.Field.TipoPessoaID == 1 {
 			// cadastro de pessoa juridica
 
 			if dados.Doc1 != nil {
@@ -123,20 +130,20 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 			}
 		}
 
-	} else if dados.TipoPessoa_ID != nil {
+	} else if dados.TipoPessoaID != nil {
 
 		// verificar a existencia do registro de tipo de pessoa
 		TipoPessoa := tipo_pessoa.New()
-		if err := TipoPessoa.PesquisaID(*dados.TipoPessoa_ID); err != nil {
+		if err := TipoPessoa.PesquisaID(*dados.TipoPessoaID); err != nil {
 			smsg := "O tipo de pessoa informado não é válido."
 			err := errors.New(smsg)
 			return err.Error(), err
 		}
 
-		dados.TipoPessoa_Desc = &TipoPessoa.Field.Descricao
+		dados.TipoPessoaDesc = &TipoPessoa.Field.Descricao
 
 		// o tipo da pessoa tenha sido informada como parametro
-		if *dados.TipoPessoa_ID == 0 {
+		if *dados.TipoPessoaID == 0 {
 
 			// cadastro de pessoa fisica
 
@@ -164,7 +171,7 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 				}
 			}
 
-		} else if *dados.TipoPessoa_ID == 1 {
+		} else if *dados.TipoPessoaID == 1 {
 
 			// cadastro de pessoa juridica
 			if dados.Doc1 != nil {

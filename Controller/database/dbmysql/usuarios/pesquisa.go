@@ -1,4 +1,4 @@
-package usuarios
+package Usuarios
 
 import (
 	"GoLibs"
@@ -127,51 +127,35 @@ func (s *UsuarioST) PesquisaTodos() error {
 	return nil
 }
 
-func (s *UsuarioST) PesquisaEmailHash(email_in, documento_in string) (string, error) {
+func (s *UsuarioST) PesquisaWhere(WhereIn string) error {
 
-	if len(strings.TrimSpace(email_in)) == 0 {
-		return "", errors.New("Email não informado.")
+	if len(strings.TrimSpace(WhereIn)) == 0 {
+		return errors.New("Paramêtros de pesquisa não localizado.")
 
-	} else if len(strings.TrimSpace(documento_in)) == 0 {
-		return "", errors.New("Documento não informado.")
-	}
-
-	DocSoNumero, err := GoLibs.SoNumeros(documento_in)
-	if err != nil {
-		return "", errors.New("Documento informado inválido:" + err.Error())
 	}
 
 	if err := s.dbConexao.CheckConnect(); err != nil {
-		return "", errors.New("Banco de dados não conectado.")
+		return errors.New("Banco de dados não conectado.")
 	}
 
 	s.RecordCount = 0
 
-	sSQL := " select ativado, senha from usuario "
-	sSQL += " where email = " + GoLibs.Asp(email_in)
-	sSQL += " and doc1 = " + GoLibs.Asp(DocSoNumero)
+	sSQL := " select * from usuario "
+	sSQL += WhereIn
 	sSQL += " limit 0,1"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
-		return "", err
+		return err
 	}
 
 	if err := s.MarshalResult(Results); err != nil {
-		return "", err
+		return err
 	}
 
 	s.RecordCount = RecordCount
 	if s.RecordCount == 0 {
-		return "", errors.New("Usuário não foi localizado.")
+		return errors.New("Usuário não foi localizado.")
 	}
 
-	if s.Field.Ativado == 1 {
-		return "", errors.New("Conta de usuário já ativada.")
-	}
-
-	if len(strings.TrimSpace(s.Field.Senha)) == 0 {
-		return "", errors.New("Hash não definido, erro no servidor.")
-	}
-
-	return s.Field.Senha, nil
+	return nil
 }

@@ -1,8 +1,8 @@
 package dbmysql
 
 import (
+	"BaxEnd/Controller/database/dbmysql/Usuarios"
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
-	"BaxEnd/Controller/database/dbmysql/usuarios"
 	"GoLibs/logs"
 	"GoMysql"
 )
@@ -11,7 +11,7 @@ type ConexaoST struct {
 	ParamsConexao GoMysql.ParamsConexaoST
 	dbConexao     *GoMysql.ConexaoST
 	TipoPessoa    tipo_pessoa.TipoPessoaST
-	Usuario       *usuarios.UsuarioST
+	Usuario       *Usuarios.UsuarioST
 }
 
 func NewConexao() *ConexaoST {
@@ -23,7 +23,7 @@ func NewConexao() *ConexaoST {
 	s.ParamsConexao.SENHA = "AB@102030"
 	s.dbConexao = GoMysql.NewConexao(s.ParamsConexao)
 
-	s.Usuario = usuarios.NewUsuarioST(s.dbConexao)
+	s.Usuario = Usuarios.NewUsuarioST(s.dbConexao)
 	return s
 }
 
@@ -75,7 +75,7 @@ func (s *ConexaoST) RepararBanco() error {
 		}
 	}
 
-	Usuario := usuarios.NewUsuarioDadosST()
+	Usuario := Usuarios.NewUsuarioDadosST()
 	if err := s.dbConexao.CreateTable(Usuario); err != nil {
 		logs.Erro(err)
 		return err
