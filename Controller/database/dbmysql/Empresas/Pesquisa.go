@@ -1,14 +1,13 @@
-package Usuarios
+package Empresas
 
 import (
 	"GoLibs"
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-func (s *UsuarioST) PesquisaCodigo(ID int64) error {
+func (s *EmpresaST) PesquisaCodigo(ID int64) error {
 
 	if ID == 0 {
 		return nil
@@ -20,16 +19,11 @@ func (s *UsuarioST) PesquisaCodigo(ID int64) error {
 
 	s.RecordCount = 0
 
-	sSQL := " select * from usuario "
-	sSQL += " where EmpresaID = " + strconv.FormatInt(s.Empresa.Field.Id, 10)
-	sSQL += " and id = " + fmt.Sprintf("%v", ID)
+	sSQL := " select * from " + ConsNomeTabela
+	sSQL += " where id = " + strconv.FormatInt(ID, 10)
 	sSQL += " limit 0,1"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
-		return err
-	}
-
-	if err := s.MarshalResult(Results); err != nil {
 		return err
 	}
 
@@ -38,10 +32,14 @@ func (s *UsuarioST) PesquisaCodigo(ID int64) error {
 		return nil
 	}
 
+	if err := s.MarshalResult(Results); err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func (s *UsuarioST) PesquisaNome(nome_in string) error {
+func (s *EmpresaST) PesquisaNome(nome_in string) error {
 
 	if len(strings.TrimSpace(nome_in)) == 0 {
 		return errors.New("Não é possível pesquisar o email, o mesmo não foi informado.")
@@ -53,9 +51,8 @@ func (s *UsuarioST) PesquisaNome(nome_in string) error {
 
 	s.RecordCount = 0
 
-	sSQL := " select * from usuario "
-	sSQL += " where EmpresaID = " + strconv.FormatInt(s.Empresa.Field.Id, 10)
-	sSQL += " and nome like " + GoLibs.Asp(nome_in+"%")
+	sSQL := " select * from " + ConsNomeTabela
+	sSQL += " where nome like " + GoLibs.Asp(nome_in+"%")
 	sSQL += " limit 0,100"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
@@ -73,40 +70,7 @@ func (s *UsuarioST) PesquisaNome(nome_in string) error {
 	return nil
 }
 
-func (s *UsuarioST) PesquisaEmail(email_in string) error {
-
-	if len(strings.TrimSpace(email_in)) == 0 {
-		return errors.New("Não é possível pesquisar o email, o mesmo não foi informado.")
-	}
-
-	if err := s.dbConexao.CheckConnect(); err != nil {
-		return errors.New("Banco de dados não conectado.")
-	}
-
-	s.RecordCount = 0
-
-	sSQL := " select * from usuario "
-	sSQL += " where EmpresaID = " + strconv.FormatInt(s.Empresa.Field.Id, 10)
-	sSQL += " and email = " + GoLibs.Asp(email_in)
-	sSQL += " limit 0,1"
-	RecordCount, Results, err := s.dbConexao.Query(sSQL)
-	if err != nil {
-		return err
-	}
-
-	if err := s.MarshalResult(Results); err != nil {
-		return err
-	}
-
-	s.RecordCount = RecordCount
-	if s.RecordCount == 0 {
-		return nil
-	}
-
-	return nil
-}
-
-func (s *UsuarioST) PesquisaTodos() error {
+func (s *EmpresaST) PesquisaTodos(EmpresaID int) error {
 	s.RecordCount = 0
 
 	if err := s.dbConexao.CheckConnect(); err != nil {
@@ -114,7 +78,6 @@ func (s *UsuarioST) PesquisaTodos() error {
 	}
 
 	sSQL := "select * from " + ConsNomeTabela
-	sSQL += " where EmpresaID = " + strconv.FormatInt(s.Empresa.Field.Id, 10)
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
 		return err
@@ -132,7 +95,7 @@ func (s *UsuarioST) PesquisaTodos() error {
 	return nil
 }
 
-func (s *UsuarioST) PesquisaWhere(WhereIn string) error {
+func (s *EmpresaST) PesquisaWhere(WhereIn string) error {
 
 	if len(strings.TrimSpace(WhereIn)) == 0 {
 		return errors.New("Paramêtros de pesquisa não localizado.")
@@ -146,8 +109,7 @@ func (s *UsuarioST) PesquisaWhere(WhereIn string) error {
 	s.RecordCount = 0
 
 	sSQL := " select * from " + ConsNomeTabela
-	sSQL += " where EmpresaID = " + strconv.FormatInt(s.Empresa.Field.Id, 10)
-	sSQL += " and " + strings.Replace(WhereIn, "where", "", -1)
+	sSQL += WhereIn
 	sSQL += " limit 0,1"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {

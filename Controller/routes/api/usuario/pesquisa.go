@@ -14,8 +14,26 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
 	Retorno.Ini()
+	params := mux.Vars(r)
+
+	EmpresaID, err := strconv.Atoi(params["EmpresaID"])
+	if err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
 
 	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(int64(EmpresaID)); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
@@ -46,6 +64,7 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
+	Retorno.Ini()
 	params := mux.Vars(r)
 
 	ID, err := strconv.Atoi(params["id"])

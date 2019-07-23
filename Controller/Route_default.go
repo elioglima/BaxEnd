@@ -27,11 +27,14 @@ func SetRoutesViews(routes *mux.Router) {
 }
 
 func SetRoutesUsuario(routes *mux.Router) {
-	routes.HandleFunc("/api/usuarios/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
-	routes.HandleFunc("/api/usuarios/novo/", use(usuario.Novo, basicAuth))
-	routes.HandleFunc("/api/usuario/atualizar/{id}", use(usuario.Atualizar, basicAuth))
-	routes.HandleFunc("/api/usuario/hash/{email}/{documento}", use(usuario.ColherHash, basicAuth))
-	routes.HandleFunc("/api/usuario/ativar/{id}", use(usuario.AtivarCadastro, basicAuth))
+
+	sRotaUsuario := "/api/{EmpresaID:[0-9]+}/usuario"
+
+	routes.HandleFunc(sRotaUsuario+"/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
+	routes.HandleFunc(sRotaUsuario+"/novo/", use(usuario.Novo, basicAuth))
+	routes.HandleFunc(sRotaUsuario+"/atualizar/{id:[0-9]+}", use(usuario.Atualizar, basicAuth))
+	routes.HandleFunc(sRotaUsuario+"/hash/{email}/{documento}", use(usuario.ColherHash, basicAuth))
+	routes.HandleFunc(sRotaUsuario+"/ativar/{id:[0-9]+}", use(usuario.AtivarCadastro, basicAuth))
 
 	routes.HandleFunc("/api/usuario/apagar/{id}", use(usuario.Apagar, basicAuth))
 	routes.HandleFunc("/api/usuario/pesquisa/codigo/{id}", use(usuario.PesquisaCodigo, basicAuth))

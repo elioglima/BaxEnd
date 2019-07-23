@@ -6,6 +6,7 @@ import (
 	"GoLibs"
 	"errors"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -19,6 +20,15 @@ func ColherHash(w http.ResponseWriter, r *http.Request) {
 
 	email := params["email"]
 	documento := params["documento"]
+
+	EmpresaID, err := strconv.Atoi(params["EmpresaID"])
+	if err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
 
 	if len(strings.TrimSpace(email)) == 0 {
 		err := errors.New("E-mail não informado.")
@@ -41,6 +51,22 @@ func ColherHash(w http.ResponseWriter, r *http.Request) {
 	DocSoNumero, err := GoLibs.SoNumeros(documento)
 	if err != nil {
 		err := errors.New("Documento informado inválido:" + err.Error())
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(int64(EmpresaID)); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
