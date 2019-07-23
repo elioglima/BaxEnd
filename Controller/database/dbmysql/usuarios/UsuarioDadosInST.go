@@ -17,6 +17,7 @@ import (
 
 type UsuarioDadosInST struct {
 	Id             *int64             // chave não alteravel
+	EmpresaID      *int64             // chave não alteravel - indica a qual empresa o usuario pertence
 	Email          *string            // chave não alteravel
 	Nome           *string            // nome compledo do usuario
 	Doc1           *string            // 0 CPF ou 1 CNPJ

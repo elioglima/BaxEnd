@@ -11,6 +11,7 @@ import (
 
 type UsuarioDadosST struct {
 	Id              int64     `db_autprimary:"true"`
+	EmpresaID       int64     `db_notnull:"true"`
 	DataCadastro    time.Time `db_notnull:"true"`
 	DataAtualizacao time.Time `db_notnull:"true"`
 	Email           string    `db_notnull:"true"`

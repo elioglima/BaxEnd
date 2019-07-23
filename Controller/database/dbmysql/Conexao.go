@@ -1,6 +1,16 @@
 package dbmysql
 
+/*
+
+	CLASSE ConexaoST
+
+	Responsável por carregar objeto e classe para uso em geral
+	e manipulação de dados do banco de dados.
+
+*/
+
 import (
+	"BaxEnd/Controller/database/dbmysql/Empresas"
 	"BaxEnd/Controller/database/dbmysql/Usuarios"
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
 	"GoLibs/logs"
@@ -11,6 +21,7 @@ type ConexaoST struct {
 	ParamsConexao GoMysql.ParamsConexaoST
 	dbConexao     *GoMysql.ConexaoST
 	TipoPessoa    tipo_pessoa.TipoPessoaST
+	Empresa       *Empresas.EmpresaST
 	Usuario       *Usuarios.UsuarioST
 }
 
@@ -24,6 +35,7 @@ func NewConexao() *ConexaoST {
 	s.dbConexao = GoMysql.NewConexao(s.ParamsConexao)
 
 	s.Usuario = Usuarios.NewUsuarioST(s.dbConexao)
+	s.Empresa = Empresas.NewEmpresaST(s.dbConexao)
 	return s
 }
 
@@ -75,11 +87,21 @@ func (s *ConexaoST) RepararBanco() error {
 		}
 	}
 
+	// criação de tabelas caso não exista
+
+	Empresa := Empresas.NewEmpresaDadosST()
+	if err := s.dbConexao.CreateTable(Empresa); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
 	Usuario := Usuarios.NewUsuarioDadosST()
 	if err := s.dbConexao.CreateTable(Usuario); err != nil {
 		logs.Erro(err)
 		return err
 	}
+
+	// importação de dados iniciais para teste
 
 	return nil
 }
