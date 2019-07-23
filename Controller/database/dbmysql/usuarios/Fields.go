@@ -1,4 +1,4 @@
-package usuarios
+package Usuarios
 
 import (
 	"GoLibs"
@@ -28,16 +28,19 @@ func (s *UsuarioST) MarshalResultToField(Results []map[string]interface{}) error
 	s.Field = UsuarioDadosST{}
 	s.Field.Id = GoMysql.FirstValueToInt64(Results, "Id")
 	s.Field.DataCadastro = GoMysql.FirstValueToTime(Results, "DataCadastro")
+	s.Field.DataAtualizacao = GoMysql.FirstValueToTime(Results, "DataAtualizacao")
+	s.Field.DataAtivacao = GoMysql.FirstValueToTime(Results, "DataAtivacao")
+	s.Field.Ativado = GoMysql.FirstValueToBool(Results, "Ativado")
 	s.Field.Email = GoMysql.FirstValueToStr(Results, "Email")
 	s.Field.Senha = GoMysql.FirstValueToStr(Results, "Senha")
 	s.Field.Nome = GoMysql.FirstValueToStr(Results, "Nome")
-	s.Field.Categoria_ID = GoMysql.FirstValueToInt64(Results, "Categoria_ID")
-	s.Field.Categoria_Desc = GoMysql.FirstValueToStr(Results, "Categoria_Desc")
+	s.Field.CategoriaID = GoMysql.FirstValueToInt64(Results, "CategoriaID")
+	s.Field.CategoriaDesc = GoMysql.FirstValueToStr(Results, "CategoriaDesc")
 
-	s.Field.TipoPessoa_ID = GoMysql.FirstValueToInt64(Results, "TipoPessoa_ID")
-	s.Field.TipoPessoa_Desc = GoMysql.FirstValueToStr(Results, "TipoPessoa_Desc")
+	s.Field.TipoPessoaID = GoMysql.FirstValueToInt64(Results, "TipoPessoaID")
+	s.Field.TipoPessoaDesc = GoMysql.FirstValueToStr(Results, "TipoPessoaDesc")
 
-	if s.Field.TipoPessoa_ID == 0 {
+	if s.Field.TipoPessoaID == 0 {
 		Doc1DB := GoMysql.FirstValueToStr(Results, "Doc1")
 		Doc1Formatado, err := GoLibs.ImprimeCPF(Doc1DB)
 		if err != nil {
@@ -65,17 +68,21 @@ func (s *UsuarioST) MarshalResultToFields(Results []map[string]interface{}) erro
 		FieldTemp := UsuarioDadosST{}
 		FieldTemp.Id = GoMysql.GetValueToInt64(Result, "Id")
 		FieldTemp.DataCadastro = GoMysql.GetValueToTime(Result, "DataCadastro")
+		FieldTemp.DataAtualizacao = GoMysql.GetValueToTime(Result, "DataAtualizacao")
+		FieldTemp.DataAtivacao = GoMysql.GetValueToTime(Result, "DataAtivacao")
+		FieldTemp.Ativado = GoMysql.GetValueToBool(Result, "Ativado")
+
 		FieldTemp.Email = GoMysql.GetValueToStr(Result, "Email")
 		FieldTemp.Senha = GoMysql.GetValueToStr(Result, "Senha")
 		FieldTemp.Nome = GoMysql.GetValueToStr(Result, "Nome")
 
-		FieldTemp.Categoria_ID = GoMysql.GetValueToInt64(Result, "Categoria_ID")
-		FieldTemp.Categoria_Desc = GoMysql.GetValueToStr(Result, "Categoria_Desc")
+		FieldTemp.CategoriaID = GoMysql.GetValueToInt64(Result, "CategoriaID")
+		FieldTemp.CategoriaDesc = GoMysql.GetValueToStr(Result, "CategoriaDesc")
 
-		FieldTemp.TipoPessoa_ID = GoMysql.GetValueToInt64(Result, "TipoPessoa_ID")
-		FieldTemp.TipoPessoa_Desc = GoMysql.GetValueToStr(Result, "TipoPessoa_Desc")
+		FieldTemp.TipoPessoaID = GoMysql.GetValueToInt64(Result, "TipoPessoaID")
+		FieldTemp.TipoPessoaDesc = GoMysql.GetValueToStr(Result, "TipoPessoaDesc")
 
-		if s.Field.TipoPessoa_ID == 0 {
+		if s.Field.TipoPessoaID == 0 {
 			Doc1DB := GoMysql.GetValueToStr(Result, "Doc1")
 			Doc1Formatado, err := GoLibs.ImprimeCPF(Doc1DB)
 			if err != nil {

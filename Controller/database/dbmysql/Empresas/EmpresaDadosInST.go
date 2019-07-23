@@ -1,7 +1,6 @@
-package Usuarios
+package Empresas
 
 import (
-	"GoLibs"
 	"GoMysql"
 	"database/sql"
 	"errors"
@@ -10,14 +9,13 @@ import (
 )
 
 /* **********************************************************************
-	STRUCT UsuarioST
-	Classe de Usuário com os metodos fornecidos para as rotas
+	STRUCT EmpresaDadosInST
+	Classe de Entrada e alterações de dados da empresa e filiais
 
 ** ********************************************************************** */
 
-type UsuarioDadosInST struct {
+type EmpresaDadosInST struct {
 	Id             *int64             // chave não alteravel
-	EmpresaID      *int64             // chave não alteravel - indica a qual empresa o usuario pertence
 	Email          *string            // chave não alteravel
 	Nome           *string            // nome compledo do usuario
 	Doc1           *string            // 0 CPF ou 1 CNPJ
@@ -30,29 +28,19 @@ type UsuarioDadosInST struct {
 	SQLResult      sql.Result
 }
 
-func NewUsuarioDadosInST(dbConexao *GoMysql.ConexaoST) *UsuarioDadosInST {
-	s := new(UsuarioDadosInST)
+func NewEmpresaDadosInST(dbConexao *GoMysql.ConexaoST) *EmpresaDadosInST {
+	s := new(EmpresaDadosInST)
 	s.dbConexao = dbConexao
 	return s
 }
 
-func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
+func (s *EmpresaDadosInST) Inserir() (sql.Result, error) {
 
 	numUp := 0
 	s.dbConexao.SQL.Clear()
-	s.dbConexao.SQL.Insert("usuario")
+	s.dbConexao.SQL.Insert("empresa")
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
-
-	if s.Email != nil {
-		numUp++
-		s.dbConexao.SQL.Add("Email", *s.Email)
-		hash, err := GoLibs.HashEncode(*s.Email + *s.Nome)
-		if err != nil {
-			return nil, errors.New("Erro ao gerar hash para senha temporaria, " + err.Error())
-		}
-		s.dbConexao.SQL.Add("Senha", hash)
-	}
 
 	if s.Nome != nil {
 		numUp++
@@ -88,11 +76,11 @@ func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 	return s.dbConexao.SQL.Execute()
 }
 
-func (s *UsuarioDadosInST) Update() (sql.Result, error) {
+func (s *EmpresaDadosInST) Update() (sql.Result, error) {
 
 	numUp := 0
 	s.dbConexao.SQL.Clear()
-	s.dbConexao.SQL.Update("usuario")
+	s.dbConexao.SQL.Update("empresa")
 	s.dbConexao.SQL.Where("id=" + fmt.Sprintf("%v", *s.Id))
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())

@@ -1,5 +1,22 @@
 package main
 
+/* ****************************************************************************************************
+
+	PROJETO :: BAXEND
+
+		* API PARA DESENVOLVEDORES EM GERAL
+		* UTILITARIOS EM GERAL
+			* SEND EMAIL
+			* GERAÇÃO DE BOLETOS
+			* GERAÇÃO DE PROPOSTAS
+
+		* MODULOS
+			* CADASTROS
+			* ORÇAMENTOS
+			* NEGOCIAÇÕES
+
+**************************************************************************************************** */
+
 import (
 	"BaxEnd/Controller"
 	logger "GoLibs/logs"

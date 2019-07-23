@@ -10,7 +10,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func Atualizar(w http.ResponseWriter, r *http.Request) {
+/*
+	{
+		"hash":"YeqlJsoXK8jfZcXU+hysFQ+gH59tq/lUDLuKBrxW1LOBoOnEQWUXd0QmPK0HdIHXjn1k+U/KZRYIsDKwujUuoA==",
+		"senha":"AB@102030",
+		"senha_conf":"AB@102030"
+	}
+*/
+
+func AtivarCadastro(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
 	Retorno.Ini()
@@ -34,7 +42,7 @@ func Atualizar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if database.MySql.Usuario.RecordCount == 0 {
-		Retorno.Msg = "Nenhum usuário não localizado"
+		Retorno.Msg = "Usuário não localizado"
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return
@@ -56,7 +64,7 @@ func Atualizar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg, err := database.MySql.Usuario.Atualizar(ArrayByteIn)
+	msg, err := database.MySql.Usuario.AtivarCadastro(ArrayByteIn)
 	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()

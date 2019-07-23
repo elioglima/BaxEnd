@@ -1,17 +1,29 @@
 package dbmysql
 
+/*
+
+	CLASSE ConexaoST
+
+	Responsável por carregar objeto e classe para uso em geral
+	e manipulação de dados do banco de dados.
+
+*/
+
 import (
+	"BaxEnd/Controller/database/dbmysql/Empresas"
+	"BaxEnd/Controller/database/dbmysql/Usuarios"
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
-	"BaxEnd/Controller/database/dbmysql/usuarios"
 	"GoLibs/logs"
 	"GoMysql"
+	"os"
 )
 
 type ConexaoST struct {
 	ParamsConexao GoMysql.ParamsConexaoST
 	dbConexao     *GoMysql.ConexaoST
 	TipoPessoa    tipo_pessoa.TipoPessoaST
-	Usuario       *usuarios.UsuarioST
+	Empresa       *Empresas.EmpresaST
+	Usuario       *Usuarios.UsuarioST
 }
 
 func NewConexao() *ConexaoST {
@@ -23,7 +35,8 @@ func NewConexao() *ConexaoST {
 	s.ParamsConexao.SENHA = "AB@102030"
 	s.dbConexao = GoMysql.NewConexao(s.ParamsConexao)
 
-	s.Usuario = usuarios.NewUsuarioST(s.dbConexao)
+	s.Usuario = Usuarios.NewUsuarioST(s.dbConexao)
+	s.Empresa = Empresas.NewEmpresaST(s.dbConexao)
 	return s
 }
 
@@ -75,10 +88,51 @@ func (s *ConexaoST) RepararBanco() error {
 		}
 	}
 
-	Usuario := usuarios.NewUsuarioDadosST()
-	if err := s.dbConexao.CreateTable(Usuario); err != nil {
+	if err := s.CriaEstrutura(); err != nil {
 		logs.Erro(err)
 		return err
+	}
+
+	return nil
+}
+
+func (s *ConexaoST) CriaEstrutura() error {
+
+	/*
+		Neste item permite
+
+			* checar a estrutura do banco
+			* criar as tabelas que falta e
+			* criar dados de exemplos e testes
+
+	*/
+
+	// criação de tabelas caso não exista
+	var Objeto interface{}
+
+	Objeto = Empresas.NewEmpresaDadosST()
+	if err := s.dbConexao.CreateTable(Objeto); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
+	Objeto = Usuarios.NewUsuarioDadosST()
+	if err := s.dbConexao.CreateTable(Objeto); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
+	// importação de dados iniciais para teste
+	Empresa := Empresas.NewEmpresaST(s.dbConexao)
+	if err := Empresa.Demo(); err != nil {
+		logs.Erro(err)
+		os.Exit(0)
+	}
+
+	Usuario := Usuarios.NewUsuarioST(s.dbConexao)
+	if err := Usuario.Demo(); err != nil {
+		logs.Erro(err)
+		os.Exit(0)
 	}
 
 	return nil
