@@ -87,8 +87,26 @@ func (s *ConexaoST) RepararBanco() error {
 		}
 	}
 
-	// criação de tabelas caso não exista
+	if err := s.CriaEstrutura(); err != nil {
+		logs.Erro(err)
+		return err
+	}
 
+	return nil
+}
+
+func (s *ConexaoST) CriaEstrutura() error {
+
+	/*
+		Neste item permite
+
+			* checar a estrutura do banco
+			* criar as tabelas que falta e
+			* criar dados de exemplos e testes
+
+	*/
+
+	// criação de tabelas caso não exista
 	Empresa := Empresas.NewEmpresaDadosST()
 	if err := s.dbConexao.CreateTable(Empresa); err != nil {
 		logs.Erro(err)
