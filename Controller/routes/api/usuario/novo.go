@@ -5,13 +5,18 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 func Novo(w http.ResponseWriter, r *http.Request) {
 	Retorno := sRetorno{}
 	Retorno.Ini()
+	params := mux.Vars(r)
 
-	if err := database.MySql.Conectar(); err != nil {
+	EmpresaID, err := strconv.Atoi(params["EmpresaID"])
+	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
@@ -30,6 +35,22 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 	} else if len(ArrayByteIn) == 0 {
 		Retorno.Erro = true
 		Retorno.Msg = "Nenhum paramêtros informado."
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(int64(EmpresaID)); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return

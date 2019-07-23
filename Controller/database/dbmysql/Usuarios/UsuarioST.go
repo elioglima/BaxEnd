@@ -1,6 +1,7 @@
 package Usuarios
 
 import (
+	"BaxEnd/Controller/database/dbmysql/Empresas"
 	"GoLibs"
 	"GoLibs/logs"
 	"GoMysql"
@@ -15,6 +16,7 @@ type UsuarioST struct {
 	Fields      []UsuarioDadosST
 	Field       UsuarioDadosST
 	Response    interface{}
+	Empresa     *Empresas.EmpresaST
 	RecordCount int
 }
 
@@ -22,7 +24,25 @@ func NewUsuarioST(dbConexaoIn *GoMysql.ConexaoST) *UsuarioST {
 	s := &UsuarioST{}
 	s.RecordCount = 0
 	s.dbConexao = dbConexaoIn
+	s.Empresa = Empresas.NewEmpresaST(s.dbConexao)
 	return s
+}
+
+func (s *UsuarioST) LoadEmpresa(EmpresaID int64) error {
+	if err := s.Empresa.PesquisaCodigo(EmpresaID); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
+	if s.Empresa.RecordCount == 0 {
+		return errors.New("Empresa não localizada")
+	}
+
+	if s.Empresa.Field.Ativado == false {
+		return errors.New("O cadastro da Empresa está desativado.")
+	}
+
+	return nil
 }
 
 func (s *UsuarioST) Demo() error {

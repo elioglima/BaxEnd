@@ -111,12 +111,22 @@ func (s *ConexaoST) CriaEstrutura() error {
 	var Objeto interface{}
 
 	Objeto = Empresas.NewEmpresaDadosST()
+	if err := s.dbConexao.DropTable(Objeto); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
 	if err := s.dbConexao.CreateTable(Objeto); err != nil {
 		logs.Erro(err)
 		return err
 	}
 
 	Objeto = Usuarios.NewUsuarioDadosST()
+	if err := s.dbConexao.DropTable(Objeto); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
 	if err := s.dbConexao.CreateTable(Objeto); err != nil {
 		logs.Erro(err)
 		return err

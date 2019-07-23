@@ -33,16 +33,10 @@ func AtivarCadastro(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.Usuario.PesquisaCodigo(int64(ID)); err != nil {
+	EmpresaID, err := strconv.Atoi(params["EmpresaID"])
+	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	if database.MySql.Usuario.RecordCount == 0 {
-		Retorno.Msg = "Usuário não localizado"
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return
@@ -59,6 +53,37 @@ func AtivarCadastro(w http.ResponseWriter, r *http.Request) {
 	} else if len(ArrayByteIn) == 0 {
 		Retorno.Erro = true
 		Retorno.Msg = "Erro ao receber parametros"
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(int64(EmpresaID)); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.PesquisaCodigo(int64(ID)); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if database.MySql.Usuario.RecordCount == 0 {
+		Retorno.Msg = "Usuário não localizado"
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return
