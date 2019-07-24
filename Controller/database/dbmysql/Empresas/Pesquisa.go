@@ -1,5 +1,10 @@
 package Empresas
 
+/*
+	CLASSE DE CADASTRO DE EMPRESAS
+
+*/
+
 import (
 	"GoLibs"
 	"errors"

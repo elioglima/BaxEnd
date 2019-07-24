@@ -38,9 +38,17 @@ func NewUsuarioDadosInST(dbConexao *GoMysql.ConexaoST) *UsuarioDadosInST {
 
 func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 
+	if s.EmpresaID == nil {
+		return nil, errors.New("Erro interno ao verificar a empresaid.")
+	} else if *s.EmpresaID == 0 {
+		return nil, errors.New("Erro interno ao verificar a empresaid.")
+
+	}
+
 	numUp := 0
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Insert("usuario")
+	s.dbConexao.SQL.Add("empresaid", *s.EmpresaID)
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 

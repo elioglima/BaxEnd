@@ -132,6 +132,11 @@ func (s *ConexaoST) CriaEstrutura() error {
 		return err
 	}
 
+	if err := s.dbConexao.ForeignKey("usuario", "empresaid", "empresa", "id", true, true); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
 	// importação de dados iniciais para teste
 	Empresa := Empresas.NewEmpresaST(s.dbConexao)
 	if err := Empresa.Root(); err != nil {
