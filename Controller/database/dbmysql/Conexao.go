@@ -107,27 +107,31 @@ func (s *ConexaoST) CriaEstrutura() error {
 
 	*/
 
-	// criação de tabelas caso não exista
-	var Objeto interface{}
-
-	Objeto = Empresas.NewEmpresaDadosST()
-	// if err := s.dbConexao.DropTable(Objeto); err != nil {
-	// 	logs.Erro(err)
-	// 	return err
-	// }
-
-	if err := s.dbConexao.CreateTable(Objeto); err != nil {
+	// inicio da limpeza da base de dados
+	ObjetoUsuario := Usuarios.NewUsuarioDadosST()
+	if err := s.dbConexao.DropTable(ObjetoUsuario); err != nil {
 		logs.Erro(err)
 		return err
 	}
 
-	Objeto = Usuarios.NewUsuarioDadosST()
-	// if err := s.dbConexao.DropTable(Objeto); err != nil {
-	// 	logs.Erro(err)
-	// 	return err
-	// }
+	ObjetoEmpresa := Empresas.NewEmpresaDadosST()
+	if err := s.dbConexao.DropTable(ObjetoEmpresa); err != nil {
+		logs.Erro(err)
+		return err
+	}
 
-	if err := s.dbConexao.CreateTable(Objeto); err != nil {
+	// inicio da criação de tabelas
+	if err := s.dbConexao.CreateTable(ObjetoEmpresa); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
+	if err := s.dbConexao.CreateTable(ObjetoUsuario); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
+	if err := s.dbConexao.ForeignKey("usuario", "empresaid", "empresa", "id", true, true); err != nil {
 		logs.Erro(err)
 		return err
 	}

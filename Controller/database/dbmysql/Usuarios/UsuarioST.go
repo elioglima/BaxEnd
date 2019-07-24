@@ -72,10 +72,24 @@ func (s *UsuarioST) Root() error {
 	s.dbConexao.SQL.Add("DataCadastro", DataCompra)
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 	s.dbConexao.SQL.Add("EmpresaID", 1)
-	s.dbConexao.SQL.Add("nome", RootBuild.UsuarioNome)
-	s.dbConexao.SQL.Add("email", RootBuild.UsuarioEmail)
-	s.dbConexao.SQL.Add("doc1", RootBuild.UsuarioDoc1)
-	s.dbConexao.SQL.Add("doc2", RootBuild.UsuarioDoc2)
+
+	numCampo := 0
+	if RootBuild.UsuarioNome != s.Field.Nome {
+		numCampo++
+		s.dbConexao.SQL.Add("nome", RootBuild.UsuarioNome)
+	}
+	if RootBuild.UsuarioEmail != s.Field.Email {
+		numCampo++
+		s.dbConexao.SQL.Add("email", RootBuild.UsuarioEmail)
+	}
+	if RootBuild.UsuarioDoc1 != s.Field.Doc1 {
+		numCampo++
+		s.dbConexao.SQL.Add("doc1", RootBuild.UsuarioDoc1)
+	}
+	if RootBuild.UsuarioDoc2 != s.Field.Doc2 {
+		numCampo++
+		s.dbConexao.SQL.Add("doc2", RootBuild.UsuarioDoc2)
+	}
 
 	Hash, err := GoLibs.HashEncode(RootBuild.UsuarioEmail + RootBuild.UsuarioSenha)
 	if err != nil {
@@ -83,12 +97,19 @@ func (s *UsuarioST) Root() error {
 		return err
 	}
 
-	s.dbConexao.SQL.Add("senha", Hash)
+	if Hash != s.Field.Senha {
+		numCampo++
+		s.dbConexao.SQL.Add("senha", Hash)
+	}
+
 	s.dbConexao.SQL.Add("ativado", 1)
 	s.dbConexao.SQL.Add("DataAtivacao", DataCompra)
-	if _, err := s.dbConexao.SQL.Execute(); err != nil {
-		logs.Erro("Erro ao criar empresa de demonstração.")
-		return err
+
+	if numCampo > 0 {
+		if _, err := s.dbConexao.SQL.Execute(); err != nil {
+			logs.Erro("Erro ao criar empresa de demonstração.")
+			return err
+		}
 	}
 
 	return nil

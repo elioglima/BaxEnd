@@ -41,6 +41,7 @@ func (s *UsuarioST) Novo(ArrayByteIn []byte) (string, error) {
 		return err.Error(), nil
 	}
 
+	dados.EmpresaID = &s.Empresa.Field.Id
 	Results, err := dados.Inserir()
 
 	if err != nil {
