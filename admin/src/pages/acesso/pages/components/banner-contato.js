@@ -34,11 +34,7 @@ class Objeto extends Component {
               <span className="titulo">Email</span>
               <span className="texto">contato@baxend.com.br</span>
             </div>
-            <div className="col-50">
-              <input type="email" placeholder="Enter email" value={base64.decode(this.state.name)} onChange={e => this.setState({name: base64.encode(e.target.value)})} /> 
-              <input type="password" className="mr-sm-2" size="sm" placeholder="Password" value={base64.decode(this.state.pass)} onChange={e => this.setState({pass: base64.encode(e.target.value)})} />
-              <button variant="success" size="sm" type="button" onClick={(e) => this.onSubmit(e)}>Entrar</button>          
-            </div>
+            
           </div>
 
         </div>
