@@ -1,0 +1,61 @@
+
+.ChatBotBase {
+  position: fixed;
+  bottom: 1%;
+  right: 1%;
+  background-color: white;
+  height: 600px;
+  width: 320px;
+  border-radius: 10px;
+  border: 1px;
+  border-style: solid;
+  border-color: rgb(190, 197, 209);  
+}
+
+/* 
+
+@media screen and (max-width: 468px) {
+  .ChatBotBase {
+    height: 70%;
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .ChatBotBase {
+    height: 70%;
+    width: 70%;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .ChatBotBase {
+    height: 70%;
+    width: 70%;
+  }
+}
+*/
+
+@media screen and (min-width: 768px) {
+  .ChatBotBase {
+    height: 480px;
+    width: 255px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .ChatBotBase {
+    height: 500px;
+    width: 270px;
+  }
+}
+
+
+@media screen and (min-width: 1200px) {
+  .ChatBotBase {
+    height: 600px;
+    width: 320px;
+  }
+}
+
