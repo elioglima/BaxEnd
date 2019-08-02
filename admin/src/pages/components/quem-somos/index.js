@@ -8,7 +8,7 @@ class Objeto extends Component {
       <div> 
         <div className="quem-somos">
           <div className="col-100 titulo">
-            QUEM SOMOS
+            <span>QUEM</span> <span className="cor_azul">SOMOS</span>
           </div>
           <div className="col-100 qs-texto">Somos especializados em consultoria, desenvolvimento e analise de dados. Atendendo a necessidade de nossos clientes e aprimorando continuamente nosso portfólio. Com grande visão no futuro e conhecedora das mais rigorosas normas nacionais e internacionais, temos acompanhado as mudanças e tendências do mercado, para trazer a você cliente as melhores soluções e poder lhe dar a garantia e segurança da continuidade da sua produção. Para isso nós investimos continuamente na capacitação e treinamento de nossos funcionários em todos os setores, tornando-os profissionais altamente qualificados e também investindo em novas tecnologias que fazem deste mercado um dos mais modernos do mundo.
           </div>

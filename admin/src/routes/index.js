@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import { Switch, Route } from "react-router-dom"
 import { ConnectedRouter } from "connected-react-router"
 
-import Acesso from "../pages/acesso/pages/index"
+import Acesso from "../pages/acesso"
 
 // import Logado_Inicio from '../pages/logado/inicio/pages/index'
 // import NotFound from '../pages/generics/notfound/pages/index'
