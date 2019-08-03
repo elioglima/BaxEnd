@@ -2,6 +2,7 @@ import React, {useEffect } from 'react'
 import { connect } from "react-redux";
 import ChatBotBase from './ChatBotBase';
 import ChamadaAtendimento from './ChamadaAtendimento';
+import * as processar from './Controller/Processar.js'
 
 class Objeto extends React.Component {
     withProps(Component, props) {
@@ -16,20 +17,29 @@ class Objeto extends React.Component {
             VisibilidadeChat: false,
             Transacoes: {
                 idChat: 5001,                
-                Mensagens: [
-                    {msg:"Ola", identificador:"client", dataexecucao:"enviado à 1 minuto"},
-                    {msg:"Tudo Bem", identificador:"chatbot", dataexecucao:"recebido à 1 minuto"}
-                ]
+                Mensagens: []
             }
         }
-
     }    
+
+    componentDidMount() {
+        this.props.chatbot.map((data, key) => {
+            this.setState(state => {
+                const obj = {msg:data.msg, identificador:"chatbot", dataexecucao:"enviado agora"}
+                const list = state.Transacoes.Mensagens.push(obj);      
+                return {
+                  list,
+                  value: obj ,
+                };
+              }); 
+        })
+    }
 
     onSendMensage(SendTexts) {
         if (SendTexts.length === 0) {
             return false
         }
-
+        
         this.setState(state => {
             const obj = {msg:SendTexts, identificador:"client", dataexecucao:"enviado agora"}
             const list = state.Transacoes.Mensagens.push(obj);      
@@ -37,7 +47,11 @@ class Objeto extends React.Component {
               list,
               value: obj ,
             };
-          });          
+        });          
+
+        this.props.analise(SendTexts)
+            .then(res => { console.log("ok", res); })
+            .catch(err => console.log('There was an error:' + err))
          
     }
 
@@ -74,5 +88,8 @@ class Objeto extends React.Component {
 }
 
 
+function mapStateToProps(state) {
+    return { chatbot: processar.chatbot, analise: processar.analise }
+  }
 
-export default connect(null,null)(Objeto)
+export default connect(mapStateToProps, null)(Objeto)
