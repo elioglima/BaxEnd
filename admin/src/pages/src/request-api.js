@@ -6,7 +6,7 @@ export const RAPI = (uri, params) => {
       
       function(resolve, reject) { 
         
-        const URLS = 'http://localhost:5125/api/' + uri
+        const URLS = 'http://localhost:2000/api/' + uri
         const request = require('request');
         const base64 = require('base-64');
         const var_logado = base64.decode(localStorage.getItem('logado'))    

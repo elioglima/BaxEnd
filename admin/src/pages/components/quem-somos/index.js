@@ -14,7 +14,7 @@ class Objeto extends Component {
           </div>
           <div className="col-33 descricao">
             <div className="col-30 ico">
-              <i class="fas fa-drafting-compass"></i>
+              <i className="fas fa-drafting-compass"></i>
             </div>  
             <div className="col-70 desc_texto">
             CONSULTORIA
@@ -22,13 +22,13 @@ class Objeto extends Component {
           </div>
           <div className="col-30 descricao">
             <div className="col-30 ico">
-              <i class="fas fa-drafting-compass"></i>
+              <i className="fas fa-drafting-compass"></i>
             </div>  
             <div className="col-70 desc_texto">SUPORTE</div>
           </div>
           <div className="col-30 descricao">
             <div className="col-30 ico">
-              <i class="fas fa-drafting-compass"></i>
+              <i className="fas fa-drafting-compass"></i>
             </div>  
             <div className="col-70 desc_texto">DESENVOLVIMENTO</div>
           </div>

@@ -52,9 +52,9 @@ class Objeto extends React.Component {
 
                 <ScrollToBottom className="ChatBotText">                 
                     {
-                    this.state.Transacoes.Mensagens.map((item, key) => {
+                        this.state.Transacoes.Mensagens.map((item, key) => {
                                return ( 
-                                    <div className="ChatBotTextBase">
+                                    <div className="ChatBotTextBase" key={key}  >
                                         <div className={this.getChatBotTituloMsgColor(item.identificador)}>{this.getChatBotIdentificadorMsg(item)}</div>
                                         <div className={this.getChatBotTextMsgColor(item.identificador)}>{item.msg}</div>
                                     </div>
