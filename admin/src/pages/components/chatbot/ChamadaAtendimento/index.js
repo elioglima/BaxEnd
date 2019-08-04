@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from "react-redux";
-import logo from './icoChatBot.png';
-import './ChamadaAtendimento.css';
+import logo from './img/icoChatBot.png';
+import './css/ChamadaAtendimento.css';
 
 /*
     base da tela

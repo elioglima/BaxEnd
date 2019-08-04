@@ -1,15 +1,10 @@
-import React, {useEffect } from 'react'
+import React from 'react'
 import { connect } from "react-redux";
 import ChatBotBase from './ChatBotBase';
 import ChamadaAtendimento from './ChamadaAtendimento';
 import * as processar from './Controller/Processar.js'
 
 class Objeto extends React.Component {
-    withProps(Component, props) {
-        return function(matchProps) {
-          return <Component {...props} {...matchProps} />
-        }
-    }
 
     constructor(props) {
         super(props)
@@ -50,8 +45,12 @@ class Objeto extends React.Component {
         });          
 
         this.props.analise(SendTexts)
-            .then(res => { console.log("ok", res); })
-            .catch(err => console.log('There was an error:' + err))
+            .then(res => { 
+                console.log("Sucesso Analise dados:", res); 
+            })
+            .catch(err => {
+                console.log('Erro Analise dados:' + err)
+            })
          
     }
 
@@ -65,12 +64,10 @@ class Objeto extends React.Component {
     }
 
     render() {    
-        
         return (      
             <div>
                 { 
                     (() => {
-                  
                         if (this.state.VisibilidadeChat === true) 
                             return <ChatBotBase onCloseAtendimento={this.onCloseAtendimento.bind(this)} onSendMensage={this.onSendMensage.bind(this)} Transacoes={this.state.Transacoes} />                
 
@@ -79,14 +76,10 @@ class Objeto extends React.Component {
 
                     })()
                 }
-
-                
-
             </div>      
         )
     }
 }
-
 
 function mapStateToProps(state) {
     return { chatbot: processar.chatbot, analise: processar.analise }
