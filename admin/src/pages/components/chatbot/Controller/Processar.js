@@ -7,10 +7,11 @@ export const Pesquisa = [
             {"chave":"Que dia é hoje?"},
             {"chave":"Qual dia é hoje?"},
             {"chave":"Hoje é?"},
+            {"chave":"Hoje é"},
         ]
     },{
             "id":1,
-            "Titulo":"Meu nome é Davi, é um prazer em lhe conhecer.",
+            "Titulo":"Meu nome é Davi, sou um robô, estou aqui para te ajuda e é um prazer em te conhecer.",
             "Indexs":[
                 {"chave":"Qual é seu nome?"},
                 {"chave":"Qual é seu nome"},
@@ -18,7 +19,8 @@ export const Pesquisa = [
                 {"chave":"qual seu nome"},
                 {"chave":"Com quem estou falando?"},
                 {"chave":"Com quem estou falando"},
-                {"chave":"Como você se chama?"}
+                {"chave":"Como você se chama?"},
+                {"chave":"Quem é você"},
             ]
     },{
         "id":1,
@@ -81,6 +83,8 @@ export const chatbot = [
 
 const procComparativoPalavra = (chave, msg) => {
     const dePara = [
+                        {"de":"que é","para":"quem é"},
+                        {"de":"que e","para":"quem é"},
                         {"de":"quel","para":"qual"},
                         {"de":"qiel","para":"qual"},
                         {"de":"sei","para":"seu"},                        
@@ -90,15 +94,16 @@ const procComparativoPalavra = (chave, msg) => {
                         {"de":"nime","para":"nome"},
                         {"de":"npnw","para":"nome"},
                         {"de":"dial","para":"dia"},
+                        {"de":"voce","para":"você"},
+                        {"de":"vc","para":"você"},
                         {"de":"?","para":""},
                     ]
     
-
     if (chave.toLowerCase() === msg.toLowerCase()) {
         return true
     } 
 
-    let msg_temp = msg
+    let msg_temp = msg.toString()
 
     for (let i1 = 0; i1 < dePara.length; i1++) {
         const elm1 = dePara[i1];
