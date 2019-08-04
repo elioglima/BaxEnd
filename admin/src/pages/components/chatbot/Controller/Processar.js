@@ -2,6 +2,32 @@
 export const Pesquisa = [
     {
         "id":1,
+        "Titulo":"Hoje é: {datetime}",
+        "Indexs":[
+            {"chave":"Que dia é hoje?"},
+            {"chave":"Qual dia é hoje?"},
+            {"chave":"Hoje é?"},
+        ]
+    },{
+            "id":1,
+            "Titulo":"Meu nome é Davi, é um prazer em lhe conhecer.",
+            "Indexs":[
+                {"chave":"Qual é seu nome?"},
+                {"chave":"Qual é seu nome"},
+                {"chave":"Qual e seu nome"},
+                {"chave":"qual seu nome"},
+                {"chave":"Com quem estou falando?"},
+                {"chave":"Com quem estou falando"},
+                {"chave":"Como você se chama?"}
+            ]
+    },{
+        "id":1,
+        "Titulo":"É um prazer te ajudar, caso precise é só chamar.",
+        "Indexs":[
+            {"chave":"origado"},
+        ]
+    },{
+        "id":1,
         "Titulo":"Acesso ao Sistema",
         "Indexs":[
             {"chave":"acesso sistema"},
@@ -53,20 +79,69 @@ export const chatbot = [
 },
 ];
 
-export const analise = (msg_recebida) => {
+const procComparativoPalavra = (chave, msg) => {
+    const dePara = [
+                        {"de":"quel","para":"qual"},
+                        {"de":"qiel","para":"qual"},
+                        {"de":"sei","para":"seu"},                        
+                        {"de":"teu","para":"seu"},                        
+                        {"de":"noem","para":"nome"},
+                        {"de":"name","para":"nome"},
+                        {"de":"nime","para":"nome"},
+                        {"de":"npnw","para":"nome"},
+                        {"de":"dial","para":"dia"},
+                        {"de":"?","para":""},
+                    ]
+    
+
+    if (chave.toLowerCase() === msg.toLowerCase()) {
+        return true
+    } 
+
+    let msg_temp = msg
+
+    for (let i1 = 0; i1 < dePara.length; i1++) {
+        const elm1 = dePara[i1];
+        msg_temp = msg_temp.replace(elm1.de, elm1.para)
+        if (chave.toLowerCase() === msg_temp.toLowerCase()) {
+            return true
+        }
+    } 
+
+
+
+    return false
+}
+
+const procFormatAcao = (elm1) => {
+    var res = JSON.parse(JSON.stringify(elm1));
+    if(res.Titulo.indexOf("{datetime}") > -1) {
+        var dateTime = require('node-datetime');
+        var dt = dateTime.create();
+        var formatted = dt.format('d/m/Y H:M:S');                                    
+        res.Titulo = elm1.Titulo.replace("{datetime}", " " + formatted); 
+    }
+    return res
+}
+
+const procSimples = (msg_recebida) =>  {
     return new Promise(      
         function(resolve, reject) {
             for (let i1 = 0; i1 < Pesquisa.length; i1++) {
                 const elm1 = Pesquisa[i1];                
                 for (let i2 = 0; i2 < elm1.Indexs.length; i2++) {
-                    const elm2 = elm1.Indexs[i2];
-                    if (elm2.chave === msg_recebida) {
-                        return resolve(elm1);
+                    const elm2 = elm1.Indexs[i2];                    
+                    if (procComparativoPalavra(elm2.chave, msg_recebida)) {                        
+                        return resolve(procFormatAcao(elm1));
                     };
                 }
             }
             return reject("Erro")
         }
     );
+}
+
+export const analise = (msg_recebida) => {
+    return procSimples(msg_recebida)
 }
 

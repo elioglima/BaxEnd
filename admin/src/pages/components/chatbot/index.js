@@ -30,24 +30,32 @@ class Objeto extends React.Component {
         })
     }
 
-    onSendMensage(SendTexts) {
-        if (SendTexts.length === 0) {
-            return false
-        }
-        
+    SendMensagem(mensgem, identificador) {
         this.setState(state => {
-            const obj = {msg:SendTexts, identificador:"client", dataexecucao:"enviado agora"}
+            const obj = {msg:mensgem, identificador:identificador, dataexecucao:"enviado agora"}
             const list = state.Transacoes.Mensagens.push(obj);      
             return {
               list,
               value: obj ,
             };
-        });          
-
+        });     
+    }
+    onSendMensage(SendTexts) {
+        if (SendTexts.length === 0) {
+            return false
+        }
+        
+        this.SendMensagem(SendTexts, "client")
+        
         this.props.analise(SendTexts)
-            .then(res => { 
-                console.log("Sucesso Analise dados:", res); 
-            })
+            .then(async res => {
+                await new Promise (resolve => {                                        
+                  setTimeout(resolve, 2000)
+                })
+
+                this.SendMensagem(res.Titulo, "chatbot")
+              
+              })
             .catch(err => {
                 console.log('Erro Analise dados:' + err)
             })

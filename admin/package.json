@@ -12,6 +12,7 @@
     "create-react-class": "^15.6.3",
     "history": "^4.7.2",
     "local-storage": "^2.0.0",
+    "node-datetime": "^2.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.4.2",
     "react-data-grid": "^6.1.0",
