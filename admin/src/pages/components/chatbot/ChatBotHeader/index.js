@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from "react-redux";
-import './styles.css'
+import './css/styles.css'
 
 /*
     base da tela
 */
 
 class Objeto extends React.Component {
-
     render() {    
         return (            
             <div className="ChatBotHeader">                

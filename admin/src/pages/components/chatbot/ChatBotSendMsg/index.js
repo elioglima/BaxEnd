@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux";
-import './styles.css'
+import './css/styles.css'
 
 /*
     base da tela
@@ -12,6 +12,10 @@ class Objeto extends React.Component {
         this.state = {
             SendTexts: ""
         }  
+    }
+
+    componentDidMount() {
+        this.nameInput.focus();
     }
 
     onClickKEyPressDownSendMensage(e) {        
@@ -28,7 +32,7 @@ class Objeto extends React.Component {
     render() {    
         return (            
             <div className="ChatBotSendMsg">
-                <input type="text" className="ChatBotSendMsgInput" 
+                <input type="text" ref={(input) => { this.nameInput = input; }}  className="ChatBotSendMsgInput" 
                         value={this.state.SendTexts} 
                         onChange={e => this.setState({SendTexts: e.target.value})}  
                         onKeyDown={e => this.onClickKEyPressDownSendMensage(e) }
