@@ -4,22 +4,20 @@ export const Pesquisa = [
         "id":1,
         "Titulo":"Hoje é: {datetime}",
         "Indexs":[
-            {"chave":"Que dia é hoje?"},
-            {"chave":"Qual dia é hoje?"},
-            {"chave":"Hoje é?"},
+            {"chave":"Que dia é hoje"},
+            {"chave":"Qual dia é hoje"},
+            {"chave":"Hoje é"},
             {"chave":"Hoje é"},
         ]
     },{
             "id":1,
             "Titulo":"Meu nome é Davi, sou um robô, estou aqui para te ajuda e é um prazer em te conhecer.",
             "Indexs":[
-                {"chave":"Qual é seu nome?"},
                 {"chave":"Qual é seu nome"},
                 {"chave":"Qual e seu nome"},
                 {"chave":"qual seu nome"},
-                {"chave":"Com quem estou falando?"},
                 {"chave":"Com quem estou falando"},
-                {"chave":"Como você se chama?"},
+                {"chave":"Como você se chama"},
                 {"chave":"Quem é você"},
             ]
     },{
@@ -108,8 +106,14 @@ const procComparativoPalavra = (chave, msg) => {
     for (let i1 = 0; i1 < dePara.length; i1++) {
         const elm1 = dePara[i1];
         msg_temp = msg_temp.replace(elm1.de, elm1.para)
+        msg_temp = msg_temp.toLowerCase()
         if (chave.toLowerCase() === msg_temp.toLowerCase()) {
             return true
+        } 
+
+        if (chave.indexOf(msg_temp) > -1) {
+            // verificar percentual de acerto da chave
+            // 70% entao ok.
         }
     } 
 
