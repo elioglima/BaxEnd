@@ -20,19 +20,21 @@ class Objeto extends React.Component {
 
     onClickKEyPressDownSendMensage(e) {        
         if(e.keyCode !== 13) return false;
-        this.props.onSendMensage(this.state.SendTexts)        
+        this.props.onSendMensage(e, this.state.SendTexts)        
         this.setState({SendTexts: ''})
     }
 
     onClickSendMensage(e) {        
-        this.props.onSendMensage(this.state.SendTexts)        
+        this.props.onSendMensage(e, this.state.SendTexts)        
         this.setState({SendTexts: ''})
     }
 
     render() {    
         return (            
             <div className="ChatBotSendMsg">
-                <input type="text" ref={(input) => { this.nameInput = input; }}  className="ChatBotSendMsgInput" 
+                <input type="text" 
+                        ref={(input) => { this.nameInput = input; }}  
+                        className="ChatBotSendMsgInput" 
                         value={this.state.SendTexts} 
                         onChange={e => this.setState({SendTexts: e.target.value})}  
                         onKeyDown={e => this.onClickKEyPressDownSendMensage(e) }
@@ -40,7 +42,7 @@ class Objeto extends React.Component {
                         />
 
                 <button className="ChatBotSendMsgButtom" 
-                        onClick={e=>this.onClickSendMensage(e)} >Enviar</button>
+                        onClick={e => this.onClickSendMensage(e)} >Enviar</button>
             </div>            
         )
     }

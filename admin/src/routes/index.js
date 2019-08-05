@@ -1,8 +1,10 @@
 import React, {Component} from "react"
 import { Switch, Route } from "react-router-dom"
 import { ConnectedRouter } from "connected-react-router"
+import ChatBot from '../pages/components/chatbot';
 
 import Acesso from "../pages/acesso"
+import Docs from "../pages/Docs"
 
 // import Logado_Inicio from '../pages/logado/inicio/pages/index'
 // import NotFound from '../pages/generics/notfound/pages/index'
@@ -21,16 +23,20 @@ function withProps(Component, props) {
 class Routes extends Component {  
 
   render() {            
-    return (
-      <ConnectedRouter history={history}>
+    return (     
+      <div>
+      <ConnectedRouter history={history}>        
         <Switch>
           <Route exact path="/" component={withProps(Acesso, {dados:this.props.dados})} />
-          {/* <Route path="/logado" component={withProps(Logado_Inicio, {dados:this.props.dados})} /> */}
+          <Route path="/docs" component={withProps(Docs, {dados:this.props.dados})} />
           {/* <Route path="/cadastrousuario" component={withProps(Logado_Cadastro_Usuario_Dados, {dados:this.props.dados})} /> */}
           {/* <Route path="/logado/ajuda" component={withProps(Logado_Ajuda, {dados:this.props.dados})} /> */}
           {/* <Route path="*" component={withProps(NotFound, {dados:this.props.dados})} /> */}
         </Switch>
       </ConnectedRouter>
+      <ChatBot />
+
+      </div> 
     )
     }
 }

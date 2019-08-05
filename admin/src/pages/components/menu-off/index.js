@@ -8,13 +8,13 @@ class Objeto extends Component {
       <div> 
         <div className="menu-off">
           <div className="col-30">
-            <span className="titulo">Baxend</span>            
+            <span className="titulo">{this.props.label}</span>            
           </div>
 
           <div className="col-70 base-right">
-            <span className="item">Inicio</span>
-            <span className="item">Documetação</span>
-            <span className="item">Suporte</span>
+            <span className="item" onClick={e => this.props.dispHome(e)}>Inicio</span>
+            <span className="item" onClick={e => this.props.dispDocs(e)}>Documetação</span>
+            <span className="item">Suporte</span> 
           </div>
         </div>
         <div className="divisao"></div>

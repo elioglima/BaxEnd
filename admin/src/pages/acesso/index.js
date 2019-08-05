@@ -2,10 +2,9 @@ import React, {Component} from "react";
 import { connect } from "react-redux";
 import * as Actions from "./actions/actions";
 import '../css/styles.css';
-import BannerContato from './components/banner_contato/'
-import MenuOff from './components/menu-off/'
+import BannerContato from '../components/banner_contato/'
+import MenuOff from '../components/menu-off/'
 import QuemSomos from '../components/quem-somos'
-import ChatBot from "../components/chatbot";
 
 class Objeto extends Component {
   
@@ -27,11 +26,11 @@ class Objeto extends Component {
   render() {
 
     this.props.Auth_app()    
-
+    console.log(this.props)
     return (
       <div>  
         <BannerContato />      
-        <MenuOff />
+        <MenuOff {...this.props} label="Baxend" />
                     
         <div className="bannerss" ></div>
         {/* <div className="col-50">
@@ -41,7 +40,6 @@ class Objeto extends Component {
         </div> */}
 
         <QuemSomos />
-        <ChatBot />
 
 
       </div>

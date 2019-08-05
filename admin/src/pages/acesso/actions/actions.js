@@ -1,6 +1,8 @@
 import { push } from "connected-react-router"
 import { Auth_app as Auth } from '../../src/auth_app'
+import * as RoutesAction from '../../../routes/routes_actions'
 
+export const dispDocs = (e) => dispatch => { return dispatch(RoutesAction.dispDocs(e)) }
 export const Auth_app = ()  => dispatch => { return dispatch(Auth()) }
 export const Logar = (parametros) => dispatch => {
 
