@@ -62,7 +62,7 @@ class Objeto extends React.Component {
         this.props.analise(SendTexts)
             .then(async res => {
                 await new Promise (resolve => {                                        
-                  setTimeout(resolve, 2000)
+                  setTimeout(resolve, 500)
                 })
 
                 this.SendMensagem(res.Titulo, "chatbot")              

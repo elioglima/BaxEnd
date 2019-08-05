@@ -44,6 +44,25 @@ export const Pesquisa = [
         ],
         "Route":"/"
     },{
+        "id":3,
+        "Titulo":"Testando conexão com API.",
+        "Indexs":[
+            {"chave":"testar api"},
+            {"chave":"testar conexão com api"},            
+            {"chave":"testar conexão"},            
+            {"chave":"testar conexao"},            
+            {"chave":"teste conexao"},            
+            {"chave":"teste conexão"},            
+        ],
+        "Route":"/docs"
+    },{
+        "id":3,
+        "Titulo":"O que você deseja testar?",
+        "Indexs":[
+            {"chave":"teste"},
+        ],
+        "Route":"/docs"
+    },{
             "id":1,
             "Titulo":"Meu nome é Davi, sou um robô, estou aqui para te ajuda e é um prazer em te conhecer.",
             "Indexs":[
@@ -138,6 +157,7 @@ const dePara = [
     {"de":"voce","para":"você"},
     {"de":"vc","para":"você"},
     {"de":"esta","para":"está"},
+    {"de":"c/","para":"com"},
     {"de":"?","para":""},
 ]
 

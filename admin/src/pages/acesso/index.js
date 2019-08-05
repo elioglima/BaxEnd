@@ -13,7 +13,6 @@ class Objeto extends Component {
     pass:'' 
   }
 
-
   onSubmit = e => {
     e.preventDefault();
     var parametros = {
@@ -26,9 +25,8 @@ class Objeto extends Component {
   render() {
 
     this.props.Auth_app()    
-    console.log(this.props)
     return (
-      <div>  
+      <div> 
         <BannerContato />      
         <MenuOff {...this.props} label="Baxend" />
                     
