@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ChatBotBase from './ChatBotBase';
 import ChamadaAtendimento from './ChamadaAtendimento';
 import * as processar from './Controller/Processar.js'
+import * as Actions from './Actions'
 
 class Objeto extends React.Component {
 
@@ -40,7 +41,18 @@ class Objeto extends React.Component {
             };
         });     
     }
-    onSendMensage(SendTexts) {
+    
+    DirecionarPagina(value) {
+        if(value.hasOwnProperty("Route")) {
+            if (value.Route === '/') {
+                this.props.dispHome(null);
+            } else if (value.Route === '/docs') {
+                this.props.dispDocs(null);
+            }
+        }
+    }
+
+    onSendMensage(e, SendTexts) {        
         if (SendTexts.length === 0) {
             return false
         }
@@ -53,11 +65,12 @@ class Objeto extends React.Component {
                   setTimeout(resolve, 2000)
                 })
 
-                this.SendMensagem(res.Titulo, "chatbot")
-              
+                this.SendMensagem(res.Titulo, "chatbot")              
+                this.DirecionarPagina(res)
               })
-            .catch(err => {
-                console.log('Erro Analise dados:' + err)
+            .catch(res => {
+                this.SendMensagem(res.Titulo, "chatbot")
+
             })
          
     }
@@ -90,7 +103,7 @@ class Objeto extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return { chatbot: processar.chatbot, analise: processar.analise }
+    return { chatbot: processar.chatbotSaudacao, analise: processar.analise }
   }
 
-export default connect(mapStateToProps, null)(Objeto)
+export default connect(mapStateToProps, Actions)(Objeto)

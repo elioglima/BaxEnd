@@ -1,8 +1,17 @@
 import { push } from "connected-react-router";
 import base64 from 'base-64';
 
+  export const dispHome = (e) => dispatch => {
+    if (e !== null) {
+      e.preventDefault()
+    }
+    dispatch(push("/"));
+  }
+
   export const dispInicio = (e) => dispatch => {
-    e.preventDefault()
+    if (e !== null) {
+      e.preventDefault()
+    }
     dispatch(push("/logado"));
   }
 
@@ -10,6 +19,14 @@ import base64 from 'base-64';
     e.preventDefault()
     dispatch(push("/logado/ajuda"));
   }    
+
+  export const dispDocs  = (e) => dispatch => {
+    if (e !== null) {
+      e.preventDefault()
+    }
+
+    dispatch(push("/Docs"));
+  } 
 
   export const disPesquisaGeral = (e, inp_pesquisa) => dispatch => {    
     e.preventDefault()

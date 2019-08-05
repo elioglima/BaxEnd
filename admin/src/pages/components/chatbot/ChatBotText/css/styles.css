@@ -45,6 +45,7 @@
   padding-left: 3px;
   color: darkgrey;
   font-size: 12px;
+
 }
 
 .ChatBotText .ChatBotTextMsgServer {
@@ -58,6 +59,9 @@
   font-size: 13px;
   color: white;
   word-wrap: break-word;
+  text-align: justify;
+  letter-spacing: 2px;
+
 }
 
 .ChatBotText .ChatBotTextMsgClient {
@@ -73,6 +77,8 @@
   word-wrap: break-word;
   line-height: 1.6em;  
   position: relative;
+  text-align: justify;
+  letter-spacing: 2px;
 }
 
 
