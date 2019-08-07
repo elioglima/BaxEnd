@@ -4,23 +4,40 @@ export const DataAPI =  [
         "Titulo":"Cadastro de Usuários",
         "Itens":[
             {
+                "Id":1,
                 "Titulo":"Inserir Usuários",
                 "Metodo":"POST",
+                "URL":"usuario/novo",
                 "Parametros":[
                     {
-                        "name":"Nome",
-                        "tipo":"Numero",
+                        "titulo":"Código da Empresa",
+                        "nome":"IDEmpresa",
+                        "tipo":"text",
                         "tamanho":45,
-                    }
-                ]
-            },{
-                "Titulo":"Alterar Usuários",
-                "Metodo":"POST",
-                "Parametros":[
+                        "placeholder":"Código da Empresa",
+                        "requerido":true,
+                    },
                     {
-                        "name":"Nome",
-                        "tipo":"Numero",
+                        "titulo":"Nome Completo",
+                        "nome":"Nome",
+                        "tipo":"text",
                         "tamanho":45,
+                        "placeholder":"Nome/ Razão Social",
+                        "requerido":true,
+                    },{
+                        "titulo":"E-mail",
+                        "nome":"email",
+                        "tipo":"email",
+                        "tamanho":45,
+                        "placeholder":"e-mail",
+                        "requerido":true,
+                    },{
+                        "titulo":"CPF/ CNPJ",
+                        "nome":"doc1",
+                        "tipo":"text",
+                        "tamanho":45,
+                        "placeholder":"CPF/ CNPJ",
+                        "requerido":true,
                     }
                 ]
             }
@@ -35,9 +52,17 @@ export const DataAPI =  [
                 "Metodo":"POST",
                 "Parametros":[
                     {
+                        "titulo":"Nome Completo",
                         "name":"Nome",
-                        "tipo":"Numero",
+                        "tipo":"text",
                         "tamanho":45,
+                        "placeholder":"informe o nome",
+                    },{
+                        "titulo":"E-mail",
+                        "name":"email",
+                        "tipo":"email",
+                        "tamanho":45,
+                        "placeholder":"informe o e-mail",
                     }
                 ]
             }

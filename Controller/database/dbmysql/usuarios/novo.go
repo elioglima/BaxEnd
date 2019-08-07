@@ -29,6 +29,11 @@ func (s *UsuarioST) Novo(ArrayByteIn []byte) (string, error) {
 		return err.Error(), err
 	}
 
+	if err := s.LoadEmpresa(int64(*dados.EmpresaID)); err != nil {
+		logs.Erro(err)
+		return err.Error(), err
+	}
+
 	smsg, err := s.ValidacaoNovo(dados)
 	if err != nil {
 		logs.Erro(err)

@@ -6,7 +6,7 @@ export const RAPI = (uri, params) => {
       
       function(resolve, reject) { 
         
-        const URLS = 'http://localhost:2000/api/' + uri
+        const URLS = 'http://localhost:2000'+'/api/'+uri
         const request = require('request');
         const base64 = require('base-64');
         const var_logado = base64.decode(localStorage.getItem('logado'))    
@@ -29,9 +29,14 @@ export const RAPI = (uri, params) => {
         const v = localStorage.getItem('A1')
         const json_token =  base64.decode(v)
       
-        if (json_token.toString().trim().length > 0) {
+        if (json_token.toString().trim().length == 0) {
+            retorno.Status = 500 
+            retorno.Response = "Erro ao gerar token"
+            reject(retorno)
+            return
+        }
         
-          try {         
+        try {         
             const json_parse = JSON.parse(json_token)  
             const res_token = token.decodificar(json_parse)
 
@@ -41,14 +46,27 @@ export const RAPI = (uri, params) => {
                 params: params
               }
 
-              request({
+              console.log('params',params)
+
+              const data = JSON.stringify(params)
+              const options = {
                 url: URLS,
-                method: 'POST',
-                json: true,
-                body: sendJSON, 
-              }, (err, response, body) => {
+                method: 'POST',                
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Cache-Control': 'no-cache',
+                  Accept: '*/*',
+                  'User-Agent': 'PostmanRuntime/7.15.2',
+                },
+                json:true,
+                body:params,
+                                
+                
+              }
+
+              request(options, (err, response, body) => {
                 try {
-        
+                  console.log(err, response, body)
                   if (response.statusCode !== 200) {                
                     retorno.Status = response.statusCode 
                     retorno.Response = response.statusMessage
@@ -74,10 +92,11 @@ export const RAPI = (uri, params) => {
             }
         
           } catch (error) {
+
             retorno.Status = 500 
             retorno.Response = error    
             reject(retorno)
           }
-        }
+
       })
   } 

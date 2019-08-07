@@ -1,8 +1,8 @@
 package Controller
 
 import (
-	logger "GoLibs/logs"
 	"BaxEnd/Controller/routes/views"
+	logger "GoLibs/logs"
 	"encoding/base64"
 	"net/http"
 	"strings"

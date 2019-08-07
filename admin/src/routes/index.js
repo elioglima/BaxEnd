@@ -35,7 +35,6 @@ class Routes extends Component {
         </Switch>
       </ConnectedRouter>
       <ChatBot />
-
       </div> 
     )
     }

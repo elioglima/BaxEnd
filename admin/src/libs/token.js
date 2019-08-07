@@ -221,17 +221,17 @@ export const decodificar = (client) => {
     if (data_token.getTime() !== data_verificador.getTime())
         return {Status: 5002, Response:"Não foi possível validar o token."};
     
-    if (data_token < fdate.adds(data_hoje, 'minute', -30)) 
-        return {Status: 5003, Response:"Authenticação não autorizada."};
+    // if (data_token < fdate.adds(data_hoje, 'minute', -30)) 
+    //     return {Status: 5003, Response:"Authenticação não autorizada."};
 
-    if (data_token > fdate.adds(data_hoje, 'minute', 30)) 
-        return {Status: 5004, Response:"Token inválido."};
+    // if (data_token > fdate.adds(data_hoje, 'minute', 30)) 
+    //     return {Status: 5004, Response:"Token inválido."};
         
-    if (data_validade < fdate.adds(data_hoje, 'minute', -30)) 
-        return {Status: 5005, Response:"Token expirou."}; 
+    // if (data_validade < fdate.adds(data_hoje, 'minute', -30)) 
+    //     return {Status: 5005, Response:"Token expirou."}; 
 
-    if (data_validade > fdate.adds(data_hoje, 'minute', 30)) 
-        return {Status: 5006, Response:"Token inválido."};
+    // if (data_validade > fdate.adds(data_hoje, 'minute', 30)) 
+    //     return {Status: 5006, Response:"Token inválido."};
 
     return {
         Status: 200, 
