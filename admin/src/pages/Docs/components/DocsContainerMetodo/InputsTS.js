@@ -17,12 +17,16 @@ class Objeto extends Component {
                     this.props.item.Parametros.map((itemParam, key2) => {
                         let nome = "ID" + this.props.item.Id + "CMPTP" + itemParam.tipo + "NMCP" + itemParam.nome                        
                         return (
-                            <div>  
-                                <TextField 
-                                    nome={nome} 
-                                    tipo={itemParam.tipo} 
-                                    placeholder={itemParam.placeholder}  
-                                    onChange={this.props.onChange}  
+                            <div key={key2} >  
+                                <TextField
+                                    key={nome}  
+                                    nome = {nome} 
+                                    tipo = {itemParam.tipo} 
+                                    valor = {itemParam.valor} 
+                                    titulo = {itemParam.titulo} 
+                                    placeholder = {itemParam.placeholder}  
+                                    onChange = {this.props.onChange}  
+                                    onAutoChange = {this.props.onAutoChange}  
                                     />                                                                                                                              
                             </div>
                         )

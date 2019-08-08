@@ -26,17 +26,6 @@ class Objeto extends Component {
     render() {  
         return (
             <div className="CompReactRButtonControl" >
-                {
-                    (() => {
-                        if (this.state.titulo.length > 0) {
-                            return (
-                                <div className="CompReactRButtonControlLabel" >
-                                </div>
-                            )
-                        }                    
-                    })
-                }
-                
                 <div className="CompReactRButtonControlInput">
                     <button  type={this.state.tipo} 
                         className={this.state.className}

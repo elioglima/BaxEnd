@@ -16,3 +16,51 @@
     width: 100px;
     height: 100px;
 }
+
+.olhoazul, .olhobranco {
+    animation: olho infinite 5s;
+}
+
+.antena {
+    animation: anteninha infinite 5s;
+}
+
+@keyframes olho {
+    0% {
+      left: 0px;
+    }
+    
+    20% {
+        left: 0px;
+    }
+
+    40% {
+        left: 17px;
+    }
+    
+    60% {
+        left: 17px;
+    }
+
+    80% {
+        left: 0px;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+@keyframes anteninha {
+    0% {
+      transform: rotate(10deg)
+    }
+    
+    50% {
+        transform: rotate(-10deg)
+    }
+    
+    100% {
+        transform: rotate(10deg)
+    }
+}

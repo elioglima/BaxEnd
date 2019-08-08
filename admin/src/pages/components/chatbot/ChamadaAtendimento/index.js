@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from "react-redux";
-import logo from './img/icoChatBot.png';
+import cabeca from './img/RB1.svg'
+import olhoazul from './img/RB-OAZ.svg'
+import olhobranco from './img/RB-OBRA.svg'
+import antena from './img/RB-ANTENA.svg'
 import './css/ChamadaAtendimento.css';
 
 /*
@@ -11,8 +14,11 @@ class Objeto extends React.Component {
 
     render() {    
         return (            
-            <div className="ChamadaAtendimentoBase">     
-                <img src={logo} alt="Inicie seu atendimento" onClick={e=>this.props.onChamadaAtendimento(e)} />
+            <div className="ChamadaAtendimentoBase" alt="Inicie seu atendimento" onClick={e=>this.props.onChamadaAtendimento(e)}>     
+                <img className="antena" src={antena} />                                                
+                <img className="cabeca" src={cabeca} />                
+                <img className="olhoazul" src={olhoazul} />           
+                <img className="olhobranco" src={olhobranco} />    
             </div>            
         )
     }
