@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
 )
 
 func setRoutes() {
@@ -62,7 +63,7 @@ func SetRoutesUsuario(routes *mux.Router) {
 	// sRotaUsuario := "/api/{EmpresaID:[0-9]+}/usuario"
 	// sRotaUsuario := "/api/"
 
-	routes.HandleFunc("/api/usuario/novo/", usuario.Test)
+	routes.HandleFunc("/api/usuario/pesquisa/todos", usuario.PesquisaTodos)
 	// routes.HandleFunc("/api/usuario/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
 	// routes.HandleFunc("/api/usuario/atualizar/{id:[0-9]+}", use(usuario.Atualizar, basicAuth))
 	// routes.HandleFunc("/api/usuario/hash/{email}/{documento}", use(usuario.ColherHash, basicAuth))

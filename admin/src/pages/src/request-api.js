@@ -17,38 +17,38 @@ export const RAPI = (uri, params) => {
             body:{}
         }
     
-        if ((var_logado === null) || (var_logado === undefined)) {
-          retorno.Status = 500 
-          retorno.Response = 'Ops, não existe usuário logado.'       
-        } else if (var_logado.toString().trim().length === 0) {
-          retorno.Status = 500 
-          retorno.Response = 'Ops, não existe usuário logado.'     
-        }
+        // if ((var_logado === null) || (var_logado === undefined)) {
+        //   retorno.Status = 500 
+        //   retorno.Response = 'Ops, não existe usuário logado.'       
+        // } else if (var_logado.toString().trim().length === 0) {
+        //   retorno.Status = 500 
+        //   retorno.Response = 'Ops, não existe usuário logado.'     
+        // }
 
-        var token = require('../../libs/token');  
-        const v = localStorage.getItem('A1')
-        const json_token =  base64.decode(v)
+        // var token = require('../../libs/token');  
+        // const v = localStorage.getItem('A1')
+        // const json_token =  base64.decode(v)       
+        
+        // console.log('params',v)
       
-        if (json_token.toString().trim().length == 0) {
-            retorno.Status = 500 
-            retorno.Response = "Erro ao gerar token"
-            reject(retorno)
-            return
-        }
+        // if (json_token.toString().trim().length == 0) {
+        //     retorno.Status = 500 
+        //     retorno.Response = "Erro ao gerar token"
+        //     reject(retorno)
+        //     return
+        // }
         
         try {         
-            const json_parse = JSON.parse(json_token)  
-            const res_token = token.decodificar(json_parse)
+            // const json_parse = JSON.parse(json_token)  
+            // const res_token = token.decodificar(json_parse)
 
-            if (res_token.Status === 200) {
-              const sendJSON = {
-                A1: json_parse,
-                params: params
-              }
+            // if (res_token.Status === 200) {
+            //   const sendJSON = {
+            //     A1: json_parse,
+            //     params: params
+            //   }
 
-              console.log('params',params)
 
-              const data = JSON.stringify(params)
               const options = {
                 url: URLS,
                 method: 'POST',                
@@ -60,13 +60,10 @@ export const RAPI = (uri, params) => {
                 },
                 json:true,
                 body:params,
-                                
-                
               }
 
               request(options, (err, response, body) => {
                 try {
-                  console.log(err, response, body)
                   if (response.statusCode !== 200) {                
                     retorno.Status = response.statusCode 
                     retorno.Response = response.statusMessage
@@ -85,11 +82,11 @@ export const RAPI = (uri, params) => {
                 }         
               });    
 
-            } else {
-              retorno.Status = res_token.Status 
-              retorno.Response = res_token.Response 
-              reject(retorno)
-            }
+            // } else {
+            //   retorno.Status = res_token.Status 
+            //   retorno.Response = res_token.Response 
+            //   reject(retorno)
+            // }
         
           } catch (error) {
 

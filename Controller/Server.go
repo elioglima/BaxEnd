@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
 )
 
 var (
@@ -45,11 +46,11 @@ func ListenServer(sPorta int) {
 	setRoutes()
 
 	go func() {
-		// err := global.DBConnect()
-		// if err != nil {
-		// 	logger.Erro("Database Desconectado", err)
-		// 	return
-		// }
+		err := global.DBConnect()
+		if err != nil {
+			logger.Erro("Database Desconectado", err)
+			return
+		}
 
 		// allowedHeaders := handlers.AllowedHeaders([]string{"*"})
 		// allowedOrigins := handlers.AllowedOrigins([]string{"*"})
@@ -57,7 +58,7 @@ func ListenServer(sPorta int) {
 		// err = http.ListenAndServe(":"+strconv.Itoa(porta), handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(routes))
 
 		handler := cors.AllowAll().Handler(routes)
-		err := http.ListenAndServe(":"+strconv.Itoa(porta), handler)
+		err = http.ListenAndServe(":"+strconv.Itoa(porta), handler)
 		if err != nil {
 			logger.Erro("ListenAndServe: ", err)
 			return

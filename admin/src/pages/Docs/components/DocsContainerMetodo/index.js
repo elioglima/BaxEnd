@@ -12,7 +12,8 @@ class Objeto extends Component {
         this.state = {
             "ResponseAPI":{
                 "Status":0,
-                "Response":""
+                "Mensagem":"",
+                "Dados":{}
             },
             "ResponseAPIID":0
         }
@@ -29,7 +30,7 @@ class Objeto extends Component {
             if (this.state.hasOwnProperty(key)) {
                 if (key.indexOf("CompReactID"+item.Id) > -1) {                     
                     const nome = this.props.getName(key)
-                    DadosJson[nome] = this.state[key]
+                    DadosJson[nome] = this.props.getValue(key, this.state[key])
                 } 
             }
         }
@@ -37,25 +38,24 @@ class Objeto extends Component {
 
         // [{nome:valor},{nome2:valor}]
         // {nome:valor, nome2:valor}
-        
+        console.log(DadosJson)
         var count = Object.keys(DadosJson).length;
         if (count === 0) {
             return
         }
 
-        console.log(count, DadosJson);
-
         this.props.dispRAPI(item.URL, DadosJson)
             .then(res => {
                 console.log("sucesso", res)
-                // this.setState(
-                //     {
-                //         "ResponseAPI":{
-                //             Status:res.Status,
-                //             Response:res.body.Msg,
-                //         },
-                //         "ResponseAPIID":item.Id
-                //     })
+                this.setState(
+                    {
+                        "ResponseAPI":{
+                            Status:res.Status,
+                            Mensagem:res.body.Msg,
+                            Dados:res.body.Dados,
+                        },
+                        "ResponseAPIID":item.Id
+                    })
 
             })
             .catch(erro => {

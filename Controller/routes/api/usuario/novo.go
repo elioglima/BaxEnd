@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
 )
 
 func Novo(w http.ResponseWriter, r *http.Request) {
@@ -16,24 +17,6 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
 	Retorno.Ini()
-
-	type Cdata struct {
-		Nome string
-	}
-
-	DataTipo := Cdata{}
-
-	data, err := ioutil.ReadAll(r.Body)
-	if err == nil && data != nil {
-		err = json.Unmarshal(data, &DataTipo)
-		if err != nil {
-			http.Error(w, err.Error(), 400)
-			return
-		}
-	}
-
-	fmt.Printf("%s", DataTipo.Nome)
-	return
 
 	ArrayByteIn, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -44,29 +27,6 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 		responseReturn(w, Retorno)
 		return
 	}
-
-	logs.Erro(ArrayByteIn)
-	err = json.Unmarshal(ArrayByteIn, &DataTipo)
-	if err != nil {
-		http.Error(w, err.Error(), 400)
-		return
-	}
-
-	// } else if len(ArrayByteIn) == 0 {
-	// 	Retorno.Erro = true
-	// 	Retorno.Msg = "Nenhum paramêtros informado."
-	// 	Retorno.Dados = nil
-	// 	logs.Erro(Retorno.Msg)
-	// 	responseReturn(w, Retorno)
-	// 	return
-	// }
-
-	Retorno.Erro = true
-	Retorno.Msg = "Nenhum paramêtros informado."
-	Retorno.Dados = nil
-	logs.Erro(Retorno.Msg)
-	responseReturn(w, Retorno)
-	return
 
 	if err := database.MySql.Conectar(); err != nil {
 		Retorno.Erro = true
@@ -91,16 +51,17 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 }
 
 func Test(w http.ResponseWriter, r *http.Request) {
-	var body map[string]interface{}
+
 	type Cdata struct {
 		Nome string
 	}
+	// fmt.Printf("%s ok", r.Body)
 
 	DataTipo := Cdata{}
 
-	data, err := ioutil.ReadAll(r.Body)
-	if err == nil && data != nil {
-		err = json.Unmarshal(data, &DataTipo)
+	ArrayByteIn, err := ioutil.ReadAll(r.Body)
+	if err == nil && ArrayByteIn != nil {
+		err = json.Unmarshal(ArrayByteIn, &DataTipo)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 			return
@@ -108,12 +69,5 @@ func Test(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("%s", DataTipo.Nome)
-	return
 
-	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		http.Error(w, err.Error(), 400)
-		return
-	}
-
-	fmt.Fprintf(w, "body: %s\n", body)
 }

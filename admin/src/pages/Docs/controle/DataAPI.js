@@ -5,64 +5,17 @@ export const DataAPI =  [
         "Itens":[
             {
                 "Id":1,
-                "Titulo":"Inserir Usuários",
+                "Titulo":"Pesquisa Todos Usuários",
                 "Metodo":"POST",
-                "URL":"usuario/novo",
+                "URL":"usuario/pesquisa/todos",
                 "Parametros":[
                     {
                         "titulo":"Código da Empresa",
-                        "nome":"IDEmpresa",
-                        "tipo":"text",
+                        "nome":"EmpresaID",
+                        "tipo":"number",
                         "tamanho":45,
                         "placeholder":"Código da Empresa",
                         "requerido":true,
-                    },
-                    {
-                        "titulo":"Nome Completo",
-                        "nome":"Nome",
-                        "tipo":"text",
-                        "tamanho":45,
-                        "placeholder":"Nome/ Razão Social",
-                        "requerido":true,
-                    },{
-                        "titulo":"E-mail",
-                        "nome":"email",
-                        "tipo":"email",
-                        "tamanho":45,
-                        "placeholder":"e-mail",
-                        "requerido":true,
-                    },{
-                        "titulo":"CPF/ CNPJ",
-                        "nome":"doc1",
-                        "tipo":"text",
-                        "tamanho":45,
-                        "placeholder":"CPF/ CNPJ",
-                        "requerido":true,
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "Id":2,
-        "Titulo":"Cadastro de Cliente",
-        "Itens":[
-            {
-                "Titulo":"Alterar",
-                "Metodo":"POST",
-                "Parametros":[
-                    {
-                        "titulo":"Nome Completo",
-                        "name":"Nome",
-                        "tipo":"text",
-                        "tamanho":45,
-                        "placeholder":"informe o nome",
-                    },{
-                        "titulo":"E-mail",
-                        "name":"email",
-                        "tipo":"email",
-                        "tamanho":45,
-                        "placeholder":"informe o e-mail",
                     }
                 ]
             }

@@ -2,10 +2,13 @@ package Usuarios
 
 import (
 	"GoLibs"
+	"GoLibs/logs"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
 	"strings"
+
 )
 
 func (s *UsuarioST) PesquisaCodigo(ID int64) error {
@@ -106,11 +109,26 @@ func (s *UsuarioST) PesquisaEmail(email_in string) error {
 	return nil
 }
 
-func (s *UsuarioST) PesquisaTodos() error {
-	s.RecordCount = 0
+func (s *UsuarioST) PesquisaTodos(ArrayByteIn []byte) error {
+	logs.Cyan("/api/usuario/pesquisa/todos")
+	type CDados struct {
+		EmpresaID int64
+	}
+
+	dados := CDados{}
+	fmt.Printf("%+s\n", ArrayByteIn)
+	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
+		return err
+	}
+
+	logs.Cyan(dados.EmpresaID)
 
 	if err := s.dbConexao.CheckConnect(); err != nil {
 		return errors.New("Banco de dados não conectado.")
+	}
+
+	if err := s.LoadEmpresa(dados.EmpresaID); err != nil {
+		return err
 	}
 
 	sSQL := "select * from " + ConsNomeTabela
