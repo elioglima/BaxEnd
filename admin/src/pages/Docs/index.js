@@ -1,16 +1,22 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import * as Actions from "./actions/actions";
-import '../css/styles.css';
+import * as Actions from "./actions";
+import './components/css/styles.css'
 import BannerContato from '../components/banner_contato'
 import MenuOff from '../components/menu-off'
-import MenuLateral from "./components/MenuLateral";
+import DocsBase from "./components/DocsBase";
 
 class Objeto extends Component {
   
-  state = {
-    name:'',
-    pass:'' 
+  constructor(props) {
+    super(props)
+    this.state = {
+        registro_sel:0
+    }
+  }    
+
+  onClickRegistroSel(e, key) {
+      this.setState({registro_sel:key})
   }
 
 
@@ -20,19 +26,16 @@ class Objeto extends Component {
       N: this.state.name,
       P: this.state.pass,
     }
-    this.props.Logar(parametros)    
   }  
 
   render() {
 
-    this.props.Auth_app()    
 
     return (
       <div>  
         <BannerContato />      
         <MenuOff {...this.props} label="Documentação" />
-        <MenuLateral />
-
+        <DocsBase {...this.state} onClickRegistroSel={this.onClickRegistroSel.bind(this)} />
       </div>
       );
       }

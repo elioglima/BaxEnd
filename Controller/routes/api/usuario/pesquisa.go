@@ -2,25 +2,29 @@ package usuario
 
 import (
 	"BaxEnd/Controller/database"
+	"GoLibs/logs"
 	"errors"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
 
 	"github.com/gorilla/mux"
+
 )
 
 func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 
+	logs.Branco("usuario/pesquisa/todos/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
-	params := mux.Vars(r)
 
-	EmpresaID, err := strconv.Atoi(params["EmpresaID"])
+	ArrayByteIn, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		Retorno.Erro = true
-		Retorno.Msg = err.Error()
+		Retorno.Msg = errors.New("Erro ao receber body. \n " + err.Error()).Error()
 		Retorno.Dados = nil
+		logs.Erro(Retorno.Msg)
 		responseReturn(w, Retorno)
 		return
 	}
@@ -33,15 +37,7 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.Usuario.LoadEmpresa(int64(EmpresaID)); err != nil {
-		Retorno.Erro = true
-		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	if err := database.MySql.Usuario.PesquisaTodos(); err != nil {
+	if err := database.MySql.Usuario.PesquisaTodos(ArrayByteIn); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil

@@ -1,0 +1,10 @@
+
+.CompReactTextFieldControl {
+    float: left;
+    padding: 5px 10px 5px 0px;
+}
+
+.CompReactTextFieldControl .CompReactTextFieldControlInput input {
+    padding: 5px 5px 5px 5px;
+    font-size: 14px;
+}

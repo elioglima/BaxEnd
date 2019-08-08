@@ -4,40 +4,18 @@ export const DataAPI =  [
         "Titulo":"Cadastro de Usuários",
         "Itens":[
             {
-                "Titulo":"Inserir Usuários",
+                "Id":1,
+                "Titulo":"Pesquisa Todos Usuários",
                 "Metodo":"POST",
+                "URL":"usuario/pesquisa/todos",
                 "Parametros":[
                     {
-                        "name":"Nome",
-                        "tipo":"Numero",
+                        "titulo":"Código da Empresa",
+                        "nome":"EmpresaID",
+                        "tipo":"number",
                         "tamanho":45,
-                    }
-                ]
-            },{
-                "Titulo":"Alterar Usuários",
-                "Metodo":"POST",
-                "Parametros":[
-                    {
-                        "name":"Nome",
-                        "tipo":"Numero",
-                        "tamanho":45,
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "Id":2,
-        "Titulo":"Cadastro de Cliente",
-        "Itens":[
-            {
-                "Titulo":"Alterar",
-                "Metodo":"POST",
-                "Parametros":[
-                    {
-                        "name":"Nome",
-                        "tipo":"Numero",
-                        "tamanho":45,
+                        "placeholder":"Código da Empresa",
+                        "requerido":true,
                     }
                 ]
             }

@@ -3,13 +3,15 @@ package Controller
 // https://github.com/mongodb/mongo-go-driver
 // go get github.com/derekparker/delve/cmd/dlv
 import (
-	logger "GoLibs/logs"
 	"BaxEnd/Controller/global"
+	logger "GoLibs/logs"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
 )
 
 var (
@@ -44,14 +46,19 @@ func ListenServer(sPorta int) {
 	setRoutes()
 
 	go func() {
-
 		err := global.DBConnect()
 		if err != nil {
 			logger.Erro("Database Desconectado", err)
 			return
 		}
 
-		err = http.ListenAndServe(":"+strconv.Itoa(porta), routes)
+		// allowedHeaders := handlers.AllowedHeaders([]string{"*"})
+		// allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+		// allowedMethods := handlers.AllowedMethods([]string{"*"})
+		// err = http.ListenAndServe(":"+strconv.Itoa(porta), handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(routes))
+
+		handler := cors.AllowAll().Handler(routes)
+		err = http.ListenAndServe(":"+strconv.Itoa(porta), handler)
 		if err != nil {
 			logger.Erro("ListenAndServe: ", err)
 			return

@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
 )
 
 type StUsersNovoIn struct {
@@ -26,6 +27,11 @@ func (s *UsuarioST) Novo(ArrayByteIn []byte) (string, error) {
 	if err != nil {
 		smsg := "Json recebido é inválido. \n" + err.Error()
 		err := errors.New(smsg)
+		return err.Error(), err
+	}
+
+	if err := s.LoadEmpresa(int64(*dados.EmpresaID)); err != nil {
+		logs.Erro(err)
 		return err.Error(), err
 	}
 
