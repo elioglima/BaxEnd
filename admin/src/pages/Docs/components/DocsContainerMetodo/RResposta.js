@@ -12,7 +12,7 @@ class Objeto extends Component {
             <div className={this.props.classNameBase}>                          
                 { this.props.item.Id === this.props.ResponseAPIID &&  this.props.ResponseAPI.Mensagem }
                 <br />
-                { this.props.item.Id === this.props.ResponseAPIID &&  JSON.stringify(this.props.ResponseAPI.Dados) }
+                { this.props.item.Id === this.props.ResponseAPIID &&  <div><pre>{JSON.stringify(this.props.ResponseAPI.Dados, null, 2) }</pre></div> }
             </div> 
         )
     }
