@@ -137,7 +137,7 @@ func (s *UsuarioST) PesquisaEmail(email_in string) error {
 
 	sSQL := " select * from usuario "
 	sSQL += " where EmpresaID = " + strconv.FormatInt(s.Empresa.Field.Id, 10)
-	sSQL += " and email = " + GoLibs.Asp(email_in)
+	sSQL += " and email like " + GoLibs.Asp(email_in+"%")
 	sSQL += " limit 0,1"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
