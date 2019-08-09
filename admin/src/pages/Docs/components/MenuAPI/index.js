@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import {DataAPI} from '../../controle/DataAPI'
-import DocsContainer from '../DocsContainer';
+import RButtonDash from '../../../components/html/RButtonDash';
 
 class Objeto extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class Objeto extends Component {
                 {
                     DataAPI.map((item, key) => {
                         return (
-                            <div key={key} className="docs-menu-lateral-item" onClick={e => this.props.onClickRegistroSel(e, key)}>{item.Titulo}</div> 
+                            <RButtonDash key={item.Id} titulo={item.Titulo} onClick={e => this.props.onClickRegistroSel(e, key)} />                           
                         )
                     })
                 }

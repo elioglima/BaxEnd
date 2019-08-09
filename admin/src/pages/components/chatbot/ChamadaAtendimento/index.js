@@ -16,9 +16,10 @@ class Objeto extends React.Component {
         return (            
             <div className="ChamadaAtendimentoBase" alt="Inicie seu atendimento" onClick={e=>this.props.onChamadaAtendimento(e)}>     
                 <img className="antena" src={antena} />                                                
-                <img className="cabeca" src={cabeca} />                
                 <img className="olhoazul" src={olhoazul} />           
                 <img className="olhobranco" src={olhobranco} />    
+                <div className="fundoolho" ></div>                
+                <img className="cabeca" src={cabeca} />                
             </div>            
         )
     }

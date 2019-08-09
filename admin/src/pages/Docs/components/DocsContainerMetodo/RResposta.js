@@ -7,12 +7,12 @@ class Objeto extends Component {
 
     }
 
-    render() {            
+    render() {                    
         return (            
-            <div className={this.props.classNameBase}>                          
+            <div className="docs-container-metodo-resposta">                                          
                 { this.props.item.Id === this.props.ResponseAPIID &&  this.props.ResponseAPI.Mensagem }
                 <br />
-                { this.props.item.Id === this.props.ResponseAPIID &&  <div><pre>{JSON.stringify(this.props.ResponseAPI.Dados, null, 2) }</pre></div> }
+                { this.props.item.Id === this.props.ResponseAPIID && <pre>{JSON.stringify(this.props.ResponseAPI.Dados, null, 2) }</pre> }
             </div> 
         )
     }

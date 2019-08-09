@@ -28,10 +28,10 @@ class Objeto extends Component {
     }
 
     render() {  
-        
+        console.log(this.state.titulo)
         return (
             <div key={this.props.key} className="CompReactTextFieldControl" >
-                { this.state.titulo.length > 0 && <div className="CompReactTextFieldControlLabel" >{this.state.titulo}</div> && ""}                 
+                <div className="CompReactTextFieldControlLabel" >{this.state.titulo}</div>
                 <div className="CompReactTextFieldControlInput">
                     <input  
                         type={this.state.tipo} 

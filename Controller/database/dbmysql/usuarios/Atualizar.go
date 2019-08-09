@@ -131,7 +131,6 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 		}
 
 	} else if dados.TipoPessoaID != nil {
-
 		// verificar a existencia do registro de tipo de pessoa
 		TipoPessoa := tipo_pessoa.New()
 		if err := TipoPessoa.PesquisaID(*dados.TipoPessoaID); err != nil {
@@ -146,7 +145,6 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 		if *dados.TipoPessoaID == 0 {
 
 			// cadastro de pessoa fisica
-
 			if dados.Doc1 != nil {
 				if err := GoLibs.IsCPF(*dados.Doc1); err != nil { // verificação de cpf
 					smsg := "O CPF informado não é válido."
@@ -209,7 +207,6 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 	if dados.Doc2 != nil {
 
 		// verificação do documento doc2 caso tenha sido informado
-
 		if len(strings.TrimSpace(*dados.Doc2)) == 0 {
 			dados.Doc2 = nil
 
@@ -238,6 +235,5 @@ func (s *UsuarioST) ValidacaoAlterar(dados *UsuarioDadosInST) (string, error) {
 		}
 
 	}
-
 	return "", nil
 }

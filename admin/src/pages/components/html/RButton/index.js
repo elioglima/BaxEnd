@@ -6,13 +6,10 @@ class Objeto extends Component {
     constructor(props) {
         super(props)
         
-        this.state = {
-            id:"CompReact"+props.nome+props.tipo,
-            nome:props.nome,
-            tipo:props.tipo,
+        let nome = "CompReactBTID" + this.props.item.Id                        
+        this.state = {            
+            id:nome,
             valor:props.valor,
-            placeholder:props.placeholder,
-            titulo:props.titulo,
             erro:props.erro,
             className:props.className,
         }
@@ -23,7 +20,8 @@ class Objeto extends Component {
         this.setState({valor:e.target.value})
     }
 
-    render() {  
+    render() {         
+
         return (
             <div className="CompReactRButtonControl" >
                 <div className="CompReactRButtonControlInput">
@@ -31,7 +29,7 @@ class Objeto extends Component {
                         className={this.state.className}
                         id={this.state.id} 
                         name={this.state.id}                         
-                        onClick={e => this.props.onClick(this.props.item, e)} 
+                        onClick={e => this.props.onClick(this.props.item, this.state.id)} 
                         >{this.props.valor}</button> 
                 </div>
                 
