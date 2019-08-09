@@ -16,7 +16,10 @@ class Objeto extends Component {
             erro:props.erro,
             className:props.className,
         }
+    }
 
+    componentDidMount = () => {
+        this.props.onAutoChange(this.state.id, this.state.valor)
     }
 
     onChange = (e) => {                
@@ -25,39 +28,22 @@ class Objeto extends Component {
     }
 
     render() {  
+        console.log(this.state.titulo)
         return (
-            <div className="CompReactTextFieldControl" >
-                {
-                    (() => {
-                        if (this.state.titulo.length > 0) {
-                            return (
-                                <div className="CompReactTextFieldControlLabel" >
-                                </div>
-                            )
-                        }                    
-                    })
-                }
-                
+            <div key={this.props.key} className="CompReactTextFieldControl" >
+                <div className="CompReactTextFieldControlLabel" >{this.state.titulo}</div>
                 <div className="CompReactTextFieldControlInput">
-                    <input  type={this.state.tipo} 
+                    <input  
+                        type={this.state.tipo} 
                         className={this.state.className}
                         id={this.state.id} 
                         name={this.state.id} 
-                        value={this.state.vbalor} 
+                        value={this.state.valor} 
                         onChange={e => this.onChange(e)} 
                         placeholder={this.state.placeholder}
                         />
                 </div>
-                {
-                    (() => {
-                        if (this.state.erro.length > 0) {
-                            return (
-                                <div className="CompReactTextFieldControlError" >
-                                </div>
-                            )
-                        }                    
-                    })
-                }
+                {/* { this.state.erro.length > 0 && <div className="CompReactTextFieldControlError" > </div> && "" } */}
                 
             </div>
         )

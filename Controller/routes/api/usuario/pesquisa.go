@@ -3,15 +3,77 @@ package usuario
 import (
 	"BaxEnd/Controller/database"
 	"GoLibs/logs"
+	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"strconv"
-	"strings"
-
-	"github.com/gorilla/mux"
-
 )
+
+func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
+
+	logs.Branco("usuario/pesquisa/codigo/")
+	Retorno := sRetorno{}
+	Retorno.Ini()
+
+	ArrayByteIn, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = errors.New("Erro ao receber body. \n " + err.Error()).Error()
+		Retorno.Dados = nil
+		logs.Erro(Retorno.Msg)
+		responseReturn(w, Retorno)
+		return
+	}
+
+	type CDados struct {
+		EmpresaID int64
+		Id        int64
+	}
+
+	dados := CDados{}
+	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(dados.EmpresaID); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.PesquisaCodigo(int64(dados.Id)); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if database.MySql.Usuario.RecordCount == 0 {
+		Retorno.Msg = "Nenhum usuário não localizado"
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	Retorno.Dados = database.MySql.Usuario.Field
+	Retorno.Msg = "Usuários localizado com sucesso."
+	responseReturn(w, Retorno)
+}
 
 func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 
@@ -57,22 +119,21 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 	responseReturn(w, Retorno)
 }
 
-func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
-
+func PesquisaNome(w http.ResponseWriter, r *http.Request) {
+	logs.Branco("usuario/pesquisa/nome/")
 	Retorno := sRetorno{}
-	Retorno.Ini()
-	params := mux.Vars(r)
 
-	ID, err := strconv.Atoi(params["id"])
+	ArrayByteIn, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		Retorno.Erro = true
-		Retorno.Msg = err.Error()
+		Retorno.Msg = errors.New("Erro ao receber body. \n " + err.Error()).Error()
 		Retorno.Dados = nil
+		logs.Erro(Retorno.Msg)
 		responseReturn(w, Retorno)
 		return
 	}
 
-	if err := database.MySql.Usuario.PesquisaCodigo(int64(ID)); err != nil {
+	if err := database.MySql.Conectar(); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
@@ -80,59 +141,7 @@ func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if database.MySql.Usuario.RecordCount == 0 {
-		Retorno.Msg = "Nenhum usuário não localizado"
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	Retorno.Dados = database.MySql.Usuario.Field
-	Retorno.Msg = "Usuários localizado com sucesso."
-	responseReturn(w, Retorno)
-}
-
-func PesquisaEmail(w http.ResponseWriter, r *http.Request) {
-
-	Retorno := sRetorno{}
-	params := mux.Vars(r)
-	value := params["value"]
-
-	if err := database.MySql.Usuario.PesquisaEmail(value); err != nil {
-		Retorno.Erro = true
-		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	if database.MySql.Usuario.RecordCount == 0 {
-		Retorno.Msg = "Nenhum usuário não localizado"
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	Retorno.Dados = database.MySql.Usuario.Field
-	Retorno.Msg = "Usuário localizado com sucesso."
-	responseReturn(w, Retorno)
-}
-
-func PesquisaNome(w http.ResponseWriter, r *http.Request) {
-
-	Retorno := sRetorno{}
-	params := mux.Vars(r)
-	value := params["value"]
-
-	if len(strings.TrimSpace(value)) == 0 {
-		Retorno.Erro = true
-		Retorno.Msg = errors.New("Paramêtro não informado").Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	if err := database.MySql.Usuario.PesquisaNome(value); err != nil {
+	if err := database.MySql.Usuario.PesquisaNome(ArrayByteIn); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
@@ -148,6 +157,72 @@ func PesquisaNome(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Retorno.Dados = database.MySql.Usuario.Fields
+	Retorno.Msg = "Usuário localizado com sucesso."
+	responseReturn(w, Retorno)
+}
+
+func PesquisaEmail(w http.ResponseWriter, r *http.Request) {
+
+	logs.Branco("usuario/pesquisa/email/")
+	Retorno := sRetorno{}
+	Retorno.Ini()
+
+	ArrayByteIn, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = errors.New("Erro ao receber body. \n " + err.Error()).Error()
+		Retorno.Dados = nil
+		logs.Erro(Retorno.Msg)
+		responseReturn(w, Retorno)
+		return
+	}
+
+	type CDados struct {
+		EmpresaID int64
+		Email     string
+	}
+
+	dados := CDados{}
+	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(dados.EmpresaID); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.PesquisaEmail(dados.Email); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if database.MySql.Usuario.RecordCount == 0 {
+		Retorno.Msg = "Nenhum usuário não localizado"
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	Retorno.Dados = database.MySql.Usuario.Field
 	Retorno.Msg = "Usuário localizado com sucesso."
 	responseReturn(w, Retorno)
 }

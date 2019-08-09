@@ -8,13 +8,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-
 )
 
 func Novo(w http.ResponseWriter, r *http.Request) {
 
-	logs.Branco("usuario/novo")
-
+	logs.Branco("usuario/novo/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -28,7 +26,29 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	type CDados struct {
+		EmpresaID *int64
+		Id        *int64
+	}
+
+	dados := CDados{}
+	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
 	if err := database.MySql.Conectar(); err != nil {
+		Retorno.Erro = true
+		Retorno.Msg = err.Error()
+		Retorno.Dados = nil
+		responseReturn(w, Retorno)
+		return
+	}
+
+	if err := database.MySql.Usuario.LoadEmpresa(*dados.EmpresaID); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil

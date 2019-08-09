@@ -22,9 +22,12 @@ class Objeto extends Component {
     onChange(e, nome, valor) {        
         this.setState({[nome]:valor})
     }
+
+    onAutoChange(nome, valor) { 
+        this.setState({[nome]:valor})
+    }    
    
     onClick(item, e) {
-
         let DadosJson = {}
         for (const key in this.state) {
             if (this.state.hasOwnProperty(key)) {
@@ -35,18 +38,13 @@ class Objeto extends Component {
             }
         }
 
-
-        // [{nome:valor},{nome2:valor}]
-        // {nome:valor, nome2:valor}
-        console.log(DadosJson)
         var count = Object.keys(DadosJson).length;
         if (count === 0) {
             return
         }
 
         this.props.dispRAPI(item.URL, DadosJson)
-            .then(res => {
-                console.log("sucesso", res)
+            .then(res => {                              
                 this.setState(
                     {
                         "ResponseAPI":{
@@ -56,11 +54,8 @@ class Objeto extends Component {
                         },
                         "ResponseAPIID":item.Id
                     })
-
             })
             .catch(erro => {
-                // console.log("erro", erro.Status, erro.Response.message)
-
                 this.setState(
                     {
                         "ResponseAPI":{
@@ -69,12 +64,7 @@ class Objeto extends Component {
                         },
                         "ResponseAPIID":item.Id
                     })
-
-                // console.log('erro', erro, item.Id)                
             })
-
-        // console.log("DadosForm", DadosForm)    
-
     }
 
     render() {           
@@ -85,7 +75,7 @@ class Objeto extends Component {
                     this.props.Dados.Itens.map((item, key1) => {     
 
                         return (
-                            <div className="docs-container-metodo-base">          
+                            <div key={"div1"+key1}  className="docs-container-metodo-base">          
 
                                 <div key={"titulo1"+key1} className="docs-container-metodo-titulo" >
                                     <span className={item.Metodo}>{item.Metodo}</span>
@@ -94,10 +84,11 @@ class Objeto extends Component {
 
                                 <div key={"url"+key1} className="docs-container-metodo-url" >{item.URL}</div> 
                                 
-                                <InputsTS item={item} onChange={this.onChange.bind(this)} />
+                                <InputsTS key={"inp"+key1} item={item} onChange={this.onChange.bind(this)} onAutoChange={this.onAutoChange.bind(this)} />
 
                                 <div className="docs-container-metodo-botoes">          
                                     <RButton 
+                                        key={"bt"+key1}
                                         item={item}
                                         className={"Executar"} 
                                         valor="Executar" 

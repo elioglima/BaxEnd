@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import MenuLateral from '../MenuLateral';
+import MenuAPI from '../MenuAPI';
 import {DataAPI} from '../../controle/DataAPI'
 import DocsContainer from '../DocsContainer';
 
@@ -14,10 +14,10 @@ class Objeto extends Component {
     }
 
     render() {    
-        return (            
+        return (                        
             <div className="docs-base"> 
-                <MenuLateral {...this.props} />
-                <DocsContainer {...this.props} />
+                { this.props.registro_sel === -1 && <MenuAPI {...this.props} /> }                
+                { this.props.registro_sel > -1 && <DocsContainer {...this.props} /> }                                
             </div>
         )
     }

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as Actions from "./actions";
 import './components/css/styles.css'
 import BannerContato from '../components/banner_contato'
-import MenuOff from '../components/menu-off'
+import MenuSuperior from './components/MenuSuperior'
 import DocsBase from "./components/DocsBase";
 
 class Objeto extends Component {
@@ -11,11 +11,12 @@ class Objeto extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        registro_sel:0
+        registro_sel:-1
     }
   }    
 
   onClickRegistroSel(e, key) {
+      console.log(key)
       this.setState({registro_sel:key})
   }
 
@@ -33,8 +34,8 @@ class Objeto extends Component {
 
     return (
       <div>  
-        <BannerContato />      
-        <MenuOff {...this.props} label="Documentação" />
+        <BannerContato />              
+        <MenuSuperior {...this.props} label="Documentação" onClickRegistroSel={this.onClickRegistroSel.bind(this)} />
         <DocsBase {...this.state} onClickRegistroSel={this.onClickRegistroSel.bind(this)} />
       </div>
       );

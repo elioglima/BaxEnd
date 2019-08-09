@@ -2,49 +2,38 @@ package usuario
 
 import (
 	"BaxEnd/Controller/database"
+	"GoLibs/logs"
+	"encoding/json"
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"strconv"
-
-	"github.com/gorilla/mux"
 )
 
 func Atualizar(w http.ResponseWriter, r *http.Request) {
 
+	logs.Branco("usuario/pesquisa/email/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
-	params := mux.Vars(r)
-
-	EmpresaID, err := strconv.Atoi(params["EmpresaID"])
-	if err != nil {
-		Retorno.Erro = true
-		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	ID, err := strconv.Atoi(params["id"])
-	if err != nil {
-		Retorno.Erro = true
-		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
 
 	ArrayByteIn, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = errors.New("Erro ao receber body. \n " + err.Error()).Error()
 		Retorno.Dados = nil
+		logs.Erro(Retorno.Msg)
 		responseReturn(w, Retorno)
 		return
+	}
 
-	} else if len(ArrayByteIn) == 0 {
+	type CDados struct {
+		EmpresaID *int64
+		Id        *int64
+	}
+
+	dados := CDados{}
+	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
 		Retorno.Erro = true
-		Retorno.Msg = "Erro ao receber parametros"
+		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return
@@ -58,7 +47,7 @@ func Atualizar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.Usuario.LoadEmpresa(int64(EmpresaID)); err != nil {
+	if err := database.MySql.Usuario.LoadEmpresa(*dados.EmpresaID); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
@@ -66,7 +55,7 @@ func Atualizar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.Usuario.PesquisaCodigo(int64(ID)); err != nil {
+	if err := database.MySql.Usuario.PesquisaCodigo(*dados.Id); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil

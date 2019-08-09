@@ -83,11 +83,11 @@ func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 		s.dbConexao.SQL.Add("TipoPessoaDesc", *s.TipoPessoaDesc)
 	}
 
-	if s.CategoriaID != nil {
-		numUp++
-		s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
-		s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
-	}
+	// if s.CategoriaID != nil {
+	// 	numUp++
+	// 	s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
+	// 	s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
+	// }
 
 	if numUp == 0 {
 		return nil, errors.New("Nenhum campo informado para atualização")
@@ -126,11 +126,11 @@ func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 		numUp++
 	}
 
-	if s.CategoriaID != nil {
-		numUp++
-		s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
-		s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
-	}
+	// if s.CategoriaID != nil {
+	// 	numUp++
+	// 	s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
+	// 	s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
+	// }
 
 	if numUp == 0 {
 		return nil, errors.New("Nenhum campo informado para atualização")

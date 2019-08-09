@@ -2,20 +2,32 @@
 .docs-base {
     position: inherit;
     width: 100%;
+    height: 100%;
+
 }
 
 .docs-base .docs-menu-lateral {
-    position: fixed;
-    background-color: rgb(237, 240, 245);
-    width: 20%;
+    display: inline-block;
+    top:0;
+    width: 98%;
     height: 100%;
     padding-top: 5px;
+    padding: 10px 10px 10px 10px;
 }
 
 .docs-base .docs-menu-lateral .docs-menu-lateral-item {
     font-family: sans-serif;
     display: inline-block;
-    width: 98%;
+    width: 20%;
+    padding: 5px 5px 5px 5px;
+    
+}
+
+.docs-base .docs-menu-lateral .docs-menu-lateral-item .docs-menu-lateral-item-base {
+    font-family: sans-serif;
+    display: inline-block;
+    width: 95%;
+    height: 100%;
     background-color: rgb(68, 93, 133);
     padding: 8px 5px 8px 8px;
     border-bottom: 1px solid rgb(102, 127, 168);
@@ -24,20 +36,30 @@
     border-spacing: 2px;
     font-size: 15px;
     cursor: pointer;
+    border-radius: 10px;    
+}
+
+.docs-base .docs-menu-lateral .docs-menu-lateral-item .docs-menu-lateral-item-base .docs-menu-lateral-item-titulo {
+    display: inline-block;
+    width: 80%;
+    padding:5px 5px 5px 5px;
+    text-align: center;
+
 }
 
 .docs-base .docs-menu-lateral .docs-menu-lateral-item:hover {
+    border-radius: 10px;
     background-color: rgb(106, 135, 180);
 }
 
 .docs-base .docs-menu-lateral .docs-menu-lateral-item:active {
+    border-radius: 10px;
     background-color: rgb(25, 40, 66);
     color: rgb(86, 116, 163);
 }
 
 .docs-base .docs-container {
-    margin-left: 20%;
-    width: 77%;
+    width: 97%;
     display: inline-block;
     color: black;
     padding-left: 20px;
@@ -104,4 +126,8 @@
     margin-top: 5px;
     padding-top: 5px;
 
+}
+
+.docs-base .docs-container .docs-container-metodo-base .docs-container-metodo-resposta {
+    word-wrap: break-word;
 }

@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-
 )
 
 func setRoutes() {
@@ -64,13 +63,16 @@ func SetRoutesUsuario(routes *mux.Router) {
 	// sRotaUsuario := "/api/"
 
 	routes.HandleFunc("/api/usuario/pesquisa/todos", usuario.PesquisaTodos)
+	routes.HandleFunc("/api/usuario/pesquisa/nome", usuario.PesquisaNome)
+	routes.HandleFunc("/api/usuario/pesquisa/codigo", usuario.PesquisaCodigo)
+	routes.HandleFunc("/api/usuario/pesquisa/email", usuario.PesquisaEmail)
+	routes.HandleFunc("/api/usuario/atualizar", usuario.Atualizar)
+	routes.HandleFunc("/api/usuario/novo", usuario.Novo)
+	routes.HandleFunc("/api/usuario/apagar", usuario.Apagar)
+
 	// routes.HandleFunc("/api/usuario/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
 	// routes.HandleFunc("/api/usuario/atualizar/{id:[0-9]+}", use(usuario.Atualizar, basicAuth))
 	// routes.HandleFunc("/api/usuario/hash/{email}/{documento}", use(usuario.ColherHash, basicAuth))
 	// routes.HandleFunc("/api/usuario/ativar/{id:[0-9]+}", use(usuario.AtivarCadastro, basicAuth))
-
 	// routes.HandleFunc("/api/usuario/apagar/{id}", use(usuario.Apagar, basicAuth))
-	// routes.HandleFunc("/api/usuario/pesquisa/codigo/{id}", use(usuario.PesquisaCodigo, basicAuth))
-	// routes.HandleFunc("/api/usuario/pesquisa/nome/{value}", use(usuario.PesquisaNome, basicAuth))
-	// routes.HandleFunc("/api/usuario/pesquisa/email/{value}", use(usuario.PesquisaEmail, basicAuth))
 }
