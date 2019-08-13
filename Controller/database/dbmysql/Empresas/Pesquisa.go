@@ -45,6 +45,48 @@ func (s *EmpresaST) PesquisaTodos(ArrayByteIn []byte) error {
 	return nil
 }
 
+func (s *EmpresaST) PesquisaNome(ArrayByteIn []byte) error {
+
+	type CDados struct {
+		Nome *string
+	}
+
+	dados := CDados{}
+	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
+		return err
+	}
+
+	if err := s.dbConexao.CheckConnect(); err != nil {
+		return errors.New("Banco de dados não conectado.")
+	}
+
+	if dados.Nome == nil {
+		return errors.New("Nenhum paramêtro localizado.")
+	} else if len(strings.TrimSpace(*dados.Nome)) == 0 {
+		return errors.New("Paramêtro informado não pode ser em branco.")
+	}
+
+	s.RecordCount = 0
+
+	sSQL := " select * from " + ConsNomeTabela
+	sSQL += " where nome like " + GoLibs.Asp(*dados.Nome+"%")
+	sSQL += " limit 0,100"
+	RecordCount, Results, err := s.dbConexao.Query(sSQL)
+	if err != nil {
+		return err
+	}
+	if err := s.MarshalResult(Results); err != nil {
+		return err
+	}
+
+	s.RecordCount = RecordCount
+	if s.RecordCount == 0 {
+		return nil
+	}
+
+	return nil
+}
+
 func (s *EmpresaST) PesquisaCodigo(ID int64) error {
 
 	if ID == 0 {
@@ -72,37 +114,6 @@ func (s *EmpresaST) PesquisaCodigo(ID int64) error {
 
 	if err := s.MarshalResult(Results); err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (s *EmpresaST) PesquisaNome(nome_in string) error {
-
-	if len(strings.TrimSpace(nome_in)) == 0 {
-		return errors.New("Não é possível pesquisar o email, o mesmo não foi informado.")
-	}
-
-	if err := s.dbConexao.CheckConnect(); err != nil {
-		return errors.New("Banco de dados não conectado.")
-	}
-
-	s.RecordCount = 0
-
-	sSQL := " select * from " + ConsNomeTabela
-	sSQL += " where nome like " + GoLibs.Asp(nome_in+"%")
-	sSQL += " limit 0,100"
-	RecordCount, Results, err := s.dbConexao.Query(sSQL)
-	if err != nil {
-		return err
-	}
-	if err := s.MarshalResult(Results); err != nil {
-		return err
-	}
-
-	s.RecordCount = RecordCount
-	if s.RecordCount == 0 {
-		return nil
 	}
 
 	return nil

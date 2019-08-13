@@ -69,6 +69,7 @@ func SetRoutesUsuario(routes *mux.Router) {
 	routes.HandleFunc("/api/usuario/apagar", usuario.Apagar)
 
 	routes.HandleFunc("/api/empresa/pesquisa/todos", empresa.PesquisaTodos)
+	routes.HandleFunc("/api/empresa/pesquisa/nome", empresa.PesquisaNome)
 
 	// routes.HandleFunc("/api/usuario/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
 
