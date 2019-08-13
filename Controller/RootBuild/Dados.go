@@ -3,6 +3,7 @@ package RootBuild
 const (
 	EmpresaDataCompra   = "2016-07-01T10:30:05.000Z"
 	EmpresaNome         = "Maxtime Info"
+	EmpresaEmail        = "diretoria@maxtime.info"
 	EmpresaTipoPessoaID = 0
 	EmpresaDoc1         = "21639921877"
 	EmpresaDoc2         = "321666318"

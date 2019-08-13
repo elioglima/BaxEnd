@@ -34,7 +34,7 @@ export const DataAPI =  [
                 "Id":3,
                 "Titulo":"Pesquisa de empresa por código",
                 "Metodo":"POST",
-                "URL":"usuario/pesquisa/codigo",
+                "URL":"empresa/pesquisa/codigo",
                 "Parametros":[
                     {
                         "titulo":"* Código da Empresa",

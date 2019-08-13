@@ -50,6 +50,7 @@ func (s *EmpresaST) Root() error {
 	s.dbConexao.SQL.Add("DataCadastro", DataCompra)
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 	s.dbConexao.SQL.Add("nome", RootBuild.EmpresaNome)
+	s.dbConexao.SQL.Add("email", RootBuild.EmpresaEmail)
 	s.dbConexao.SQL.Add("doc1", RootBuild.EmpresaDoc1)
 	s.dbConexao.SQL.Add("doc2", RootBuild.EmpresaDoc2)
 	s.dbConexao.SQL.Add("ativado", 1)

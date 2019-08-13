@@ -32,6 +32,6 @@ func Apagar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Retorno.Msg = "Usuário deletado com sucesso."
+	Retorno.Msg = "Registro deletado com sucesso."
 	responseReturn(w, Retorno)
 }
