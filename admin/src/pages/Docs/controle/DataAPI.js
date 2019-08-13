@@ -295,7 +295,7 @@ export const DataAPI =  [
                         "tamanho":45,
                         "placeholder":"codigo do usuario",
                         "requerido":true,
-                        "valor":""
+                        "valor":"2"
                     }
                 ]
             }
