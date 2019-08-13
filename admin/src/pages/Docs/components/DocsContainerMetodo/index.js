@@ -38,10 +38,10 @@ class Objeto extends Component {
             }
         }
 
-        var count = Object.keys(DadosJson).length;
-        if (count === 0) {
-            return
-        }
+        // var count = Object.keys(DadosJson).length;
+        // if (count === 0) {
+        //     return
+        // }
 
         this.props.dispRAPI(item.URL, DadosJson)
             .then(res => {                              

@@ -28,7 +28,6 @@ class Objeto extends Component {
     }
 
     render() {  
-        console.log(this.state.titulo)
         return (
             <div key={this.props.key} className="CompReactTextFieldControl" >
                 <div className="CompReactTextFieldControlLabel" >{this.state.titulo}</div>
