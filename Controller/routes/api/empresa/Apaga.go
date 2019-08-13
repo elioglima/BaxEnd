@@ -1,4 +1,4 @@
-package usuario
+package empresa
 
 import (
 	"BaxEnd/Controller/database"
@@ -10,7 +10,7 @@ import (
 
 func Apagar(w http.ResponseWriter, r *http.Request) {
 
-	logs.Branco("usuario/Apagar/")
+	logs.Branco("empresa/Apagar/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -24,7 +24,7 @@ func Apagar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg, err := database.MySql.Usuario.Apagar(ArrayByteIn)
+	msg, err := database.MySql.Empresa.Apagar(ArrayByteIn)
 	if err != nil {
 		Retorno.Erro = false
 		Retorno.Msg = msg

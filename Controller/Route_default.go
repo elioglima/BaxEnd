@@ -74,7 +74,6 @@ func SetRoutesUsuario(routes *mux.Router) {
 	routes.HandleFunc("/api/empresa/pesquisa/email", empresa.PesquisaEmail)
 	routes.HandleFunc("/api/empresa/atualizar", empresa.Atualizar)
 	routes.HandleFunc("/api/empresa/novo", empresa.Novo)
-
-	// routes.HandleFunc("/api/usuario/pesquisar/todos/", use(usuario.PesquisaTodos, basicAuth))
+	routes.HandleFunc("/api/empresa/apagar", empresa.Apagar)
 
 }

@@ -111,3 +111,20 @@ func (s *EmpresaDadosInST) Update() (sql.Result, error) {
 
 	return s.dbConexao.SQL.Execute()
 }
+
+func (s *EmpresaDadosInST) Apagar() (sql.Result, error) {
+
+	if s.Id == nil {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	} else if *s.Id == 1 {
+		return nil, errors.New("O primeiro registro não pode ser alterado.")
+	} else if *s.Id <= 0 {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	}
+
+	s.dbConexao.SQL.Clear()
+	s.dbConexao.SQL.Delete("empresa")
+	sWhere := "Id = " + fmt.Sprintf("%v", *s.Id)
+	s.dbConexao.SQL.Where(sWhere)
+	return s.dbConexao.SQL.Execute()
+}
