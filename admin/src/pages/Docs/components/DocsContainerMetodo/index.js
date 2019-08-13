@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import RButton from '../../../components/html/RButton';
 import InputsTS from './InputsTS.js'
-import * as Actions from '../../actions'
 import RResposta from './RResposta';
+import * as Actions from '../../actions'
+
 
 class Objeto extends Component {
     

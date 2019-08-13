@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import MenuAPI from '../MenuAPI';
 import {DataAPI} from '../../controle/DataAPI'
 import DocsContainer from '../DocsContainer';
+import ListaPesquisa from '../ListaPesquisa';
+import DocsContainerPesquisa from '../DocsContainerPesquisa';
+
 
 class Objeto extends Component {
     constructor(props) {
@@ -16,8 +19,10 @@ class Objeto extends Component {
     render() {    
         return (                        
             <div className="docs-base"> 
-                { this.props.registro_sel === -1 && <MenuAPI {...this.props} /> }                
-                { this.props.registro_sel > -1 && <DocsContainer {...this.props} /> }                                
+                { (this.props.ListaPesquisa.length > 0 && this.props.registro_sel_detalhes === -1) &&  <ListaPesquisa {...this.props} {...this.state} /> }                
+                { (this.props.ListaPesquisa.length > 0 && this.props.registro_sel_detalhes >= 0) && <DocsContainerPesquisa {...this.props}  /> }                
+                { (this.props.ListaPesquisa.length === 0 && this.props.registro_sel === -1) && <MenuAPI {...this.props} /> }                
+                { (this.props.ListaPesquisa.length === 0  && this.props.registro_sel > -1) && <DocsContainer {...this.props} /> }                                
             </div>
         )
     }
