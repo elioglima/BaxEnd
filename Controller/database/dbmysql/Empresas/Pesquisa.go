@@ -9,7 +9,7 @@ import (
 	"GoLibs"
 	"encoding/json"
 	"errors"
-	"strconv"
+	"fmt"
 	"strings"
 )
 
@@ -100,7 +100,7 @@ func (s *EmpresaST) PesquisaCodigo(ID int64) error {
 	s.RecordCount = 0
 
 	sSQL := " select * from " + ConsNomeTabela
-	sSQL += " where id = " + strconv.FormatInt(ID, 10)
+	sSQL += " where id = " + fmt.Sprintf("%v", ID)
 	sSQL += " limit 0,1"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
