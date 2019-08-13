@@ -42,6 +42,11 @@ func (s *EmpresaDadosInST) Inserir() (sql.Result, error) {
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 
+	if s.Email != nil {
+		numUp++
+		s.dbConexao.SQL.Add("Email", *s.Email)
+	}
+
 	if s.Nome != nil {
 		numUp++
 		s.dbConexao.SQL.Add("Nome", *s.Nome)
@@ -61,12 +66,6 @@ func (s *EmpresaDadosInST) Inserir() (sql.Result, error) {
 		numUp++
 		s.dbConexao.SQL.Add("TipoPessoaID", *s.TipoPessoaID)
 		s.dbConexao.SQL.Add("TipoPessoaDesc", *s.TipoPessoaDesc)
-	}
-
-	if s.CategoriaID != nil {
-		numUp++
-		s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
-		s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
 	}
 
 	if numUp == 0 {
@@ -104,12 +103,6 @@ func (s *EmpresaDadosInST) Update() (sql.Result, error) {
 		s.dbConexao.SQL.Add("TipoPessoaID", *s.TipoPessoaID)
 		s.dbConexao.SQL.Add("TipoPessoaDesc", *s.TipoPessoaDesc)
 		numUp++
-	}
-
-	if s.CategoriaID != nil {
-		numUp++
-		s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
-		s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
 	}
 
 	if numUp == 0 {

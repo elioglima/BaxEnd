@@ -1,4 +1,4 @@
-package usuario
+package empresa
 
 import (
 	"BaxEnd/Controller/database"
@@ -9,9 +9,9 @@ import (
 	"net/http"
 )
 
-func Novo(w http.ResponseWriter, r *http.Request) {
+func Atualizar(w http.ResponseWriter, r *http.Request) {
 
-	logs.Branco("usuario/novo/")
+	logs.Branco("empresa/atualizar/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -39,23 +39,7 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.Conectar(); err != nil {
-		Retorno.Erro = true
-		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	if err := database.MySql.Usuario.LoadEmpresa(*dados.EmpresaID); err != nil {
-		Retorno.Erro = true
-		Retorno.Msg = err.Error()
-		Retorno.Dados = nil
-		responseReturn(w, Retorno)
-		return
-	}
-
-	msg, err := database.MySql.Usuario.Novo(ArrayByteIn)
+	msg, err := database.MySql.Empresa.Atualizar(ArrayByteIn)
 	if err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
@@ -65,6 +49,6 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Retorno.Msg = msg
-	Retorno.Dados = database.MySql.Usuario.Field
+	Retorno.Dados = database.MySql.Empresa.Response
 	responseReturn(w, Retorno)
 }

@@ -32,6 +32,7 @@ func (s *EmpresaST) MarshalResultToField(Results []map[string]interface{}) error
 	s.Field.DataAtivacao = GoMysql.FirstValueToTime(Results, "DataAtivacao")
 	s.Field.Ativado = GoMysql.FirstValueToBool(Results, "Ativado")
 	s.Field.Nome = GoMysql.FirstValueToStr(Results, "Nome")
+	s.Field.Email = GoMysql.FirstValueToStr(Results, "Email")
 	s.Field.CategoriaID = GoMysql.FirstValueToInt64(Results, "CategoriaID")
 	s.Field.CategoriaDesc = GoMysql.FirstValueToStr(Results, "CategoriaDesc")
 
@@ -70,6 +71,7 @@ func (s *EmpresaST) MarshalResultToFields(Results []map[string]interface{}) erro
 		FieldTemp.DataAtivacao = GoMysql.GetValueToTime(Result, "DataAtivacao")
 		FieldTemp.Ativado = GoMysql.GetValueToBool(Result, "Ativado")
 		FieldTemp.Nome = GoMysql.GetValueToStr(Result, "Nome")
+		FieldTemp.Email = GoMysql.GetValueToStr(Result, "Email")
 
 		FieldTemp.CategoriaID = GoMysql.GetValueToInt64(Result, "CategoriaID")
 		FieldTemp.CategoriaDesc = GoMysql.GetValueToStr(Result, "CategoriaDesc")

@@ -91,7 +91,7 @@ func (s *EmpresaST) PesquisaWhere(WhereIn string) error {
 	s.RecordCount = 0
 
 	sSQL := " select * from " + ConsNomeTabela
-	sSQL += WhereIn
+	sSQL += " where " + WhereIn
 	sSQL += " limit 0,1"
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
@@ -103,10 +103,6 @@ func (s *EmpresaST) PesquisaWhere(WhereIn string) error {
 	}
 
 	s.RecordCount = RecordCount
-	if s.RecordCount == 0 {
-		return errors.New("Usuário não foi localizado.")
-	}
-
 	return nil
 }
 
