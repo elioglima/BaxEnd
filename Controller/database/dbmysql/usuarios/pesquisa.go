@@ -15,7 +15,6 @@ func (s *UsuarioST) PesquisaTodos(ArrayByteIn []byte) error {
 	}
 
 	dados := CDados{}
-	fmt.Printf("%+s\n", ArrayByteIn)
 	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
 		return err
 	}
@@ -55,7 +54,6 @@ func (s *UsuarioST) PesquisaNome(ArrayByteIn []byte) error {
 	}
 
 	dados := CDados{}
-	fmt.Printf("%+s\n", ArrayByteIn)
 	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
 		return err
 	}

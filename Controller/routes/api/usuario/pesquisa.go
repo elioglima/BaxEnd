@@ -11,7 +11,6 @@ import (
 
 func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 
-	logs.Branco("usuario/pesquisa/todos/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -54,7 +53,6 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesquisaNome(w http.ResponseWriter, r *http.Request) {
-	logs.Branco("usuario/pesquisa/nome/")
 	Retorno := sRetorno{}
 
 	ArrayByteIn, err := ioutil.ReadAll(r.Body)
@@ -97,7 +95,6 @@ func PesquisaNome(w http.ResponseWriter, r *http.Request) {
 
 func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
 
-	logs.Branco("usuario/pesquisa/codigo/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -150,14 +147,14 @@ func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if database.MySql.Usuario.RecordCount == 0 {
-		Retorno.Msg = "Nenhum usuário não localizado"
+		Retorno.Msg = "Nenhum registro localizado"
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return
 	}
 
 	Retorno.Dados = database.MySql.Usuario.Field
-	Retorno.Msg = "Usuários localizado com sucesso."
+	Retorno.Msg = "Registro localizado com sucesso."
 	responseReturn(w, Retorno)
 }
 

@@ -13,10 +13,13 @@ func setRoutes() {
 
 	routes = NewRouter()
 	routes.StrictSlash(true)
+
+	SetAuthenticationMiddleware(routes)
+	SetInterceptorInput(routes)
 	SetRoutesWalk(routes)
+
 	SetRoutesUsuario(routes)
 	// SetRoutesViews(routes)
-	routes.Use(MiddlewareAuth)
 	routes.NotFoundHandler = http.HandlerFunc(views.NotFound)
 
 }
