@@ -1,9 +1,33 @@
 export const DataAPI =  [
 
     { 
+        "Id":1,
+        "Titulo":"Chave de Acesso",
+        "Itens":[
+            {
+                "Id":1,
+                "Titulo":"Pesquisa todas as Chaves",
+                "Metodo":"POST",
+                "URL":"chave/acesso/pesquisa/todos",
+                "Parametros":[
+                    {
+                        "titulo":"* Código da Empresa",
+                        "nome":"id",
+                        "tipo":"number",
+                        "tamanho":45,
+                        "placeholder":"Código da Empresa",
+                        "requerido":true,
+                        "valor":1
+                    }
+                ]
+            }            
+        ]
+    }
+    
+    , { 
         // CADASTRO DE EMPRESAS
 
-        "Id":1,
+        "Id":2,
         "Titulo":"Cadastro de Empresa",
         "Itens":[
             {
@@ -204,9 +228,8 @@ export const DataAPI =  [
         ]
     }
 
-
     , { // CADASTRO DE USUÁRIOS
-        "Id":2,
+        "Id":3,
         "Titulo":"Cadastro de Usuários",
         "Itens":[
             {
@@ -461,4 +484,8 @@ export const DataAPI =  [
             
         ]
     }
+
+
+
+    
 ]
