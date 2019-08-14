@@ -28,7 +28,31 @@ export const DataAPI =  [
                         "valor":""
                     }
                 ]
-            }            
+            }, {
+                "Id":2,
+                "Titulo":"Gerar Chaves de Acesso",
+                "Metodo":"POST",
+                "URL":"chave/acesso/gerar",
+                "Parametros":[
+                    {
+                        "titulo":"* Código da Empresa",
+                        "nome":"id",
+                        "tipo":"number",
+                        "tamanho":45,
+                        "placeholder":"Código da Empresa",
+                        "requerido":true,
+                        "valor":"1"
+                    },{
+                        "titulo":"* Descrição",
+                        "nome":"id",
+                        "tipo":"text",
+                        "tamanho":45,
+                        "placeholder":"Descrição",
+                        "requerido":true,
+                        "valor":"Chave de Teste"
+                    }
+                ]
+            }                    
         ]
     }
     
