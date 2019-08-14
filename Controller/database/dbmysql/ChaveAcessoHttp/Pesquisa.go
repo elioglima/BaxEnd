@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strconv"
+	"strings"
 )
 
 func (s *ChaveAcessoHttpST) Pesquisa(ArrayByteIn []byte) error {
@@ -23,19 +24,32 @@ func (s *ChaveAcessoHttpST) Pesquisa(ArrayByteIn []byte) error {
 	sSQL := "select * from " + ConsNomeTabela
 	CountCampo := 0
 
-	if dados.EmpresaID != nil {
-		CountCampo++
-		sSQL += " where EmpresaID = " + strconv.FormatInt(*dados.EmpresaID, 10)
-	}
-
-	if dados.Descricao != nil {
-		if CountCampo == 0 {
-			sSQL += " where "
-		} else {
-			sSQL += " and "
+	if dados.RegistroID != nil {
+		if *dados.RegistroID > 0 {
+			sSQL += " where RegistroID = " + strconv.FormatInt(*dados.RegistroID, 10)
+			CountCampo++
 		}
-		sSQL += " descricao = " + GoLibs.Asp(*dados.Descricao)
-		CountCampo++
+
+	} else {
+
+		if dados.EmpresaID != nil {
+			if *dados.EmpresaID > 0 {
+				sSQL += " where EmpresaID = " + strconv.FormatInt(*dados.EmpresaID, 10)
+				CountCampo++
+			}
+		}
+
+		if dados.Descricao != nil {
+			if len(strings.TrimSpace(*dados.Descricao)) > 0 {
+				if CountCampo == 0 {
+					sSQL += " where "
+				} else {
+					sSQL += " and "
+				}
+				sSQL += " descricao like " + GoLibs.Asp(*dados.Descricao+"%")
+				CountCampo++
+			}
+		}
 	}
 
 	if CountCampo == 0 {

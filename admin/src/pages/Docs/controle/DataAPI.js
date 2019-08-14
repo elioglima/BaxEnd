@@ -12,7 +12,7 @@ export const DataAPI =  [
                 "Parametros":[
                     {
                         "titulo":"Código da Empresa",
-                        "nome":"id",
+                        "nome":"EmpresaID",
                         "tipo":"number",
                         "tamanho":45,
                         "placeholder":"Código da Empresa",
@@ -20,7 +20,7 @@ export const DataAPI =  [
                         "valor":""
                     },{
                         "titulo":"Descrição",
-                        "nome":"id",
+                        "nome":"Descricao",
                         "tipo":"text",
                         "tamanho":45,
                         "placeholder":"Descrição",
@@ -36,7 +36,7 @@ export const DataAPI =  [
                 "Parametros":[
                     {
                         "titulo":"* Código da Empresa",
-                        "nome":"id",
+                        "nome":"EmpresaID",
                         "tipo":"number",
                         "tamanho":45,
                         "placeholder":"Código da Empresa",
@@ -44,7 +44,7 @@ export const DataAPI =  [
                         "valor":"1"
                     },{
                         "titulo":"* Descrição",
-                        "nome":"id",
+                        "nome":"Descricao",
                         "tipo":"text",
                         "tamanho":45,
                         "placeholder":"Descrição",

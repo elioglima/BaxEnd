@@ -34,6 +34,7 @@ func SetRoutesViews(routes *mux.Router) {
 func SetRoutesUsuario(routes *mux.Router) {
 
 	routes.HandleFunc("/api/chave/acesso/pesquisa/todos", ChaveAcessoRoute.PesquisaTodos)
+	routes.HandleFunc("/api/chave/acesso/gerar", ChaveAcessoRoute.GerarChaveAcesso)
 
 	routes.HandleFunc("/api/usuario/pesquisa/todos", usuario.PesquisaTodos)
 	routes.HandleFunc("/api/usuario/pesquisa/nome", usuario.PesquisaNome)

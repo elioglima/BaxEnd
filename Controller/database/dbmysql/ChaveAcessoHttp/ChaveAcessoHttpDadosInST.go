@@ -1,6 +1,7 @@
 package ChaveAcessoHttp
 
 import (
+	"GoLibs"
 	"GoMysql"
 	"database/sql"
 	"errors"
@@ -40,18 +41,23 @@ func (s *ChaveAcessoHttpDadosInST) Inserir() (sql.Result, error) {
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 
+	if s.Descricao != nil {
+		numUp++
+		s.dbConexao.SQL.Add("Descricao", GoLibs.Asp(*s.Descricao))
+	}
+
 	if s.KeyAPI != nil {
 		numUp++
-		s.dbConexao.SQL.Add("KeyAPI", *s.KeyAPI)
+		s.dbConexao.SQL.Add("KeyAPI", GoLibs.Asp(*s.KeyAPI))
 	}
 
 	if s.KeyAPP != nil {
 		numUp++
-		s.dbConexao.SQL.Add("KeyAPP", *s.KeyAPP)
+		s.dbConexao.SQL.Add("KeyAPP", GoLibs.Asp(*s.KeyAPP))
 	}
 
 	if numUp == 0 {
-		return nil, errors.New("Nenhum campo informado para atualização")
+		return nil, errors.New("Nenhum campo informado.")
 	}
 
 	return s.dbConexao.SQL.Execute()

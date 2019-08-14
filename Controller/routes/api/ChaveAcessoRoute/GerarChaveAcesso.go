@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
+func GerarChaveAcesso(w http.ResponseWriter, r *http.Request) {
 
 	Retorno := sRetorno{}
 	Retorno.Ini()
@@ -31,7 +31,7 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.ChaveAcessoHttp.Pesquisa(ArrayByteIn); err != nil {
+	if err := database.MySql.ChaveAcessoHttp.Gerar(ArrayByteIn); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil
