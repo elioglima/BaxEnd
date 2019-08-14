@@ -12,7 +12,6 @@ import (
 
 func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 
-	logs.Branco("empresa/pesquisa/todos/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -47,8 +46,6 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesquisaNome(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("empresa/pesquisa/nome/")
 	Retorno := sRetorno{}
 
 	ArrayByteIn, err := ioutil.ReadAll(r.Body)
@@ -111,8 +108,6 @@ func PesquisaNome(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("empresa/pesquisa/codigo/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -176,8 +171,6 @@ func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesquisaEmail(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("empresa/pesquisa/email/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 

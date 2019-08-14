@@ -10,8 +10,6 @@ import (
 )
 
 func Novo(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("empresa/novo/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 

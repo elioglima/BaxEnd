@@ -19,7 +19,6 @@ import (
 */
 
 func AtivarCadastro(w http.ResponseWriter, r *http.Request) {
-
 	Retorno := sRetorno{}
 	Retorno.Ini()
 	params := mux.Vars(r)

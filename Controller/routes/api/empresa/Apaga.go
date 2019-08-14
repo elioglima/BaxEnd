@@ -9,8 +9,6 @@ import (
 )
 
 func Apagar(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("empresa/Apagar/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
