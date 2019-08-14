@@ -1,4 +1,4 @@
-package ClienteTelefones
+package ClienteEnderecos
 
 import (
 	"GoMysql"
@@ -9,12 +9,12 @@ import (
 )
 
 /* **********************************************************************
-	STRUCT ClienteTelefoneDadosInST
+	STRUCT ClienteEnderecoDadosInST
 	Classe de Entrada e alterações de dados da Cliente e filiais
 
 ** ********************************************************************** */
 
-type ClienteTelefoneDadosInST struct {
+type ClienteEnderecoDadosInST struct {
 	Id             *int64
 	EmpresaID      *int64
 	ClienteID      *int64
@@ -30,13 +30,13 @@ type ClienteTelefoneDadosInST struct {
 	SQLResult      sql.Result
 }
 
-func NewClienteTelefoneDadosInST(dbConexao *GoMysql.ConexaoST) *ClienteTelefoneDadosInST {
-	s := new(ClienteTelefoneDadosInST)
+func NewClienteEnderecoDadosInST(dbConexao *GoMysql.ConexaoST) *ClienteEnderecoDadosInST {
+	s := new(ClienteEnderecoDadosInST)
 	s.dbConexao = dbConexao
 	return s
 }
 
-func (s *ClienteTelefoneDadosInST) Inserir() (sql.Result, error) {
+func (s *ClienteEnderecoDadosInST) Inserir() (sql.Result, error) {
 
 	numUp := 0
 	s.dbConexao.SQL.Clear()
@@ -77,7 +77,7 @@ func (s *ClienteTelefoneDadosInST) Inserir() (sql.Result, error) {
 	return s.dbConexao.SQL.Execute()
 }
 
-func (s *ClienteTelefoneDadosInST) Update() (sql.Result, error) {
+func (s *ClienteEnderecoDadosInST) Update() (sql.Result, error) {
 
 	numUp := 0
 	s.dbConexao.SQL.Clear()
@@ -114,7 +114,7 @@ func (s *ClienteTelefoneDadosInST) Update() (sql.Result, error) {
 	return s.dbConexao.SQL.Execute()
 }
 
-func (s *ClienteTelefoneDadosInST) Apagar() (sql.Result, error) {
+func (s *ClienteEnderecoDadosInST) Apagar() (sql.Result, error) {
 
 	if s.Id == nil {
 		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
