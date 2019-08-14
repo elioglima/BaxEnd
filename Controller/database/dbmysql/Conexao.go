@@ -111,7 +111,6 @@ func (s *ConexaoST) CriaEstrutura() error {
 
 	*/
 
-	// inicio da limpeza da base de dados
 	ObjetoUsuario := Usuarios.NewUsuarioDadosST()
 	if err := s.dbConexao.DropTable(ObjetoUsuario); err != nil {
 		logs.Erro(err)
@@ -124,8 +123,20 @@ func (s *ConexaoST) CriaEstrutura() error {
 		return err
 	}
 
+	// inicio da limpeza da base de dados
+	ObjetoChaveAcessoHttp := ChaveAcessoHttp.NewChaveAcessoHttpDadosST()
+	if err := s.dbConexao.DropTable(ObjetoChaveAcessoHttp); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
 	// inicio da criação de tabelas
 	if err := s.dbConexao.CreateTable(ObjetoEmpresa); err != nil {
+		logs.Erro(err)
+		return err
+	}
+
+	if err := s.dbConexao.CreateTable(ObjetoChaveAcessoHttp); err != nil {
 		logs.Erro(err)
 		return err
 	}

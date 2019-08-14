@@ -6,7 +6,7 @@ export const DataAPI =  [
         "Itens":[
             {
                 "Id":1,
-                "Titulo":"Pesquisa todas as Chaves",
+                "Titulo":"Pesquisa todas as Chaves de Acesso",
                 "Metodo":"POST",
                 "URL":"chave/acesso/pesquisa/todos",
                 "Parametros":[

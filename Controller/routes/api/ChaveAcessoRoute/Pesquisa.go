@@ -40,13 +40,13 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if database.MySql.Usuario.RecordCount == 0 {
-		Retorno.Msg = "Nenhum usuário não localizado"
+		Retorno.Msg = "Nenhum registro localizado"
 		Retorno.Dados = nil
 		responseReturn(w, Retorno)
 		return
 	}
 
 	Retorno.Dados = database.MySql.ChaveAcessoHttp.Fields
-	Retorno.Msg = "Usuários localizado com sucesso."
+	Retorno.Msg = "Registro localizado com sucesso."
 	responseReturn(w, Retorno)
 }
