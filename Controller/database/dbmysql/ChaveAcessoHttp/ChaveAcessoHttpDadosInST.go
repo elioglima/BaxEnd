@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type ChaveAcessoDadosInST struct {
+type ChaveAcessoHttpDadosInST struct {
 	Id        *int64
 	EmpresaID *int64
 	KeyAPI    *string
@@ -17,13 +17,13 @@ type ChaveAcessoDadosInST struct {
 	SQLResult sql.Result
 }
 
-func NewChaveAcessoDadosInST(dbConexao *GoMysql.ConexaoST) *ChaveAcessoDadosInST {
-	s := new(ChaveAcessoDadosInST)
+func NewChaveAcessoHttpDadosInST(dbConexao *GoMysql.ConexaoST) *ChaveAcessoHttpDadosInST {
+	s := new(ChaveAcessoHttpDadosInST)
 	s.dbConexao = dbConexao
 	return s
 }
 
-func (s *ChaveAcessoDadosInST) Inserir() (sql.Result, error) {
+func (s *ChaveAcessoHttpDadosInST) Inserir() (sql.Result, error) {
 
 	if s.EmpresaID == nil {
 		return nil, errors.New("Erro interno ao verificar a empresaid.")
@@ -56,7 +56,7 @@ func (s *ChaveAcessoDadosInST) Inserir() (sql.Result, error) {
 	return s.dbConexao.SQL.Execute()
 }
 
-func (s *ChaveAcessoDadosInST) Update() (sql.Result, error) {
+func (s *ChaveAcessoHttpDadosInST) Update() (sql.Result, error) {
 	numUp := 0
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Update("usuario")
@@ -81,7 +81,7 @@ func (s *ChaveAcessoDadosInST) Update() (sql.Result, error) {
 	return s.dbConexao.SQL.Execute()
 }
 
-func (s *ChaveAcessoDadosInST) Apagar() (sql.Result, error) {
+func (s *ChaveAcessoHttpDadosInST) Apagar() (sql.Result, error) {
 
 	if s.EmpresaID == nil {
 		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")

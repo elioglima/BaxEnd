@@ -10,6 +10,7 @@ package dbmysql
 */
 
 import (
+	"BaxEnd/Controller/database/dbmysql/ChaveAcessoHttp"
 	"BaxEnd/Controller/database/dbmysql/Empresas"
 	"BaxEnd/Controller/database/dbmysql/Usuarios"
 	"BaxEnd/Controller/database/dbmysql/interno/tipo_pessoa"
@@ -19,11 +20,12 @@ import (
 )
 
 type ConexaoST struct {
-	ParamsConexao GoMysql.ParamsConexaoST
-	dbConexao     *GoMysql.ConexaoST
-	TipoPessoa    tipo_pessoa.TipoPessoaST
-	Empresa       *Empresas.EmpresaST
-	Usuario       *Usuarios.UsuarioST
+	ParamsConexao   GoMysql.ParamsConexaoST
+	dbConexao       *GoMysql.ConexaoST
+	Empresa         *Empresas.EmpresaST
+	ChaveAcessoHttp *ChaveAcessoHttp.ChaveAcessoHttpST
+	Usuario         *Usuarios.UsuarioST
+	TipoPessoa      tipo_pessoa.TipoPessoaST
 }
 
 func NewConexao() *ConexaoST {
@@ -35,8 +37,10 @@ func NewConexao() *ConexaoST {
 	s.ParamsConexao.SENHA = "AB@102030"
 	s.dbConexao = GoMysql.NewConexao(s.ParamsConexao)
 
-	s.Usuario = Usuarios.NewUsuarioST(s.dbConexao)
 	s.Empresa = Empresas.NewEmpresaST(s.dbConexao)
+	s.ChaveAcessoHttp = ChaveAcessoHttp.NewChaveAcessoHttpST(s.dbConexao)
+	s.Usuario = Usuarios.NewUsuarioST(s.dbConexao)
+
 	return s
 }
 
