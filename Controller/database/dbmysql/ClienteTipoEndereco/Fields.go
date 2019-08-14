@@ -1,12 +1,12 @@
-package ClienteEnderecos
+package ClienteTipoEndereco
 
 import (
 	"GoMysql"
 )
 
-func (s *ClienteEnderecosST) MarshalResult(Results []map[string]interface{}) error {
-	s.Field = ClienteEnderecoDadosST{}
-	s.Fields = []ClienteEnderecoDadosST{}
+func (s *ClienteTipoEnderecoST) MarshalResult(Results []map[string]interface{}) error {
+	s.Field = ClienteTipoEnderecoDadosST{}
+	s.Fields = []ClienteTipoEnderecoDadosST{}
 
 	if len(Results) == 0 {
 		return nil
@@ -23,8 +23,8 @@ func (s *ClienteEnderecosST) MarshalResult(Results []map[string]interface{}) err
 	return nil
 }
 
-func (s *ClienteEnderecosST) MarshalResultToField(Results []map[string]interface{}) error {
-	s.Field = ClienteEnderecoDadosST{}
+func (s *ClienteTipoEnderecoST) MarshalResultToField(Results []map[string]interface{}) error {
+	s.Field = ClienteTipoEnderecoDadosST{}
 	s.Field.Id = GoMysql.FirstValueToInt64(Results, "Id")
 	s.Field.DataCadastro = GoMysql.FirstValueToTime(Results, "DataCadastro")
 	s.Field.DataAtualizacao = GoMysql.FirstValueToTime(Results, "DataAtualizacao")
@@ -41,11 +41,11 @@ func (s *ClienteEnderecosST) MarshalResultToField(Results []map[string]interface
 	return nil
 }
 
-func (s *ClienteEnderecosST) MarshalResultToFields(Results []map[string]interface{}) error {
+func (s *ClienteTipoEnderecoST) MarshalResultToFields(Results []map[string]interface{}) error {
 
-	s.Fields = []ClienteEnderecoDadosST{}
+	s.Fields = []ClienteTipoEnderecoDadosST{}
 	for _, Result := range Results {
-		FieldTemp := ClienteEnderecoDadosST{}
+		FieldTemp := ClienteTipoEnderecoDadosST{}
 		FieldTemp.Id = GoMysql.GetValueToInt64(Result, "Id")
 		FieldTemp.DataCadastro = GoMysql.GetValueToTime(Result, "DataCadastro")
 		FieldTemp.DataAtualizacao = GoMysql.GetValueToTime(Result, "DataAtualizacao")
