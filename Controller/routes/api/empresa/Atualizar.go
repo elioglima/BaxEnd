@@ -10,8 +10,6 @@ import (
 )
 
 func Atualizar(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("empresa/atualizar/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 

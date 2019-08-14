@@ -162,8 +162,6 @@ func PesquisaCodigo(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesquisaEmail(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("usuario/pesquisa/email/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
