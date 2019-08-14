@@ -31,7 +31,7 @@ func PesquisaTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.MySql.ChaveAcessoHttp.PesquisaTodos(ArrayByteIn); err != nil {
+	if err := database.MySql.ChaveAcessoHttp.Pesquisa(ArrayByteIn); err != nil {
 		Retorno.Erro = true
 		Retorno.Msg = err.Error()
 		Retorno.Dados = nil

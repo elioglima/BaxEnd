@@ -11,11 +11,19 @@ export const DataAPI =  [
                 "URL":"chave/acesso/pesquisa/todos",
                 "Parametros":[
                     {
-                        "titulo":"* Código da Empresa",
+                        "titulo":"Código da Empresa",
                         "nome":"id",
                         "tipo":"number",
                         "tamanho":45,
                         "placeholder":"Código da Empresa",
+                        "requerido":true,
+                        "valor":""
+                    },{
+                        "titulo":"Descrição",
+                        "nome":"id",
+                        "tipo":"text",
+                        "tamanho":45,
+                        "placeholder":"Descrição",
                         "requerido":true,
                         "valor":""
                     }

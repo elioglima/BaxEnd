@@ -9,12 +9,13 @@ import (
 )
 
 type ChaveAcessoHttpDadosInST struct {
-	Id        *int64
-	EmpresaID *int64
-	KeyAPI    *string
-	KeyAPP    *string
-	dbConexao *GoMysql.ConexaoST
-	SQLResult sql.Result
+	RegistroID *int64
+	EmpresaID  *int64
+	Descricao  *string
+	KeyAPI     *string
+	KeyAPP     *string
+	dbConexao  *GoMysql.ConexaoST
+	SQLResult  sql.Result
 }
 
 func NewChaveAcessoHttpDadosInST(dbConexao *GoMysql.ConexaoST) *ChaveAcessoHttpDadosInST {
@@ -34,7 +35,7 @@ func (s *ChaveAcessoHttpDadosInST) Inserir() (sql.Result, error) {
 
 	numUp := 0
 	s.dbConexao.SQL.Clear()
-	s.dbConexao.SQL.Insert("usuario")
+	s.dbConexao.SQL.Insert("ChaveAcessoHttp")
 	s.dbConexao.SQL.Add("empresaid", *s.EmpresaID)
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
@@ -59,8 +60,8 @@ func (s *ChaveAcessoHttpDadosInST) Inserir() (sql.Result, error) {
 func (s *ChaveAcessoHttpDadosInST) Update() (sql.Result, error) {
 	numUp := 0
 	s.dbConexao.SQL.Clear()
-	s.dbConexao.SQL.Update("usuario")
-	s.dbConexao.SQL.Where("id=" + fmt.Sprintf("%v", *s.Id))
+	s.dbConexao.SQL.Update("ChaveAcessoHttp")
+	s.dbConexao.SQL.Where("RegistroID=" + fmt.Sprintf("%v", *s.RegistroID))
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 
@@ -87,16 +88,16 @@ func (s *ChaveAcessoHttpDadosInST) Apagar() (sql.Result, error) {
 		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")
 	} else if *s.EmpresaID == 0 {
 		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")
-	} else if s.Id == nil {
+	} else if s.RegistroID == nil {
 		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
-	} else if *s.Id == 0 {
+	} else if *s.RegistroID == 0 {
 		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
 	}
 
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Delete("ChaveAcesso")
 	sWhere := "EmpresaID = " + fmt.Sprintf("%v", *s.EmpresaID)
-	sWhere += " and Id = " + fmt.Sprintf("%v", *s.Id)
+	sWhere += " and RegistroID = " + fmt.Sprintf("%v", *s.RegistroID)
 	s.dbConexao.SQL.Where(sWhere)
 	return s.dbConexao.SQL.Execute()
 }

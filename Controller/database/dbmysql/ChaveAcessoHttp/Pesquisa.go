@@ -1,18 +1,18 @@
 package ChaveAcessoHttp
 
 import (
+	"GoLibs"
+	"GoLibs/logs"
 	"encoding/json"
 	"errors"
 	"strconv"
 )
 
-func (s *ChaveAcessoHttpST) PesquisaTodos(ArrayByteIn []byte) error {
-	type CDados struct {
-		EmpresaID int64
-	}
+func (s *ChaveAcessoHttpST) Pesquisa(ArrayByteIn []byte) error {
 
-	dados := CDados{}
+	dados := NewChaveAcessoHttpDadosInST(s.dbConexao)
 	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
+		logs.Erro(err)
 		return err
 	}
 
@@ -21,7 +21,27 @@ func (s *ChaveAcessoHttpST) PesquisaTodos(ArrayByteIn []byte) error {
 	}
 
 	sSQL := "select * from " + ConsNomeTabela
-	sSQL += " where EmpresaID = " + strconv.FormatInt(dados.EmpresaID, 10)
+	CountCampo := 0
+
+	if dados.EmpresaID != nil {
+		CountCampo++
+		sSQL += " where EmpresaID = " + strconv.FormatInt(*dados.EmpresaID, 10)
+	}
+
+	if dados.Descricao != nil {
+		if CountCampo == 0 {
+			sSQL += " where "
+		} else {
+			sSQL += " and "
+		}
+		sSQL += " descricao = " + GoLibs.Asp(*dados.Descricao)
+		CountCampo++
+	}
+
+	if CountCampo == 0 {
+		sSQL += " limit 0,1000 "
+	}
+
 	RecordCount, Results, err := s.dbConexao.Query(sSQL)
 	if err != nil {
 		return err
