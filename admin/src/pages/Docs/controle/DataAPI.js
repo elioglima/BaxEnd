@@ -17,7 +17,7 @@ export const DataAPI =  [
                         "tamanho":45,
                         "placeholder":"Código da Empresa",
                         "requerido":true,
-                        "valor":1
+                        "valor":""
                     }
                 ]
             }            
