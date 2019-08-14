@@ -8,12 +8,13 @@ import "time"
 ** ********************************************************************** */
 
 type ChaveAcessoHttpDadosST struct {
-	Id              int64     `db_autprimary:"true"`
+	RegistroID      int64     `db_autprimary:"true"`
 	EmpresaID       int64     `db_notnull:"true" db_unsigned:"true"`
 	DataCadastro    time.Time `db_notnull:"true"`
 	DataAtualizacao time.Time `db_notnull:"true"`
-	KeyAPI          string    `db_notnull:"true"`
-	KeyAPP          string    `db_notnull:"true"`
+	Descricao       string    `db_notnull:"true" db_unique:"true"`
+	KeyAPI          string    `db_notnull:"true" db_tm1:"500"`
+	KeyAPP          string    `db_notnull:"true" db_tm1:"500"`
 }
 
 func NewChaveAcessoHttpDadosST() *ChaveAcessoHttpDadosST {

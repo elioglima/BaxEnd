@@ -25,10 +25,11 @@ func (s *ChaveAcessoHttpST) MarshalResult(Results []map[string]interface{}) erro
 
 func (s *ChaveAcessoHttpST) MarshalResultToField(Results []map[string]interface{}) error {
 	s.Field = ChaveAcessoHttpDadosST{}
-	s.Field.Id = GoMysql.FirstValueToInt64(Results, "Id")
+	s.Field.RegistroID = GoMysql.FirstValueToInt64(Results, "RegistroID")
 	s.Field.EmpresaID = GoMysql.FirstValueToInt64(Results, "EmpresaId")
 	s.Field.DataCadastro = GoMysql.FirstValueToTime(Results, "DataCadastro")
 	s.Field.DataAtualizacao = GoMysql.FirstValueToTime(Results, "DataAtualizacao")
+	s.Field.Descricao = GoMysql.FirstValueToStr(Results, "Descricao")
 	s.Field.KeyAPI = GoMysql.FirstValueToStr(Results, "KeyAPI")
 	s.Field.KeyAPP = GoMysql.FirstValueToStr(Results, "KeyAPP")
 	return nil
@@ -38,10 +39,11 @@ func (s *ChaveAcessoHttpST) MarshalResultToFields(Results []map[string]interface
 	s.Fields = []ChaveAcessoHttpDadosST{}
 	for _, Result := range Results {
 		FieldTemp := ChaveAcessoHttpDadosST{}
-		FieldTemp.Id = GoMysql.GetValueToInt64(Result, "Id")
+		FieldTemp.RegistroID = GoMysql.GetValueToInt64(Result, "RegistroID")
 		FieldTemp.EmpresaID = GoMysql.GetValueToInt64(Result, "EmpresaID")
 		FieldTemp.DataCadastro = GoMysql.GetValueToTime(Result, "DataCadastro")
 		FieldTemp.DataAtualizacao = GoMysql.GetValueToTime(Result, "DataAtualizacao")
+		FieldTemp.Descricao = GoMysql.GetValueToStr(Result, "Descricao")
 		FieldTemp.KeyAPI = GoMysql.GetValueToStr(Result, "KeyAPI")
 		FieldTemp.KeyAPP = GoMysql.GetValueToStr(Result, "KeyAPP")
 		s.Fields = append(s.Fields, FieldTemp)

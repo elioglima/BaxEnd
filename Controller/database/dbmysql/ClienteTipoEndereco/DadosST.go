@@ -1,8 +1,8 @@
-package ClienteEnderecos
+package ClienteTipoEndereco
 
 import "time"
 
-type ClienteEnderecoDadosST struct {
+type ClienteTipoEnderecoDadosST struct {
 	Id              int64     `db_autprimary:"true"`
 	EmpresaID       int64     `db_notnull:"true" db_unsigned:"true"`
 	ClienteID       int64     `db_notnull:"true" db_unsigned:"true"`
@@ -20,7 +20,7 @@ type ClienteEnderecoDadosST struct {
 	UF              string
 }
 
-func NewClienteEnderecoDadosST() *ClienteEnderecoDadosST {
-	s := &ClienteEnderecoDadosST{}
+func NewClienteTipoEnderecoDadosST() *ClienteTipoEnderecoDadosST {
+	s := &ClienteTipoEnderecoDadosST{}
 	return s
 }
