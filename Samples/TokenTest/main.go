@@ -45,7 +45,7 @@ func main() {
 
 	// var Algoritimo []int
 	// iCountAlgoritimo := 0
-	// iLimite := 50
+	// iLimite := 60
 
 	// for iCountAlgoritimo < iLimite {
 	// 	bExiste := false
@@ -62,7 +62,7 @@ func main() {
 	// 	}
 	// }
 
-	// MontaPrint := " var Algoritimo [200] int{"
+	// MontaPrint := " var Algoritimo [60] int{"
 	// for _, valor := range Algoritimo {
 	// 	MontaPrint += strconv.Itoa(valor) + ","
 	// }
@@ -75,7 +75,10 @@ func main() {
 
 	// 00000200006006001252000011015000000000040255400001
 	token := Token.TokenST{}
-	token.Decode("00000200006006001252000011015000000000040255400001")
-	// token.Encode()
+	err := token.Encode()
+	token.Decode("291009013016080009100101166000002000029001480701147090280900")
+	logs.Cyan(token.KeyAPP, "token.KeyAPI", err)
+	logs.Cyan(token.KeyAPI, "token.KeyAPI", err)
+	logs.Cyan(token.KeyAPIHash, "token.KeyAPIHash", err)
 
 }

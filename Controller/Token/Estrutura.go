@@ -1,7 +1,10 @@
 package Token
 
 import (
-	"GoLibs/logs"
+	"GoLibs"
+	"errors"
+	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -30,24 +33,49 @@ import (
 */
 
 type TokenST struct {
-	EmpresaID    int64
-	DataCriacao  time.Time
-	DataValidade time.Time
-	KeyAPI       string
-	KeyAPP       string
+	EmpresaID      int64
+	EmpresaTipoDoc int
+	EmpresaDoc     string
+	DataCriacao    time.Time
+	DataValidade   time.Time
+	KeyAPI         string
+	KeyAPIHash     string
+	KeyAPP         string
 }
 
-func (s *TokenST) Encode() {
+func (s *TokenST) Encode() error {
 
-	algoritimo := [50]int{31, 37, 47, 9, 18, 25, 40, 6, 0, 44, 11, 12, 39, 28, 24, 45, 16, 8, 38, 15, 41, 29, 35, 26, 13, 33, 3, 7, 21, 49, 5, 1, 10, 2, 46, 27, 20, 23, 43, 36, 48, 32, 34, 17, 19, 14, 4, 22, 42, 30}
+	algoritimo := [60]int{41, 27, 47, 59, 1, 18, 25, 20, 16, 0, 14, 31, 42, 29, 28, 51, 5, 17, 26, 35, 6, 8, 58, 7, 30, 15, 48, 11, 9, 56, 57, 45, 13, 10, 34, 3, 4, 19, 33, 39, 40, 43, 36, 46, 2, 23, 38, 54, 37, 53, 22, 12, 50, 52, 24, 21, 49, 44, 55, 32}
 
-	EMPRESA_ID := "00000001"           // 8
-	DT_CRIACAO := "20060102150405000"  // 17
-	DT_VALIDADE := "20060102150405000" // 17
-	KEYAPP := EMPRESA_ID + DT_CRIACAO + DT_VALIDADE
+	s.EmpresaID = 1                  // 8
+	s.EmpresaTipoDoc = 1             // 1
+	s.EmpresaDoc = "000021639921877" // 15
+	s.DataCriacao = time.Now()       // "20060102150405000"  // 17
+	s.DataValidade = time.Now()      // "20060102150405000" // 17
 
-	for index := len(KEYAPP); index < 50; index++ {
-		KEYAPP += "0"
+	sEmpresaID, err := GoLibs.FormatLeft(fmt.Sprintf("%v", s.EmpresaID), 8, "0")
+	if err != nil {
+		return err
+	}
+
+	sEmpresaDoc, err := GoLibs.FormatLeft(s.EmpresaDoc, 15, "0")
+	if err != nil {
+		return err
+	}
+
+	KEYAPPTemp := sEmpresaID
+	KEYAPPTemp += strconv.Itoa(s.EmpresaTipoDoc)
+	KEYAPPTemp += sEmpresaDoc
+	KEYAPPTemp += GoLibs.FormatDateTime("JustNumber", s.DataCriacao)
+	KEYAPPTemp += GoLibs.FormatDateTime("JustNumber", s.DataValidade)
+
+	KEYAPP, err := GoLibs.FormatRigth(KEYAPPTemp, len(algoritimo), "0")
+	if err != nil {
+		return err
+	}
+
+	if len(algoritimo) > len(KEYAPP) {
+		return errors.New(fmt.Sprintf("%v :: %v - %v %v", "KeyAPP gerada é inválida", KEYAPP, len(KEYAPP), len(algoritimo)))
 	}
 
 	KeyAppNew := ""
@@ -56,13 +84,15 @@ func (s *TokenST) Encode() {
 	}
 
 	s.KeyAPP = KeyAppNew
-
+	return nil
 }
 
 func (s *TokenST) Decode(KeyApp string) error {
 
-	algoritimo := [50]int{31, 37, 47, 9, 18, 25, 40, 6, 0, 44, 11, 12, 39, 28, 24, 45, 16, 8, 38, 15, 41, 29, 35, 26, 13, 33, 3, 7, 21, 49, 5, 1, 10, 2, 46, 27, 20, 23, 43, 36, 48, 32, 34, 17, 19, 14, 4, 22, 42, 30}
-
+	algoritimo := [60]int{41, 27, 47, 59, 1, 18, 25, 20, 16, 0, 14, 31, 42, 29, 28, 51, 5, 17, 26, 35, 6, 8, 58, 7, 30, 15, 48, 11, 9, 56, 57, 45, 13, 10, 34, 3, 4, 19, 33, 39, 40, 43, 36, 46, 2, 23, 38, 54, 37, 53, 22, 12, 50, 52, 24, 21, 49, 44, 55, 32}
+	if len(KeyApp) < len(algoritimo) {
+		return errors.New("KeyAPP inválido.")
+	}
 	KeyAppNewDec := make([]string, 200)
 	for a := 0; a < len(algoritimo); a++ {
 		KeyAppNewDec[algoritimo[a]] = KeyApp[a : a+1]
@@ -72,17 +102,28 @@ func (s *TokenST) Decode(KeyApp string) error {
 	for _, valor := range KeyAppNewDec {
 		KeyAPIDecode += valor
 	}
-
 	s.KeyAPI = KeyAPIDecode
 
-	EMPRESA_ID := KeyAPIDecode[0:8]
-	// 2006-01-02T15:04:05.000Z - 8:25
-	DT_CRIACAO := KeyAPIDecode[8:12] + "-" + KeyAPIDecode[12:14] + "-" + KeyAPIDecode[14:16] + "T" + KeyAPIDecode[16:18] + ":" + KeyAPIDecode[18:20] + ":" + KeyAPIDecode[20:22] + "." + KeyAPIDecode[22:25] + "Z"
-	DT_VALIDADE := KeyAPIDecode[25:42]
+	KeyAPIHash, err := GoLibs.HashEncode(s.KeyAPI)
+	if err != nil {
+		return err
+	}
+	s.KeyAPIHash = KeyAPIHash
 
-	logs.Cyan(EMPRESA_ID, "EMPRESA_ID")
-	logs.Cyan(DT_CRIACAO, "DT_CRIACAO")
-	logs.Cyan(DT_VALIDADE, "DT_VALIDADE")
-	logs.Cyan(KeyAPIDecode)
+	DTLayoutDtCriacao := KeyAPIDecode[24:28] + "-" + KeyAPIDecode[28:30] + "-" + KeyAPIDecode[30:32] + "T" + KeyAPIDecode[32:34] + ":" + KeyAPIDecode[34:36] + ":" + KeyAPIDecode[36:38] + "." + KeyAPIDecode[38:41] + "Z"
+	DataCriacao, err := GoLibs.StrParseTime(DTLayoutDtCriacao)
+	if err != nil {
+		return err
+	}
+
+	s.DataCriacao = DataCriacao
+
+	DTLayoutDtValidade := KeyAPIDecode[41:45] + "-" + KeyAPIDecode[45:47] + "-" + KeyAPIDecode[47:49] + "T" + KeyAPIDecode[49:51] + ":" + KeyAPIDecode[51:53] + ":" + KeyAPIDecode[53:55] + "." + KeyAPIDecode[55:57] + "Z"
+	DataValidade, err := GoLibs.StrParseTime(DTLayoutDtValidade)
+	if err != nil {
+		return err
+	}
+
+	s.DataValidade = DataValidade
 	return nil
 }
