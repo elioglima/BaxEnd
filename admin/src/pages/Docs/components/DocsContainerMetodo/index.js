@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import RButton from '../../../components/html/RButton';
 import InputsTS from './InputsTS.js'
-import * as Actions from '../../actions'
 import RResposta from './RResposta';
+import * as Actions from '../../actions'
+
 
 class Objeto extends Component {
     
@@ -38,13 +39,13 @@ class Objeto extends Component {
             }
         }
 
-        var count = Object.keys(DadosJson).length;
-        if (count === 0) {
-            return
-        }
+        // var count = Object.keys(DadosJson).length;
+        // if (count === 0) {
+        //     return
+        // }
 
         this.props.dispRAPI(item.URL, DadosJson)
-            .then(res => {                              
+            .then(res => {    
                 this.setState(
                     {
                         "ResponseAPI":{
@@ -60,7 +61,8 @@ class Objeto extends Component {
                     {
                         "ResponseAPI":{
                             Status:erro.Status,
-                            Response:erro.Response.message,
+                            Mensagem:erro.Response.message,
+                            Dados:erro.body.Dados,
                         },
                         "ResponseAPIID":item.Id
                     })

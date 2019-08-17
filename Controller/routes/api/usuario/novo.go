@@ -5,14 +5,11 @@ import (
 	"GoLibs/logs"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
 func Novo(w http.ResponseWriter, r *http.Request) {
-
-	logs.Branco("usuario/novo/")
 	Retorno := sRetorno{}
 	Retorno.Ini()
 
@@ -68,26 +65,4 @@ func Novo(w http.ResponseWriter, r *http.Request) {
 	Retorno.Msg = msg
 	Retorno.Dados = database.MySql.Usuario.Field
 	responseReturn(w, Retorno)
-}
-
-func Test(w http.ResponseWriter, r *http.Request) {
-
-	type Cdata struct {
-		Nome string
-	}
-	// fmt.Printf("%s ok", r.Body)
-
-	DataTipo := Cdata{}
-
-	ArrayByteIn, err := ioutil.ReadAll(r.Body)
-	if err == nil && ArrayByteIn != nil {
-		err = json.Unmarshal(ArrayByteIn, &DataTipo)
-		if err != nil {
-			http.Error(w, err.Error(), 400)
-			return
-		}
-	}
-
-	fmt.Printf("%s", DataTipo.Nome)
-
 }

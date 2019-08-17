@@ -42,6 +42,11 @@ func (s *EmpresaDadosInST) Inserir() (sql.Result, error) {
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 
+	if s.Email != nil {
+		numUp++
+		s.dbConexao.SQL.Add("Email", *s.Email)
+	}
+
 	if s.Nome != nil {
 		numUp++
 		s.dbConexao.SQL.Add("Nome", *s.Nome)
@@ -61,12 +66,6 @@ func (s *EmpresaDadosInST) Inserir() (sql.Result, error) {
 		numUp++
 		s.dbConexao.SQL.Add("TipoPessoaID", *s.TipoPessoaID)
 		s.dbConexao.SQL.Add("TipoPessoaDesc", *s.TipoPessoaDesc)
-	}
-
-	if s.CategoriaID != nil {
-		numUp++
-		s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
-		s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
 	}
 
 	if numUp == 0 {
@@ -106,15 +105,26 @@ func (s *EmpresaDadosInST) Update() (sql.Result, error) {
 		numUp++
 	}
 
-	if s.CategoriaID != nil {
-		numUp++
-		s.dbConexao.SQL.Add("CategoriaID", *s.CategoriaID)
-		s.dbConexao.SQL.Add("CategoriaDesc", *s.CategoriaDesc)
-	}
-
 	if numUp == 0 {
 		return nil, errors.New("Nenhum campo informado para atualização")
 	}
 
+	return s.dbConexao.SQL.Execute()
+}
+
+func (s *EmpresaDadosInST) Apagar() (sql.Result, error) {
+
+	if s.Id == nil {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	} else if *s.Id == 1 {
+		return nil, errors.New("O primeiro registro não pode ser alterado.")
+	} else if *s.Id <= 0 {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	}
+
+	s.dbConexao.SQL.Clear()
+	s.dbConexao.SQL.Delete("empresa")
+	sWhere := "Id = " + fmt.Sprintf("%v", *s.Id)
+	s.dbConexao.SQL.Where(sWhere)
 	return s.dbConexao.SQL.Execute()
 }

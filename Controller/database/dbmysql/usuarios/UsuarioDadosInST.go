@@ -138,3 +138,23 @@ func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 
 	return s.dbConexao.SQL.Execute()
 }
+
+func (s *UsuarioDadosInST) Apagar() (sql.Result, error) {
+
+	if s.EmpresaID == nil {
+		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")
+	} else if *s.EmpresaID == 0 {
+		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")
+	} else if s.Id == nil {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	} else if *s.Id == 0 {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	}
+
+	s.dbConexao.SQL.Clear()
+	s.dbConexao.SQL.Delete("usuario")
+	sWhere := "EmpresaID = " + fmt.Sprintf("%v", *s.EmpresaID)
+	sWhere += " and Id = " + fmt.Sprintf("%v", *s.Id)
+	s.dbConexao.SQL.Where(sWhere)
+	return s.dbConexao.SQL.Execute()
+}

@@ -7,6 +7,9 @@ XpressAPI
 *.dylib
 configs/**/*
 admin/node_modules/*
+admin/node_modules/**/*
+admin/node_modules
+node_modules
 
 # Test binary, build with `go test -c`
 *.test
