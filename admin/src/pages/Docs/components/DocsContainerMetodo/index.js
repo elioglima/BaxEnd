@@ -45,7 +45,7 @@ class Objeto extends Component {
         // }
 
         this.props.dispRAPI(item.URL, DadosJson)
-            .then(res => {                              
+            .then(res => {    
                 this.setState(
                     {
                         "ResponseAPI":{
@@ -61,7 +61,8 @@ class Objeto extends Component {
                     {
                         "ResponseAPI":{
                             Status:erro.Status,
-                            Response:erro.Response.message,
+                            Mensagem:erro.Response.message,
+                            Dados:erro.body.Dados,
                         },
                         "ResponseAPIID":item.Id
                     })

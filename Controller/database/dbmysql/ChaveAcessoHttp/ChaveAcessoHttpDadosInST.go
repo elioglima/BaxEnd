@@ -7,16 +7,19 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
 )
 
 type ChaveAcessoHttpDadosInST struct {
-	RegistroID *int64
-	EmpresaID  *int64
-	Descricao  *string
-	KeyAPI     *string
-	KeyAPP     *string
-	dbConexao  *GoMysql.ConexaoST
-	SQLResult  sql.Result
+	RegistroID   *int64
+	EmpresaID    *int64
+	Descricao    *string
+	KeyAPI       *string
+	KeyAPP       *string
+	DataCadastro *time.Time
+	DataValidade *time.Time
+	dbConexao    *GoMysql.ConexaoST
+	SQLResult    sql.Result
 }
 
 func NewChaveAcessoHttpDadosInST(dbConexao *GoMysql.ConexaoST) *ChaveAcessoHttpDadosInST {
@@ -40,6 +43,7 @@ func (s *ChaveAcessoHttpDadosInST) Inserir() (sql.Result, error) {
 	s.dbConexao.SQL.Add("empresaid", *s.EmpresaID)
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
+	s.dbConexao.SQL.Add("DataValidade", *s.DataValidade)
 
 	if s.Descricao != nil {
 		numUp++
@@ -100,10 +104,10 @@ func (s *ChaveAcessoHttpDadosInST) Apagar() (sql.Result, error) {
 		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
 	}
 
-	s.dbConexao.SQL.Clear()
-	s.dbConexao.SQL.Delete("ChaveAcesso")
-	sWhere := "EmpresaID = " + fmt.Sprintf("%v", *s.EmpresaID)
-	sWhere += " and RegistroID = " + fmt.Sprintf("%v", *s.RegistroID)
-	s.dbConexao.SQL.Where(sWhere)
+	// s.dbConexao.SQL.Clear()
+	// s.dbConexao.SQL.Delete("ChaveAcesso")
+	// sWhere := "EmpresaID = " + fmt.Sprintf("%v", *s.EmpresaID)
+	// sWhere += " and RegistroID = " + fmt.Sprintf("%v", *s.RegistroID)
+	// s.dbConexao.SQL.Where(sWhere)
 	return s.dbConexao.SQL.Execute()
 }

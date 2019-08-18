@@ -2,6 +2,7 @@ package Usuarios
 
 import (
 	"time"
+
 )
 
 /* **********************************************************************
@@ -19,6 +20,7 @@ type UsuarioDadosST struct {
 	Nome            string    `db_notnull:"true"`
 	Doc1            string    `db_comm:"CNPJ ou CPF"`
 	Doc2            string    `db_comm:"IE ou RG"`
+	AlteradorID     int64     `db_notnull:"true"`
 	Ativado         bool      `db_default:"0" db_comm:"Ativação por email"`
 	DataAtivacao    time.Time
 	TipoPessoaID    int64  `db_comm:"Tipo de pessoa ID - 0 Fisica, 1 juridica" db_default:"0"`

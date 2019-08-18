@@ -50,6 +50,14 @@ export const DataAPI =  [
                         "placeholder":"Descrição",
                         "requerido":true,
                         "valor":"Chave de Teste"
+                    },{
+                        "titulo":"* Data Validade",
+                        "nome":"DataValidade",
+                        "tipo":"text",
+                        "tamanho":45,
+                        "placeholder":"2006-01-02T15:04:05.000Z",
+                        "requerido":true,
+                        "valor":"2006-01-02T15:04:05.000Z"
                     }
                 ]
             }                    

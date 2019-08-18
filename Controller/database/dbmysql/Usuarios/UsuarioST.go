@@ -9,6 +9,7 @@ import (
 	"errors"
 	"os"
 	"time"
+
 )
 
 const ConsNomeTabela = "usuario"
@@ -72,6 +73,7 @@ func (s *UsuarioST) Root() error {
 	s.dbConexao.SQL.Add("DataCadastro", DataCompra)
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
 	s.dbConexao.SQL.Add("EmpresaID", 1)
+	s.dbConexao.SQL.Add("AlteradorID", 1)
 
 	numCampo := 0
 	if RootBuild.UsuarioNome != s.Field.Nome {

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:tem='http://tempuri.org/'>
+<soapenv:Header/>
+ <soapenv:Body>
+	<tem:GetDadosDevedor>
+         <tem:pChaveAcesso>AF9954BB9D9A4FD6C02E690E69BE39E9</tem:pChaveAcesso>
+         <tem:pCPF>216.399.218-77</tem:pCPF>
+    </tem:GetDadosDevedor>
+ </soapenv:Body>
+</soapenv:Envelope>

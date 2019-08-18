@@ -23,7 +23,7 @@ export const Pesquisa = [
             {"chave":"voce esta ai?"},
         ]
     },{
-        "id":3,
+        "id":4,
         "Titulo":"Eu te direcionei para pagina de Documentação, se precisar estou aqui.",
         "Indexs":[
             {"chave":"ir docs"},
@@ -32,7 +32,7 @@ export const Pesquisa = [
         ],
         "Route":"/docs"
     },{
-        "id":4,
+        "id":5,
         "Titulo":"Eu te direcionei para pagina inicial, se precisar estou aqui.",
         "Indexs":[
             {"chave":"ir inicio"},
@@ -44,7 +44,7 @@ export const Pesquisa = [
         ],
         "Route":"/"
     },{
-        "id":3,
+        "id":6,
         "Titulo":"Testando conexão com API.",
         "Indexs":[
             {"chave":"testar api"},
@@ -56,14 +56,14 @@ export const Pesquisa = [
         ],
         "Route":"/docs"
     },{
-        "id":3,
+        "id":7,
         "Titulo":"O que você deseja testar?",
         "Indexs":[
             {"chave":"teste"},
         ],
         "Route":"/docs"
     },{
-            "id":1,
+            "id":8,
             "Titulo":"Meu nome é Davi, sou um robô, estou aqui para te ajuda e é um prazer em te conhecer.",
             "Indexs":[
                 {"chave":"Qual é seu nome"},
@@ -82,7 +82,7 @@ export const Pesquisa = [
             {"chave":"origado"},
         ]
     },{
-        "id":1,
+        "id":9,
         "Titulo":"Acesso ao Sistema",
         "Indexs":[
             {"chave":"acesso sistema"},
@@ -93,7 +93,7 @@ export const Pesquisa = [
         ]
     },
     {
-        "id":2,
+        "id":10,
         "Titulo":"Ir: Manual do Usuário",
         "Indexs":[
             {"chave":"manual usuario"},
@@ -104,7 +104,7 @@ export const Pesquisa = [
         ]
     },
     {
-        "id":3,
+        "id":11,
         "Titulo":"Licença de Uso",
         "Indexs":[
             {"chave":"uso"},
@@ -116,9 +116,18 @@ export const Pesquisa = [
             {"chave":"autorização"},
             {"chave":"autorizacao"}
         ]
+    },{
+        "id":12,
+        "Titulo":"Eu te direcionei API encontrada, se precisar estou aqui.",
+        "Indexs":[
+            {"chave":"api usuario"},
+        ],
+        "Route":"/docs"        
     }
 
 ];
+
+// "Route":"/"
 
 
 export const chatbotSaudacao = [
