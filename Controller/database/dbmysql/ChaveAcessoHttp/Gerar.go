@@ -1,13 +1,14 @@
 package ChaveAcessoHttp
 
 import (
+	"BaxEnd/Controller/Token"
 	"BaxEnd/Controller/database/dbmysql/Empresas"
-	"GoLibs"
 	"GoLibs/logs"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
+
 )
 
 func (s *ChaveAcessoHttpST) Gerar(ArrayByteIn []byte) error {
@@ -58,24 +59,27 @@ func (s *ChaveAcessoHttpST) Gerar(ArrayByteIn []byte) error {
 		return errors.New(smsg)
 	}
 
-	// adicionar dados da chave
-	KeyAPI, err := GoLibs.HashEncode("KeyAPI=" + GoLibs.NowToDecimal() + "=KeyAPP")
-	if err != nil {
-		smsg := err.Error()
+	if dados.DataValidade == nil {
+		smsg := "Data da validade não foi informada."
 		logs.Erro(smsg)
 		return errors.New(smsg)
 	}
-	KeyAPI = strings.Replace(KeyAPI, "/", "", -1)
-	dados.KeyAPI = &KeyAPI
 
-	KeyAPP, err := GoLibs.HashEncode("KeyAPP=" + GoLibs.NowToDecimal() + "=KeyAPI")
-	if err != nil {
+	Tk := Token.NewToken()
+	Tk.EmpresaID = EmpresaDB.Field.Id
+	Tk.EmpresaTipoDoc = EmpresaDB.Field.TipoPessoaID
+	Tk.EmpresaDoc = EmpresaDB.Field.Doc1
+	Tk.DataValidade = *dados.DataValidade
+	if err := Tk.Encode(); err != nil {
 		smsg := err.Error()
 		logs.Erro(smsg)
 		return errors.New(smsg)
 	}
-	KeyAPP = strings.Replace(KeyAPP, "/", "", -1)
-	dados.KeyAPP = &KeyAPP
+
+	dados.DataCadastro = &Tk.DataCadastro
+	dados.DataValidade = &Tk.DataValidade
+	dados.KeyAPP = &Tk.KeyAPP
+	dados.KeyAPI = &Tk.KeyAPI
 
 	Results, err := dados.Inserir()
 

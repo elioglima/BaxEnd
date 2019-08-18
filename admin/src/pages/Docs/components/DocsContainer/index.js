@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import TextField from '../../../components/html/TextField';
 import {DataAPI} from '../../controle/DataAPI'
 import DocsContainerMetodoBase from '../DocsContainerMetodo'
 

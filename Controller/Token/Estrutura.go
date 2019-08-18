@@ -2,10 +2,12 @@ package Token
 
 import (
 	"GoLibs"
+	"GoLibs/logs"
 	"errors"
 	"fmt"
-	"strconv"
+	"strings"
 	"time"
+
 )
 
 /*
@@ -34,28 +36,58 @@ import (
 
 type TokenST struct {
 	EmpresaID      int64
-	EmpresaTipoDoc int
+	EmpresaTipoDoc int64
 	EmpresaDoc     string
-	DataCriacao    time.Time
+	DataCadastro   time.Time
 	DataValidade   time.Time
 	KeyAPI         string
 	KeyAPIHash     string
 	KeyAPP         string
 }
 
+func NewToken() *TokenST {
+	s := &TokenST{}
+	s.EmpresaID = -1
+	s.EmpresaTipoDoc = -1
+	s.EmpresaDoc = ""
+	s.DataCadastro = time.Now()
+	s.DataValidade = time.Now().AddDate(-365, 0, 0)
+	return s
+}
+
 func (s *TokenST) Encode() error {
 
 	algoritimo := [60]int{41, 27, 47, 59, 1, 18, 25, 20, 16, 0, 14, 31, 42, 29, 28, 51, 5, 17, 26, 35, 6, 8, 58, 7, 30, 15, 48, 11, 9, 56, 57, 45, 13, 10, 34, 3, 4, 19, 33, 39, 40, 43, 36, 46, 2, 23, 38, 54, 37, 53, 22, 12, 50, 52, 24, 21, 49, 44, 55, 32}
 
-	s.EmpresaID = 1                  // 8
-	s.EmpresaTipoDoc = 1             // 1
-	s.EmpresaDoc = "000021639921877" // 15
-	s.DataCriacao = time.Now()       // "20060102150405000"  // 17
-	s.DataValidade = time.Now()      // "20060102150405000" // 17
+	if s.EmpresaID <= 0 {
+		err := errors.New("Erro ao gerar token:Código da empresa não informado.")
+		return err
+	}
 
 	sEmpresaID, err := GoLibs.FormatLeft(fmt.Sprintf("%v", s.EmpresaID), 8, "0")
 	if err != nil {
 		return err
+	}
+
+	if s.EmpresaTipoDoc < 0 || s.EmpresaTipoDoc > 1 {
+		err := errors.New("Erro ao gerar token:Tipo de Documento não informado." + fmt.Sprintf("%v", s.EmpresaTipoDoc))
+		return err
+	}
+
+	s.EmpresaDoc = GoLibs.JustNumber(s.EmpresaDoc)
+	if len(strings.TrimSpace(s.EmpresaDoc)) == 0 {
+		err := errors.New("Erro ao gerar token:Documento não informado.")
+		return err
+	}
+
+	if s.EmpresaTipoDoc == 0 {
+		if err := GoLibs.IsCPF(s.EmpresaDoc); err != nil {
+			return err
+		}
+	} else if s.EmpresaTipoDoc == 1 {
+		if err := GoLibs.IsCNPJ(s.EmpresaDoc); err != nil {
+			return err
+		}
 	}
 
 	sEmpresaDoc, err := GoLibs.FormatLeft(s.EmpresaDoc, 15, "0")
@@ -63,12 +95,14 @@ func (s *TokenST) Encode() error {
 		return err
 	}
 
-	KEYAPPTemp := sEmpresaID
-	KEYAPPTemp += strconv.Itoa(s.EmpresaTipoDoc)
-	KEYAPPTemp += sEmpresaDoc
-	KEYAPPTemp += GoLibs.FormatDateTime("JustNumber", s.DataCriacao)
-	KEYAPPTemp += GoLibs.FormatDateTime("JustNumber", s.DataValidade)
+	s.DataCadastro = time.Now()
+	s.DataValidade = time.Now().AddDate(1, 0, 0)
 
+	KEYAPPTemp := sEmpresaID
+	KEYAPPTemp += fmt.Sprintf("%v", s.EmpresaTipoDoc)
+	KEYAPPTemp += sEmpresaDoc
+	KEYAPPTemp += GoLibs.FormatDateTime("JustNumber2", s.DataCadastro)
+	KEYAPPTemp += GoLibs.FormatDateTime("JustNumber2", s.DataValidade)
 	KEYAPP, err := GoLibs.FormatRigth(KEYAPPTemp, len(algoritimo), "0")
 	if err != nil {
 		return err
@@ -84,44 +118,61 @@ func (s *TokenST) Encode() error {
 	}
 
 	s.KeyAPP = KeyAppNew
+
+	// adicionar dados da chave
+	KeyAPI, err := GoLibs.HashEncode("KeyAPI=" + s.KeyAPP + "=KeyAPP")
+	if err != nil {
+		smsg := err.Error()
+		logs.Erro(smsg)
+		return errors.New(smsg)
+	}
+	s.KeyAPI = strings.ReplaceAll(KeyAPI, "/", "")
+
 	return nil
 }
 
-func (s *TokenST) Decode(KeyApp string) error {
+func (s *TokenST) Decode(KeyAPP string) error {
 
+	s.KeyAPP = KeyAPP
 	algoritimo := [60]int{41, 27, 47, 59, 1, 18, 25, 20, 16, 0, 14, 31, 42, 29, 28, 51, 5, 17, 26, 35, 6, 8, 58, 7, 30, 15, 48, 11, 9, 56, 57, 45, 13, 10, 34, 3, 4, 19, 33, 39, 40, 43, 36, 46, 2, 23, 38, 54, 37, 53, 22, 12, 50, 52, 24, 21, 49, 44, 55, 32}
-	if len(KeyApp) < len(algoritimo) {
-		return errors.New("KeyAPP inválido.")
+	if len(KeyAPP) < len(algoritimo) {
+		return errors.New("token inválido.")
 	}
 	KeyAppNewDec := make([]string, 200)
 	for a := 0; a < len(algoritimo); a++ {
-		KeyAppNewDec[algoritimo[a]] = KeyApp[a : a+1]
+		KeyAppNewDec[algoritimo[a]] = KeyAPP[a : a+1]
 	}
 
-	KeyAPIDecode := ""
+	KeyAPPDecode := ""
 	for _, valor := range KeyAppNewDec {
-		KeyAPIDecode += valor
+		KeyAPPDecode += valor
 	}
-	s.KeyAPI = KeyAPIDecode
 
-	KeyAPIHash, err := GoLibs.HashEncode(s.KeyAPI)
+	if len(algoritimo) > len(KeyAPPDecode) {
+		return errors.New(fmt.Sprintf("%v :: %v - %v %v", "KeyAPP decodificado é inválido", KeyAPPDecode, len(KeyAPPDecode), len(algoritimo)))
+	}
+
+	// s.KeyAPP = KeyAPPDecode
+	// adicionar dados da chave
+	KeyAPI, err := GoLibs.HashEncode("KeyAPI=" + s.KeyAPP + "=KeyAPP")
 	if err != nil {
-		return err
+		smsg := err.Error()
+		logs.Erro(smsg)
+		return errors.New(smsg)
 	}
-	s.KeyAPIHash = KeyAPIHash
+	s.KeyAPI = strings.ReplaceAll(KeyAPI, "/", "")
 
-	DTLayoutDtCriacao := KeyAPIDecode[24:28] + "-" + KeyAPIDecode[28:30] + "-" + KeyAPIDecode[30:32] + "T" + KeyAPIDecode[32:34] + ":" + KeyAPIDecode[34:36] + ":" + KeyAPIDecode[36:38] + "." + KeyAPIDecode[38:41] + "Z"
-	DataCriacao, err := GoLibs.StrParseTime(DTLayoutDtCriacao)
+	DTLayoutDtCriacao := KeyAPPDecode[24:28] + "-" + KeyAPPDecode[28:30] + "-" + KeyAPPDecode[30:32] + "T" + KeyAPPDecode[32:34] + ":" + KeyAPPDecode[34:36] + ":" + KeyAPPDecode[36:38] + "." + KeyAPPDecode[38:41] + "Z"
+	DataCadastro, err := GoLibs.StrParseTime(DTLayoutDtCriacao)
 	if err != nil {
-		return err
+		return errors.New("token inválido, data criação não localizada." + DTLayoutDtCriacao)
 	}
 
-	s.DataCriacao = DataCriacao
-
-	DTLayoutDtValidade := KeyAPIDecode[41:45] + "-" + KeyAPIDecode[45:47] + "-" + KeyAPIDecode[47:49] + "T" + KeyAPIDecode[49:51] + ":" + KeyAPIDecode[51:53] + ":" + KeyAPIDecode[53:55] + "." + KeyAPIDecode[55:57] + "Z"
+	s.DataCadastro = DataCadastro
+	DTLayoutDtValidade := KeyAPPDecode[41:45] + "-" + KeyAPPDecode[45:47] + "-" + KeyAPPDecode[47:49] + "T" + KeyAPPDecode[49:51] + ":" + KeyAPPDecode[51:53] + ":" + KeyAPPDecode[53:55] + "." + KeyAPPDecode[55:58] + "Z"
 	DataValidade, err := GoLibs.StrParseTime(DTLayoutDtValidade)
 	if err != nil {
-		return err
+		return errors.New("validade do token expirou." + DTLayoutDtValidade)
 	}
 
 	s.DataValidade = DataValidade

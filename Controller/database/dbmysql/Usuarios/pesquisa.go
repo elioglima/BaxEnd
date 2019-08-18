@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
 )
 
 func (s *UsuarioST) PesquisaTodos(ArrayByteIn []byte) error {
@@ -15,7 +16,6 @@ func (s *UsuarioST) PesquisaTodos(ArrayByteIn []byte) error {
 	}
 
 	dados := CDados{}
-	fmt.Printf("%+s\n", ArrayByteIn)
 	if err := json.Unmarshal(ArrayByteIn, &dados); err != nil {
 		return err
 	}

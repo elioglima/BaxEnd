@@ -2,6 +2,7 @@ package ChaveAcessoHttp
 
 import (
 	"GoMysql"
+
 )
 
 func (s *ChaveAcessoHttpST) MarshalResult(Results []map[string]interface{}) error {
@@ -29,6 +30,7 @@ func (s *ChaveAcessoHttpST) MarshalResultToField(Results []map[string]interface{
 	s.Field.EmpresaID = GoMysql.FirstValueToInt64(Results, "EmpresaId")
 	s.Field.DataCadastro = GoMysql.FirstValueToTime(Results, "DataCadastro")
 	s.Field.DataAtualizacao = GoMysql.FirstValueToTime(Results, "DataAtualizacao")
+	s.Field.DataValidade = GoMysql.FirstValueToTime(Results, "DataValidade")
 	s.Field.Descricao = GoMysql.FirstValueToStr(Results, "Descricao")
 	s.Field.KeyAPI = GoMysql.FirstValueToStr(Results, "KeyAPI")
 	s.Field.KeyAPP = GoMysql.FirstValueToStr(Results, "KeyAPP")
@@ -43,6 +45,7 @@ func (s *ChaveAcessoHttpST) MarshalResultToFields(Results []map[string]interface
 		FieldTemp.EmpresaID = GoMysql.GetValueToInt64(Result, "EmpresaID")
 		FieldTemp.DataCadastro = GoMysql.GetValueToTime(Result, "DataCadastro")
 		FieldTemp.DataAtualizacao = GoMysql.GetValueToTime(Result, "DataAtualizacao")
+		FieldTemp.DataValidade = GoMysql.GetValueToTime(Result, "DataValidade")
 		FieldTemp.Descricao = GoMysql.GetValueToStr(Result, "Descricao")
 		FieldTemp.KeyAPI = GoMysql.GetValueToStr(Result, "KeyAPI")
 		FieldTemp.KeyAPP = GoMysql.GetValueToStr(Result, "KeyAPP")

@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
 )
 
 /* **********************************************************************
@@ -122,9 +123,9 @@ func (s *EmpresaDadosInST) Apagar() (sql.Result, error) {
 		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
 	}
 
-	// s.dbConexao.SQL.Clear()
-	// s.dbConexao.SQL.Delete("empresa")
-	// sWhere := "Id = " + fmt.Sprintf("%v", *s.Id)
-	// s.dbConexao.SQL.Where(sWhere)
+	s.dbConexao.SQL.Clear()
+	s.dbConexao.SQL.Delete("empresa")
+	sWhere := "Id = " + fmt.Sprintf("%v", *s.Id)
+	s.dbConexao.SQL.Where(sWhere)
 	return s.dbConexao.SQL.Execute()
 }

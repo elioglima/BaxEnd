@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+
 )
 
 /* **********************************************************************
@@ -17,6 +18,7 @@ import (
 
 type UsuarioDadosInST struct {
 	Id             *int64             // chave não alteravel
+	AlteradorID    *int               // obrigatorio - define quem vai alterar
 	EmpresaID      *int64             // chave não alteravel - indica a qual empresa o usuario pertence
 	Email          *string            // chave não alteravel
 	Nome           *string            // nome compledo do usuario
@@ -39,15 +41,20 @@ func NewUsuarioDadosInST(dbConexao *GoMysql.ConexaoST) *UsuarioDadosInST {
 func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 
 	if s.EmpresaID == nil {
-		return nil, errors.New("Erro interno ao verificar a empresaid.")
+		return nil, errors.New("Erro interno ao verificar a [EmpresaID].")
 	} else if *s.EmpresaID == 0 {
-		return nil, errors.New("Erro interno ao verificar a empresaid.")
-
+		return nil, errors.New("Erro interno ao verificar a [EmpresaID].")
+	} else if s.AlteradorID == nil {
+		return nil, errors.New("Erro identificar alterador do registro. [AlteradorID]")
+	} else if *s.AlteradorID == 0 {
+		return nil, errors.New("Erro identificar alterador do registro. [AlteradorID]")
 	}
 
 	numUp := 0
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Insert("usuario")
+
+	s.dbConexao.SQL.Add("AlteradorID", *s.AlteradorID)
 	s.dbConexao.SQL.Add("empresaid", *s.EmpresaID)
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
@@ -98,12 +105,23 @@ func (s *UsuarioDadosInST) Inserir() (sql.Result, error) {
 
 func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 
+	if s.EmpresaID == nil {
+		return nil, errors.New("Erro interno ao verificar a [EmpresaID].")
+	} else if *s.EmpresaID == 0 {
+		return nil, errors.New("Erro interno ao verificar a [EmpresaID].")
+	} else if s.AlteradorID == nil {
+		return nil, errors.New("Erro identificar alterador do registro. [AlteradorID]")
+	} else if *s.AlteradorID == 0 {
+		return nil, errors.New("Erro identificar alterador do registro. [AlteradorID]")
+	}
+
 	numUp := 0
 	s.dbConexao.SQL.Clear()
 	s.dbConexao.SQL.Update("usuario")
 	s.dbConexao.SQL.Where("id=" + fmt.Sprintf("%v", *s.Id))
 	s.dbConexao.SQL.Add("DataCadastro", time.Now())
 	s.dbConexao.SQL.Add("DataAtualizacao", time.Now())
+	s.dbConexao.SQL.Add("AlteradorID", *s.AlteradorID)
 
 	if s.Nome != nil {
 		s.dbConexao.SQL.Add("Nome", *s.Nome)
@@ -136,5 +154,25 @@ func (s *UsuarioDadosInST) Update() (sql.Result, error) {
 		return nil, errors.New("Nenhum campo informado para atualização")
 	}
 
+	return s.dbConexao.SQL.Execute()
+}
+
+func (s *UsuarioDadosInST) Apagar() (sql.Result, error) {
+
+	if s.EmpresaID == nil {
+		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")
+	} else if *s.EmpresaID == 0 {
+		return nil, errors.New("Erro interno ao verificar a empresaid, na hora de apagar registro.")
+	} else if s.Id == nil {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	} else if *s.Id == 0 {
+		return nil, errors.New("Erro interno ao verificar a id, na hora de apagar registro.")
+	}
+
+	s.dbConexao.SQL.Clear()
+	s.dbConexao.SQL.Delete("usuario")
+	sWhere := " EmpresaID = " + fmt.Sprintf("%v", *s.EmpresaID)
+	sWhere += " and Id = " + fmt.Sprintf("%v", *s.Id)
+	s.dbConexao.SQL.Where(sWhere)
 	return s.dbConexao.SQL.Execute()
 }

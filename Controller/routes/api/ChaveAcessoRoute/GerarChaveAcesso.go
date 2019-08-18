@@ -6,6 +6,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+
 )
 
 func GerarChaveAcesso(w http.ResponseWriter, r *http.Request) {

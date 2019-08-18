@@ -3,6 +3,7 @@ package Usuarios
 import (
 	"GoLibs"
 	"GoMysql"
+
 )
 
 func (s *UsuarioST) MarshalResult(Results []map[string]interface{}) error {
@@ -28,6 +29,7 @@ func (s *UsuarioST) MarshalResultToField(Results []map[string]interface{}) error
 	s.Field = UsuarioDadosST{}
 	s.Field.Id = GoMysql.FirstValueToInt64(Results, "Id")
 	s.Field.EmpresaID = GoMysql.FirstValueToInt64(Results, "EmpresaId")
+	s.Field.AlteradorID = GoMysql.FirstValueToInt64(Results, "AlteradorID")
 	s.Field.DataCadastro = GoMysql.FirstValueToTime(Results, "DataCadastro")
 	s.Field.DataAtualizacao = GoMysql.FirstValueToTime(Results, "DataAtualizacao")
 	s.Field.DataAtivacao = GoMysql.FirstValueToTime(Results, "DataAtivacao")
@@ -69,6 +71,7 @@ func (s *UsuarioST) MarshalResultToFields(Results []map[string]interface{}) erro
 		FieldTemp := UsuarioDadosST{}
 		FieldTemp.Id = GoMysql.GetValueToInt64(Result, "Id")
 		FieldTemp.EmpresaID = GoMysql.GetValueToInt64(Result, "EmpresaID")
+		FieldTemp.AlteradorID = GoMysql.GetValueToInt64(Result, "AlteradorID")
 		FieldTemp.DataCadastro = GoMysql.GetValueToTime(Result, "DataCadastro")
 		FieldTemp.DataAtualizacao = GoMysql.GetValueToTime(Result, "DataAtualizacao")
 		FieldTemp.DataAtivacao = GoMysql.GetValueToTime(Result, "DataAtivacao")
