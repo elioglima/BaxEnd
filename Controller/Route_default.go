@@ -20,7 +20,9 @@ func setRoutes() {
 	SetRoutesWalk(routes)
 
 	SetRoutesUsuario(routes)
-	// SetRoutesViews(routes)
+	SetRoutesEmpresa(routes)
+	SetRoutesAcesso(routes)
+
 	routes.NotFoundHandler = http.HandlerFunc(views.NotFound)
 
 }
@@ -31,19 +33,7 @@ func SetRoutesViews(routes *mux.Router) {
 	routes.HandleFunc("/", views.Home)
 }
 
-func SetRoutesUsuario(routes *mux.Router) {
-
-	routes.HandleFunc("/api/chave/acesso/pesquisa/todos", ChaveAcessoRoute.PesquisaTodos)
-	routes.HandleFunc("/api/chave/acesso/gerar", ChaveAcessoRoute.GerarChaveAcesso)
-
-	routes.HandleFunc("/api/usuario/pesquisa/todos", usuario.PesquisaTodos)
-	routes.HandleFunc("/api/usuario/pesquisa/nome", usuario.PesquisaNome)
-	routes.HandleFunc("/api/usuario/pesquisa/codigo", usuario.PesquisaCodigo)
-	routes.HandleFunc("/api/usuario/pesquisa/email", usuario.PesquisaEmail)
-	routes.HandleFunc("/api/usuario/atualizar", usuario.Atualizar)
-	routes.HandleFunc("/api/usuario/novo", usuario.Novo)
-	routes.HandleFunc("/api/usuario/apagar", usuario.Apagar)
-
+func SetRoutesEmpresa(routes *mux.Router) {
 	routes.HandleFunc("/api/empresa/pesquisa/todos", empresa.PesquisaTodos)
 	routes.HandleFunc("/api/empresa/pesquisa/nome", empresa.PesquisaNome)
 	routes.HandleFunc("/api/empresa/pesquisa/codigo", empresa.PesquisaCodigo)
@@ -51,5 +41,19 @@ func SetRoutesUsuario(routes *mux.Router) {
 	routes.HandleFunc("/api/empresa/atualizar", empresa.Atualizar)
 	routes.HandleFunc("/api/empresa/novo", empresa.Novo)
 	routes.HandleFunc("/api/empresa/apagar", empresa.Apagar)
+}
 
+func SetRoutesUsuario(routes *mux.Router) {
+	routes.HandleFunc("/api/usuario/pesquisa/todos", usuario.PesquisaTodos)
+	routes.HandleFunc("/api/usuario/pesquisa/nome", usuario.PesquisaNome)
+	routes.HandleFunc("/api/usuario/pesquisa/codigo", usuario.PesquisaCodigo)
+	routes.HandleFunc("/api/usuario/pesquisa/email", usuario.PesquisaEmail)
+	routes.HandleFunc("/api/usuario/atualizar", usuario.Atualizar)
+	routes.HandleFunc("/api/usuario/novo", usuario.Novo)
+	routes.HandleFunc("/api/usuario/apagar", usuario.Apagar)
+}
+
+func SetRoutesAcesso(routes *mux.Router) {
+	routes.HandleFunc("/api/chave/acesso/pesquisa/todos", ChaveAcessoRoute.PesquisaTodos)
+	routes.HandleFunc("/api/chave/acesso/gerar", ChaveAcessoRoute.GerarChaveAcesso)
 }
