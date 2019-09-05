@@ -5,7 +5,6 @@ import (
 	"GoLibs/logs"
 	"errors"
 	"strings"
-
 )
 
 func (s *ChaveAcessoHttpST) Auth(KeyAPI string) error {
@@ -22,7 +21,7 @@ func (s *ChaveAcessoHttpST) Auth(KeyAPI string) error {
 		return err
 	}
 
-	sSQL := "select * from " + ConsNomeTabela
+	sSQL := "select * from " + strings.ToLower(ConsNomeTabela)
 	sSQL += " where KeyAPI = " + GoLibs.Asp(KeyAPI)
 	sSQL += " limit 0,1 "
 

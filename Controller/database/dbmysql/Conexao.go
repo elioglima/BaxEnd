@@ -17,7 +17,6 @@ import (
 	"GoLibs/logs"
 	"GoMysql"
 	"os"
-
 )
 
 type ConexaoST struct {
@@ -169,22 +168,22 @@ func (s *ConexaoST) CriaEstrutura() error {
 		os.Exit(0)
 	}
 
-	// ObjetoChaveAcessoHttp := ChaveAcessoHttp.NewChaveAcessoHttpDadosST()
-	// if err := s.dbConexao.DropTable(ObjetoChaveAcessoHttp); err != nil {
-	// 	logs.Erro(err)
-	// 	return err
-	// }
+	ObjetoChaveAcessoHttp := ChaveAcessoHttp.NewChaveAcessoHttpDadosST()
+	if err := s.dbConexao.DropTable(ObjetoChaveAcessoHttp); err != nil {
+		logs.Erro(err)
+		return err
+	}
 
-	// if err := s.dbConexao.CreateTable(ObjetoChaveAcessoHttp); err != nil {
-	// 	logs.Erro(err)
-	// 	return err
-	// }
+	if err := s.dbConexao.CreateTable(ObjetoChaveAcessoHttp); err != nil {
+		logs.Erro(err)
+		return err
+	}
 
-	// ChaveAcesso := ChaveAcessoHttp.NewChaveAcessoHttpST(s.dbConexao)
-	// if err := ChaveAcesso.Root(); err != nil {
-	// 	logs.Erro(err)
-	// 	os.Exit(0)
-	// }
+	ChaveAcesso := ChaveAcessoHttp.NewChaveAcessoHttpST(s.dbConexao)
+	if err := ChaveAcesso.Root(); err != nil {
+		logs.Erro(err)
+		os.Exit(0)
+	}
 
 	return nil
 }

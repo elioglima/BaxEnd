@@ -17,11 +17,15 @@ func (s *ChaveAcessoHttpST) Pesquisa(ArrayByteIn []byte) error {
 		return err
 	}
 
+	if dados.EmpresaID != nil {
+		return errors.New("EmpresaID não informada.")
+	}
+
 	if err := s.dbConexao.CheckConnect(); err != nil {
 		return errors.New("Banco de dados não conectado.")
 	}
 
-	sSQL := "select * from " + ConsNomeTabela
+	sSQL := "select * from " + strings.ToLower(ConsNomeTabela)
 	CountCampo := 0
 
 	if dados.RegistroID != nil {

@@ -13,6 +13,8 @@ import Docs from "../pages/Docs"
 
 
 import history from "./history"
+const BaxEndToken = require('./BaxEndToken.json')
+
 
 function withProps(Component, props) {
   return function(matchProps) {
@@ -20,8 +22,15 @@ function withProps(Component, props) {
   }
 }
 
-class Routes extends Component {  
 
+class Routes extends Component {  
+  
+  componentDidMount() {
+
+    console.log('BaxEndToken  ', BaxEndToken);
+    
+  }
+  
   render() {            
     return (     
       <div>

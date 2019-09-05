@@ -25,7 +25,7 @@ export const RAPI = (uri, params) => {
                   'Cache-Control': 'no-cache',
                   Accept: '*/*',
                   'User-Agent': 'PostmanRuntime/7.15.2',
-                  "BaxEnd-Token":"291009013017080009100001167000002000026002080700007060281001"
+                  "BaxEnd-Token":process.env.REACT_APP_KPP
                 },
                 json:true,
                 body:params,

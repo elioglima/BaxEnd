@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-
 )
 
 var (

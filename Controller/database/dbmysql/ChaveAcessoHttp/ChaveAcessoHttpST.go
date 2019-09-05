@@ -1,12 +1,12 @@
 package ChaveAcessoHttp
 
 import (
+	"BaxEnd/Controller/config/admin"
 	"GoLibs/logs"
 	"GoMysql"
 	"bytes"
 	"encoding/json"
 	"time"
-
 )
 
 const ConsNomeTabela = "ChaveAcessoHttp"
@@ -48,6 +48,9 @@ func (s *ChaveAcessoHttpST) Root() error {
 		logs.Erro("Erro ao criar empresa de demonstração.")
 		return err
 	}
+
+	AdminBaxEndToken := "REACT_APP_KPP=" + s.Field.KeyAPP
+	admin.LocalGenerateFileBaxEndToken(AdminBaxEndToken)
 
 	return nil
 }
